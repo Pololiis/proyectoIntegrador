@@ -1,9 +1,12 @@
-import NavBar from "../components/NavBar"
+import NavBar from "../components/NavBar";
+import "../styles/header.css"
 
 function Header() {
   return (
-    <NavBar/>
-  )
+    <div className="container-header">
+      <NavBar />
+    </div>
+  );
 }
 
-export default Header
+export default Header;

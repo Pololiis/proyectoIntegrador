@@ -1,0 +1,23 @@
+
+nav{
+    width: 17vw;
+}
+
+.eslogan{
+    
+    text-align: center;
+    font-size: clamp(0.85rem, 0.5rem + 0.8333vw, 1.1rem);
+}
+
+.container-logo{
+    margin-left: 20px;
+}
+
+.container-logo img{
+    width: 7vw;
+}
+
+.container-buttons{
+    margin-right: 20px;
+    width: 200px;
+}

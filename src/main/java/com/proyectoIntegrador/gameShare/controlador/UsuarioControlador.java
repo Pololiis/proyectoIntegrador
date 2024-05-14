@@ -5,17 +5,12 @@ import com.proyectoIntegrador.gameShare.entidad.Usuario;
 import com.proyectoIntegrador.gameShare.servicio.UsuarioServicio;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -23,24 +18,6 @@ import java.util.stream.Collectors;
 @CrossOrigin("*")
 public class UsuarioControlador {
     private UsuarioServicio usuarioServicio;
-
-    @PostMapping("/nuevo")
-    public  ResponseEntity<Object> registrarUsuario(@Valid @RequestBody Usuario usuario, BindingResult resultadoValidacion) {
-        if(resultadoValidacion.hasErrors()) {
-            List<String> errores = resultadoValidacion.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(errores);
-        }
-
-        Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorEmail(usuario.getEmail());
-
-        if (usuarioBuscado.isPresent()) {
-            return new ResponseEntity<>("El usuario ya existe en la base de datos.", HttpStatus.CONFLICT);
-        } else {
-            return ResponseEntity.ok(usuarioServicio.registrarUsuario(usuario));
-        }
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> buscarUsuarioPorID(@PathVariable Long id) {
@@ -63,13 +40,26 @@ public class UsuarioControlador {
             }
 
     }
-           @PutMapping
+    @PostMapping
+    public  ResponseEntity<Usuario> registrarUsuario(@Valid  @RequestBody Usuario usuario){
+
+        Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorEmail(usuario.getEmail());
+        if (usuarioBuscado.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }else{
+            return ResponseEntity.ok(usuarioServicio.registrarUsuario(usuario));
+        }
+
+
+
+}
+    @PutMapping
            public ResponseEntity<String> actualizarUsuario(@RequestBody Usuario usuario){
                  Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorID(usuario.getId());
                              if(usuarioBuscado.isPresent()){
                                  usuarioServicio.actualizarUsuario(usuario);
                                  return ResponseEntity.ok("Usuario actualizado correctamente");
-                             }                                                                      else{
+                             }else{
                                  return ResponseEntity.badRequest().body("Usuario no encontrado")  ;
                              }
            }

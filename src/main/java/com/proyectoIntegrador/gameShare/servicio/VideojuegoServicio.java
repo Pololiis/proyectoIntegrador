@@ -16,7 +16,7 @@ public class VideojuegoServicio {
     private final VideojuegoRepositorio videojuegoRepositorio;
 
     public Videojuego registrarVideojuego(Videojuego videojuego) {
-        Boolean videojuegoExiste = videojuegoRepositorio.existsByName(videojuego.getNombre());
+        Boolean videojuegoExiste = videojuegoRepositorio.existsByNombre(videojuego.getNombre());
 
         if(!videojuegoExiste) {
             return videojuegoRepositorio.save(videojuego);

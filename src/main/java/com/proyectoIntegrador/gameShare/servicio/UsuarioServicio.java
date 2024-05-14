@@ -3,9 +3,11 @@ package com.proyectoIntegrador.gameShare.servicio;
 import com.proyectoIntegrador.gameShare.entidad.Usuario;
 import com.proyectoIntegrador.gameShare.repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UsuarioServicio {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;

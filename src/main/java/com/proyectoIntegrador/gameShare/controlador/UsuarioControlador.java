@@ -3,6 +3,7 @@ package com.proyectoIntegrador.gameShare.controlador;
 
 import com.proyectoIntegrador.gameShare.entidad.Usuario;
 import com.proyectoIntegrador.gameShare.servicio.UsuarioServicio;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +13,10 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/usuarios")
+@AllArgsConstructor
+@CrossOrigin("*")
 public class UsuarioControlador {
-
-    @Autowired
     private UsuarioServicio usuarioServicio;
 
     @GetMapping("/id")

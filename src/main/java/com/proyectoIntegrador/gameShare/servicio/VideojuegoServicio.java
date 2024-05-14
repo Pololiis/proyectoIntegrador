@@ -2,6 +2,7 @@ package com.proyectoIntegrador.gameShare.servicio;
 
 import com.proyectoIntegrador.gameShare.entidad.Videojuego;
 import com.proyectoIntegrador.gameShare.repositorio.VideojuegoRepositorio;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -65,6 +66,6 @@ public class VideojuegoServicio {
             videojuegoRepositorio.deleteById(id);
             return "Videojuego con ID #" + id + " eliminado con éxito.";
         }
-        return "Videojuego con ID #" + id + " no encontrado.";
+        throw new EntityNotFoundException("Videojuego con ID #" + id + " no encontrado.");
     }
 }

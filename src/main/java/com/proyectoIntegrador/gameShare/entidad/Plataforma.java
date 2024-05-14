@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "Plataformas")
+@Table(name = "plataformas")
 public class Plataforma {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +13,4 @@ public class Plataforma {
 
     @Column(nullable = false)
     private String nombre;
-
-    // Getters y setters
 }

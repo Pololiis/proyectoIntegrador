@@ -2,6 +2,7 @@ package com.proyectoIntegrador.gameShare.controlador;
 
 import com.proyectoIntegrador.gameShare.entidad.Videojuego;
 import com.proyectoIntegrador.gameShare.servicio.VideojuegoServicio;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -47,5 +48,17 @@ public class VideojuegoControlador {
         }
 
         return ResponseEntity.notFound().build();
+    }
+    @GetMapping
+    public ResponseEntity<Object> listarVideojuegos() {
+        return ResponseEntity.ok(videojuegoServicio.listarVideojuegos());
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarVideojuego(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(videojuegoServicio.eliminarVideojuego(id));
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

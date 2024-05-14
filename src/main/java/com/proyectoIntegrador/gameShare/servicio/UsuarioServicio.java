@@ -2,14 +2,17 @@ package com.proyectoIntegrador.gameShare.servicio;
 
 import com.proyectoIntegrador.gameShare.entidad.Usuario;
 import com.proyectoIntegrador.gameShare.repositorio.UsuarioRepositorio;
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@Transactional
+@AllArgsConstructor
 public class UsuarioServicio {
-    @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
     public Optional<Usuario> buscarUsuarioPorID(Long id){

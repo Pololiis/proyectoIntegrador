@@ -1,7 +1,7 @@
-# proyectoIntegrador
+# ProyectoIntegrador
 Proyecto final para certificación de Tech Developer en Digital House.
 
-# Gemeshare
+# Gameshare
 
 Gemeshare es una innovadora plataforma que ofrece a los entusiastas de los videojuegos la oportunidad de compartir sus títulos favoritos con otros jugadores de todo el mundo. En Gemeshare, los usuarios pueden publicar sus propios videojuegos para ser arrendados, creando así una comunidad vibrante y diversa de jugadores que buscan explorar una amplia variedad de experiencias de juego.
 

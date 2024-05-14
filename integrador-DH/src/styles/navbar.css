@@ -1,6 +1,14 @@
 .borde {
   border: 1px solid red;
 }
+.nav-link{
+  color: white;
+  font-size: clamp(0.75rem, 0rem + 2.5vw, 1.7rem);
+}
+
+.nav-link:hover{
+  color: var(--color3);
+}
 
 .eslogan {
   color: white;
@@ -12,24 +20,38 @@
 }
 
 .navbar-nav {
-  width: 100%;
+  width: 30%;
+  margin: auto;
+  
 }
 
 .container-ul {
-  max-width: 20vw;
+  max-width: 60vw;
+  justify-content: space-between;
 }
 
 .logo {
   margin-left: 20px;
-  width: 7vw;
+  width: 10vw;
 }
 
 .container-buttons {
   margin-right: 20px;
-  width: 200px;
+  
+}
+
+.container-buttons button{
+  font-size: clamp(0.75rem, 0rem + 2.5vw, 1.3rem);
 }
 
 .navbar-toggler {
   background-color: white;
   margin-right: 20px;
+  height: 100%;
+}
+
+@media screen and (max-width: 992px) {
+  .navbar-nav{
+    margin: 0px;
+  }
 }

@@ -2,7 +2,7 @@ import "../styles/main.css"
 
 function Main() {
   return (
-<div>INICIO</div>  )
+<div className="container-main"></div>  )
 }
 
 export default Main

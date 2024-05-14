@@ -1,23 +1,35 @@
-
-nav{
-    width: 17vw;
+.borde {
+  border: 1px solid red;
 }
 
-.eslogan{
-    
-    text-align: center;
-    font-size: clamp(0.85rem, 0.5rem + 0.8333vw, 1.1rem);
+.eslogan {
+  color: white;
+  font-size: clamp(0.6rem, 0.54rem + 0.3vw, 2rem);
 }
 
-.container-logo{
-    margin-left: 20px;
+.eslogan:hover {
+  color: white;
 }
 
-.container-logo img{
-    width: 7vw;
+.navbar-nav {
+  width: 100%;
 }
 
-.container-buttons{
-    margin-right: 20px;
-    width: 200px;
+.container-ul {
+  max-width: 20vw;
+}
+
+.logo {
+  margin-left: 20px;
+  width: 7vw;
+}
+
+.container-buttons {
+  margin-right: 20px;
+  width: 200px;
+}
+
+.navbar-toggler {
+  background-color: white;
+  margin-right: 20px;
 }

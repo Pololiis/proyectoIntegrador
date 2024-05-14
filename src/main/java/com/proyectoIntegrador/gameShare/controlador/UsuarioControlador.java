@@ -19,7 +19,7 @@ import java.util.OptionalInt;
 public class UsuarioControlador {
     private UsuarioServicio usuarioServicio;
 
-    @GetMapping("/id")
+    @GetMapping("/{id}")
     public ResponseEntity<Usuario> buscarUsuarioPorID(@PathVariable Long id) {
            Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorID(id);
            if(usuarioBuscado.isPresent())
@@ -43,7 +43,7 @@ public class UsuarioControlador {
     @PostMapping
     public  ResponseEntity<Usuario> registrarUsuario(@Valid  @RequestBody Usuario usuario){
 
-        Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorID(usuario.getId());
+        Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorEmail(usuario.getEmail());
         if (usuarioBuscado.isPresent()) {
             return ResponseEntity.notFound().build();
         }else{
@@ -53,13 +53,13 @@ public class UsuarioControlador {
 
 
 }
-           @PutMapping
+    @PutMapping
            public ResponseEntity<String> actualizarUsuario(@RequestBody Usuario usuario){
                  Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorID(usuario.getId());
                              if(usuarioBuscado.isPresent()){
                                  usuarioServicio.actualizarUsuario(usuario);
                                  return ResponseEntity.ok("Usuario actualizado correctamente");
-                             }                                                                      else{
+                             }else{
                                  return ResponseEntity.badRequest().body("Usuario no encontrado")  ;
                              }
            }

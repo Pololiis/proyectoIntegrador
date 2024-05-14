@@ -16,7 +16,6 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column
     @NotEmpty(message = "El campo nombre del usuario no puede estar vacío.")
     @NotNull(message = "El campo nombre del usuario no puede ser nulo")
@@ -36,23 +35,24 @@ public class Usuario {
 
 
     @Column
-    @NotEmpty(message = "El campo apellido del usuario no puede estar vacío.")
-    @NotNull(message = "El campo apellido del usuario no puede ser nulo")
+    @NotEmpty(message = "El campo contraseña del usuario no puede estar vacío.")
+    @NotNull(message = "El campo contraseña del usuario no puede ser nulo")
     @Min(value = 8, message = "La contraseña debe tener al menos 8 caracteres")
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[@#$%^&+=]).*$",
             message = "La contraseña debe contener al menos una letra mayúscula y un carácter especial")
     private String contrasenia;
 
     @Column
-    @NotEmpty(message = "El campo apellido del usuario no puede estar vacío.")
-    @NotNull(message = "El campo apellido del usuario no puede ser nulo")
+    @NotEmpty(message = "El campo email del usuario no puede estar vacío.")
+    @NotNull(message = "El campo email del usuario no puede ser nulo")
     private String email;
 
 
     @Column
-    @NotEmpty(message = "El campo apellido del usuario no puede estar vacío.")
-    @NotNull(message = "El campo apellido del usuario no puede ser nulo")
+    @NotEmpty(message = "El campo fecha de nacimiento del usuario no puede estar vacío.")
+    @NotNull(message = "El campo fecha de nacimiento del usuario no puede ser nulo")
     private LocalDate fechaNacimiento;
+
     @Column
     private String rol;
     @Column

@@ -4,31 +4,78 @@ import com.proyectoIntegrador.gameShare.entidad.Videojuego;
 import com.proyectoIntegrador.gameShare.servicio.VideojuegoServicio;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/videojuegos")
-@AllArgsConstructor
 @CrossOrigin("*")
+@AllArgsConstructor
 public class VideojuegoControlador {
     private final VideojuegoServicio videojuegoServicio;
+    private Environment env;
 
     @PostMapping("/nuevo")
-    public ResponseEntity<Object> registrarVideojuego(@Valid @RequestBody Videojuego videojuego, BindingResult resultadoValidacion) {
-        if(resultadoValidacion.hasErrors()) {
-            List<String> errores = resultadoValidacion.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(errores);
+    public ResponseEntity<Object> registrarVideojuego(@RequestParam("imagen") List<@Valid MultipartFile> imagenes,
+                                                      @RequestParam("nombre") @NotEmpty @Size(min = 2, max = 450) String nombre,
+                                                      @Valid @RequestParam("descripcion") @NotEmpty @Size(min = 30) String descripcion)
+            throws IOException {
+
+        Videojuego videojuego = new Videojuego();
+        videojuego.setNombre(nombre);
+        videojuego.setDescripcion(descripcion);
+        String carpetaAlmacenamiento = env.getProperty("carpeta.de.imagenes");
+
+        List<String> urisImagenes = new ArrayList<>();
+
+        for (MultipartFile imagen : imagenes) {
+            System.out.println(imagen);
+            if (imagen != null && !imagen.isEmpty()) {
+                String nombreImagen = StringUtils.cleanPath(imagen.getOriginalFilename());
+
+                if (nombreImagen.contains("..")) {
+                    return ResponseEntity.badRequest().body("Nombre de archivo no válido.");
+                }
+
+                try {
+                    File currentDir = new File(".");
+                    String projectPath = currentDir.getCanonicalPath();
+                    Path directorioAlmacenamiento = Paths.get(projectPath, carpetaAlmacenamiento).toAbsolutePath().normalize();
+                    Files.createDirectories(directorioAlmacenamiento);
+
+                    Path rutaAlmacenamiento = directorioAlmacenamiento.resolve(nombreImagen).normalize();
+                    Files.copy(imagen.getInputStream(), rutaAlmacenamiento, StandardCopyOption.REPLACE_EXISTING);
+                    String uriImagen = ServletUriComponentsBuilder.fromCurrentContextPath()
+                            .path("/images/")
+                            .path(nombreImagen)
+                            .toUriString();
+                    urisImagenes.add(uriImagen);
+
+                } catch (IOException e) {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar la imagen: " + e.getMessage());
+                }
+            }
         }
+
+        videojuego.setImagenes(urisImagenes);
 
         Videojuego registroDeVideojuego = videojuegoServicio.registrarVideojuego(videojuego);
 

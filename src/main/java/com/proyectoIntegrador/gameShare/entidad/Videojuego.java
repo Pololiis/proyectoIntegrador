@@ -7,6 +7,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.File;
+import java.util.List;
 
 @Entity
 @Data
@@ -30,19 +32,25 @@ public class Videojuego {
 
     @NotEmpty(message = "El campo imagen del videojuego no puede estar vacío.")
     @NotNull(message = "El campo imagen del videojuego no puede ser nulo")
-    private String imagen;
-
+    private List<String> imagenes;
+/*
     @NotEmpty(message = "El campo categoría del videojuego no puede estar vacío.")
     @NotNull(message = "El campo categoría del videojuego no puede ser nulo")
-    private String categoria;
 
+ */
+    private String categoria;
+/*
     @NotEmpty(message = "El campo plataforma del videojuego no puede estar vacío.")
     @NotNull(message = "El campo plataforma del videojuego no puede ser nulo")
-    private String plataforma;
 
+ */
+    private String plataforma;
+/*
     @Column(name = "restriccion_edad")
     @NotEmpty(message = "El campo restricción del videojuego no puede estar vacío.")
     @NotNull(message = "El campo restricción del videojuego no puede ser nulo")
+
+ */
     private String restriccionEdad;
 
 }

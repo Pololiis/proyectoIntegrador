@@ -20,6 +20,7 @@ public class VideojuegoServicio {
         Boolean videojuegoExiste = videojuegoRepositorio.existsByNombre(videojuego.getNombre());
 
         if(!videojuegoExiste) {
+
             return videojuegoRepositorio.save(videojuego);
         }
 
@@ -48,7 +49,7 @@ public class VideojuegoServicio {
 
             videojuegoParaActualizar.setNombre(videojuego.getNombre());
             videojuegoParaActualizar.setDescripcion(videojuego.getDescripcion());
-            videojuegoParaActualizar.setImagen(videojuego.getImagen());
+            videojuegoParaActualizar.setImagenes(videojuego.getImagenes());
             videojuegoParaActualizar.setCategoria(videojuego.getCategoria());
             videojuegoParaActualizar.setPlataforma(videojuego.getPlataforma());
             videojuegoParaActualizar.setRestriccionEdad(videojuego.getRestriccionEdad());

@@ -1,9 +1,19 @@
 *{
   padding: 0px;
-  margin-top: 0px;
+  margin: 0px;
   box-sizing: border-box;
+  font-size: 12px;
+  font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
 }
 
+
+:root{
+  --color1: #0A1D56;
+  --color2:#492E87;
+  --color3:#37B5B6;
+  --color4:#F2F597;
+}
 
 .flex{
   display: flex;
@@ -12,3 +22,23 @@
 .space-around{
   justify-content: space-around;
 }
+
+.space-between{
+  justify-content: space-between;
+}
+
+.aling-center{
+  align-items: center;
+}
+
+.btn-primary{
+  background-color: var(--color3);
+  border: 1px solid var(--color3);
+}
+
+.btn-primary:hover{
+  background-color: white;
+  color: var(--color3);
+  border: 1px solid var(--color3);
+}
+

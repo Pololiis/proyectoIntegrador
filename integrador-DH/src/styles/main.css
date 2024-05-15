@@ -1,0 +1,7 @@
+.container-main{
+    background-image: url("../assets/bg.svg");
+    border: 1px solid red;
+    background-repeat: no-repeat;
+    background-size: contain;
+    
+}

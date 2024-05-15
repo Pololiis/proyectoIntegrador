@@ -1,9 +1,8 @@
-import React from 'react'
+import "../styles/main.css"
 
 function Main() {
   return (
-    <div>Main</div>
-  )
+<div className="container-main"></div>  )
 }
 
 export default Main

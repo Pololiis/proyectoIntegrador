@@ -28,6 +28,15 @@
   justify-content: center;
 }
 
+.subtitulo{
+  margin: 30px 0px 30px 5vw;
+}
+
+
+.container-slider{
+  margin-bottom: 10vh;
+}
+
 @media screen and (min-width: 378px) and (max-width: 600px) {
   .container-h1 {
     display: flex;

@@ -1,22 +1,33 @@
 .mySwiper {
- 
   height: 50vh;
   width: 100%;
   padding-bottom: 5vh;
+  
 }
 
 .slider-img-container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100%;
+  max-width: 80%;
+  padding: 20px;
+  border: 1px solid red;
+  flex-direction: column;
 }
 
 .slider-img-container img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: 90%;
+
   border-radius: 20px;
+}
+
+.container-link{
+  max-width: 80%;
+  border: 1px solid rgb(31, 28, 184);
+}
+
+.link-slider{
+  font-size: 1.5rem;
 }
 
 @media screen and (max-width: 475px) {

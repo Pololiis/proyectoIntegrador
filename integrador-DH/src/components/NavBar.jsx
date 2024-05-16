@@ -84,7 +84,7 @@ function NavBar() {
                 Inicio
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to="/categorias" className="nav-link">
                 Categorías
               </Link>
@@ -93,7 +93,7 @@ function NavBar() {
               <Link to="/carrito" className="nav-link">
                 Carrito
               </Link>
-            </li>
+            </li> */}
           </ul>
           <div className="d-flex container-buttons ">
             <button className="btn btn-bd-primary me-2">Iniciar Sesión</button>

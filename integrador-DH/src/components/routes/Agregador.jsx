@@ -32,7 +32,7 @@ const Agregador = () => {
 			console.log("FormData: " + formData.get('descripcion'));
 			console.log("FormData: " + formData.get('imagen'));
 
-			const response = await axios.post('http://localhost:8081/videojuegos/nuevo', formData, {
+			const response = await axios.post('http://localhost:8080/videojuegos/nuevo', formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data'
 				}

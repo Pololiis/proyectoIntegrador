@@ -13,7 +13,7 @@ import { FreeMode, Pagination } from "swiper/modules";
 function Slider() {
   return (
     <>
-      <h2>HOLA</h2>
+  
   
       <Swiper
         slidesPerView={4}
@@ -25,8 +25,8 @@ function Slider() {
         breakpoints={{
           // when window width is >= 0px
           0: {
-            slidesPerView: 1,
-            spaceBetween: 10,
+            slidesPerView: 2,
+            spaceBetween: 20,
           },
   
           400: {
@@ -36,13 +36,13 @@ function Slider() {
   
           // when window width is >= 576px
           576: {
-            slidesPerView: 2,
-            spaceBetween: 20,
+            slidesPerView: 4,
+            spaceBetween: 10,
           },
           // when window width is >= 768px
           768: {
             slidesPerView: 5,
-            spaceBetween: 0,
+            spaceBetween: 10,
           },
           
          

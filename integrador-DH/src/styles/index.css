@@ -42,3 +42,6 @@
   --bs-btn-active-bg: white;
 }
 
+.btn-bd-primary:hover{
+  border: 1px solid var(--color3);
+}

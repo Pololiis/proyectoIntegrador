@@ -4,7 +4,7 @@ import Home from "./components/routes/Home";
 import Carrito from "./components/routes/Carrito";
 import Categorias from "./components/routes/Categorias";
 import Agregador from "./components/routes/Agregador";
-
+import DetalleProducto from "./components/routes/DetalleProducto";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
             <Route path="/carrito" element={<Carrito/>}/>
             <Route path="/categorias" element={<Categorias/>}/>
             <Route path="/administrador" element={<Agregador/>}/>
-
+            <Route path="/detalleProducto" element={<DetalleProducto/>} />
           </Route>
         </Routes>
       </BrowserRouter>

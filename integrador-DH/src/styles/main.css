@@ -7,8 +7,8 @@
 
 .bg-h1 h1 {
   color: white;
-  border: 1px solid red;
-  font-size: clamp(3rem, 2.0138rem + 3.3218vw, 6rem);
+
+  font-size: clamp(1.5rem, 2.0138rem + 3.3218vw, 4.5rem);
 }
 
 /* Estilo del texto con contorno sin relleno */
@@ -18,8 +18,7 @@
 }
 
 .glow {
-  border: 1px solid red;
-  font-size: clamp(1.5rem, -1.3333rem + 9.4444vw, 10rem);
+  font-size: clamp(1.5rem, 0.3571rem + 5.7143vw, 7.5rem);
 }
 
 .container-h1 {
@@ -27,22 +26,14 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  border: 1px solid red;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (min-width: 378px) and (max-width: 600px) {
+  .container-h1 {
+    display: flex;
+  }
+
   .bg-h1 {
     height: 40vh;
-    border: 1px solid red;
   }
-
-  .bg-h1 h1 {
-    border: 1px solid red;
-  }
-  .glow {
-    font-size: ;
-    border: 1px solid red;
-  }
-
-
 }

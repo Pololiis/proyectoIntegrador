@@ -2,6 +2,7 @@
   height: 50vh;
   width: 100%;
   padding-bottom: 5vh;
+  max-width: 100%;
   
 }
 
@@ -30,14 +31,36 @@
   font-size: 1.5rem;
 }
 
+.swiper-slide {
+  max-width: 300px; /* Limita el ancho máximo de cada slide del slider */
+}
+
+.slider-img-container img {
+  max-width: 100%; /* Limita el ancho máximo de la imagen al tamaño de su contenedor */
+  max-height: 400px; /* Define la altura máxima deseada */
+  object-fit: cover; /* Ajusta el tamaño de la imagen manteniendo la relación de aspecto y cortando si es necesario */
+}
+
 @media screen and (max-width: 475px) {
   .mySwiper {
     height: auto;
   }
 }
 
+@media (max-width: 768px) {
+  .swiper-slide {
+    max-width: 400px; /* Reduce el ancho máximo de cada slide en pantallas más pequeñas */
+  }
+
+  .slider-img-container img {
+    max-height: 400px; /* Reduce la altura máxima de las imágenes en pantallas más pequeñas */
+  }
+}
+
+
 @media only screen and (max-width: 900px) and (orientation: landscape) {
   .mySwiper {
     padding-bottom: 10vh;
   }
 }
+

@@ -10,9 +10,13 @@
   color: var(--color3);
 }
 
+.nav-link:active{
+  color: var(--color3);
+}
+
 .eslogan {
   color: white;
-  font-size: clamp(0.6rem, 0.54rem + 0.3vw, 2rem);
+  font-size: clamp(0.75rem, 0rem + 2.5vw, 1.7rem);
 }
 
 .eslogan:hover {
@@ -20,19 +24,13 @@
 }
 
 .navbar-nav {
-  width: 30%;
   margin: auto;
-  
 }
 
-.container-ul {
-  max-width: 60vw;
-  justify-content: space-between;
-}
 
 .logo {
   margin-left: 20px;
-  width: 10vw;
+  width: 8vw;
 }
 
 .container-buttons {
@@ -47,7 +45,6 @@
 .navbar-toggler {
   background-color: white;
   margin-right: 20px;
-  height: 100%;
 }
 
 @media screen and (max-width: 992px) {

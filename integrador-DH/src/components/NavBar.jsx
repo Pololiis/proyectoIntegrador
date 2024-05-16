@@ -66,9 +66,9 @@ function NavBar() {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light ">
-      <div className="container-fluid">
+      <div className="container-fluid ">
         <Link to="/" className="navbar-brand eslogan">
-          <img src={logo} alt="Logo" className="logo" /> ¡Juga más, paga menos!
+          <img src={logo} alt="Logo" className="logo " /> ¡Juga más, paga menos!
         </Link>
         <button
           className="navbar-toggler"
@@ -95,9 +95,9 @@ function NavBar() {
               </Link>
             </li>
           </ul>
-          <div className="d-flex container-buttons">
-            <button className="btn btn-primary me-2">Iniciar Sesión</button>
-            <button className="btn btn-primary">Registrarse</button>
+          <div className="d-flex container-buttons ">
+            <button className="btn btn-bd-primary me-2">Iniciar Sesión</button>
+            <button className="btn btn-bd-primary">Registrarse</button>
           </div>
         </div>
       </div>

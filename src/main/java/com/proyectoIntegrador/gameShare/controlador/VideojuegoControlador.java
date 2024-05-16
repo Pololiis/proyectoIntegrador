@@ -1,5 +1,6 @@
 package com.proyectoIntegrador.gameShare.controlador;
 
+import com.proyectoIntegrador.gameShare.dto.VideojuegoDTO;
 import com.proyectoIntegrador.gameShare.entidad.Videojuego;
 import com.proyectoIntegrador.gameShare.servicio.VideojuegoServicio;
 import jakarta.persistence.EntityNotFoundException;
@@ -39,7 +40,7 @@ public class VideojuegoControlador {
                                                       @Valid @RequestParam("descripcion") @NotEmpty @Size(min = 30) String descripcion)
             throws IOException {
 
-        Videojuego videojuego = new Videojuego();
+        VideojuegoDTO videojuego = new VideojuegoDTO();
         videojuego.setNombre(nombre);
         videojuego.setDescripcion(descripcion);
         String carpetaAlmacenamiento = env.getProperty("carpeta.de.imagenes");
@@ -88,7 +89,7 @@ public class VideojuegoControlador {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> buscarVideojuegoPorId(@PathVariable Long id) {
-        Videojuego videojuegoBuscado = videojuegoServicio.buscarVideojuegoPorId(id);
+        VideojuegoDTO videojuegoBuscado = videojuegoServicio.buscarVideojuegoPorId(id);
 
         if(videojuegoBuscado != null) {
             return ResponseEntity.ok(videojuegoBuscado);

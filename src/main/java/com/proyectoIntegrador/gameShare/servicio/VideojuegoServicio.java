@@ -1,5 +1,6 @@
 package com.proyectoIntegrador.gameShare.servicio;
 
+import com.proyectoIntegrador.gameShare.dto.VideojuegoDTO;
 import com.proyectoIntegrador.gameShare.entidad.Videojuego;
 import com.proyectoIntegrador.gameShare.repositorio.VideojuegoRepositorio;
 import jakarta.persistence.EntityNotFoundException;
@@ -7,6 +8,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,29 +18,60 @@ import java.util.List;
 public class VideojuegoServicio {
     private final VideojuegoRepositorio videojuegoRepositorio;
 
-    public Videojuego registrarVideojuego(Videojuego videojuego) {
+    public Videojuego registrarVideojuego(VideojuegoDTO videojuego) {
         Boolean videojuegoExiste = videojuegoRepositorio.existsByNombre(videojuego.getNombre());
 
         if(!videojuegoExiste) {
+            Videojuego videojuegoAGuardar = new Videojuego();
+            videojuegoAGuardar.setNombre(videojuego.getNombre());
+            videojuegoAGuardar.setDescripcion(videojuego.getDescripcion());
 
-            return videojuegoRepositorio.save(videojuego);
+            List<String> imagenes = videojuego.getImagenes();
+            videojuegoAGuardar.setImagenes(String.join(",", imagenes));
+
+            return videojuegoRepositorio.save(videojuegoAGuardar);
         }
 
         return null;
     }
 
-    public Videojuego buscarVideojuegoPorId(Long id) {
+    public VideojuegoDTO buscarVideojuegoPorId(Long id) {
         Boolean videojuegoExiste = videojuegoRepositorio.existsById(id);
 
         if(videojuegoExiste) {
-            return videojuegoRepositorio.findById(id).get();
+            Videojuego videojuego = videojuegoRepositorio.findById(id).get();
+
+            VideojuegoDTO videojuegoDTO = new VideojuegoDTO();
+            videojuegoDTO.setNombre(videojuego.getNombre());
+            videojuegoDTO.setDescripcion(videojuego.getDescripcion());
+
+            String stringImagenes = videojuego.getImagenes();
+            List<String> listaImagenes = List.of(stringImagenes.split(","));
+
+            videojuegoDTO.setImagenes(listaImagenes);
+
+            return videojuegoDTO;
         }
 
         return null;
     }
 
-    public List<Videojuego> listarVideojuegos() {
-        return videojuegoRepositorio.findAll();
+    public List<VideojuegoDTO> listarVideojuegos() {
+        List<Videojuego> videojuegos = videojuegoRepositorio.findAll();
+        List<VideojuegoDTO> videojuegosDTO = new ArrayList<>();
+
+        for (Videojuego videojuego : videojuegos) {
+            VideojuegoDTO videojuegoDTO = new VideojuegoDTO();
+            videojuegoDTO.setNombre(videojuego.getNombre());
+            videojuegoDTO.setDescripcion(videojuego.getDescripcion());
+
+            String stringImagenes = videojuego.getImagenes();
+            List<String> listaImagenes = List.of(stringImagenes.split(","));
+
+            videojuegoDTO.setImagenes(listaImagenes);
+            videojuegosDTO.add(videojuegoDTO);
+        }
+        return videojuegosDTO;
     }
 
     public Videojuego actualizarVideojuego(Long id, Videojuego videojuego) {

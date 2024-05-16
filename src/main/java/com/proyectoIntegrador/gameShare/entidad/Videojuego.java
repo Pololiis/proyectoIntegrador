@@ -3,11 +3,10 @@ package com.proyectoIntegrador.gameShare.entidad;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,18 +20,20 @@ public class Videojuego {
     @Column(unique = true)
     @NotEmpty(message = "El campo nombre del videojuego no puede estar vacío.")
     @NotNull(message = "El campo nombre del videojuego no puede ser nulo")
-    @Min(value = 2, message = "El campo nombre del videojuego debe tener un mínimo de 2 caracteres.")
-    @Max(value = 450, message = "El campo nombre del videojuego debe tener un máximo de 450 caracteres.")
+    @Size(min = 2, max = 450, message = "El campo nombre del videojuego debe tener mínimo 2 caracteres y máximo 450 caracteres.")
     private String nombre;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     @NotEmpty(message = "El campo descripción del videojuego no puede estar vacío.")
     @NotNull(message = "El campo descripción del videojuego no puede ser nulo")
-    @Min(value = 30, message = "El campo descripción del videojuego debe tener un mínimo de 30 caracteres.")
+    @Size(min = 30, message = "El campo descripción del videojuego debe tener un mínimo de 30 caracteres.")
     private String descripcion;
 
+    @Column(columnDefinition = "TEXT")
     @NotEmpty(message = "El campo imagen del videojuego no puede estar vacío.")
     @NotNull(message = "El campo imagen del videojuego no puede ser nulo")
-    private List<String> imagenes;
+    private String imagenes;
 /*
     @NotEmpty(message = "El campo categoría del videojuego no puede estar vacío.")
     @NotNull(message = "El campo categoría del videojuego no puede ser nulo")
@@ -52,5 +53,4 @@ public class Videojuego {
 
  */
     private String restriccionEdad;
-
 }

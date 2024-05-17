@@ -1,28 +1,29 @@
-import "../styles/main.css";
-import Slider from "./common/Slider";
+
+
 import "../styles/main.css";
 import BarraBuscador from "./common/BarraBuscador";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
+import CardJuego from "./common/CardJuego";
 
 function Main() {
+  const url = `http://localhost:8080/videojuegos`;
+  const [videoJuegos, setVideoJuegos] = useState([]);
 
-  const url = 'http://localhost:8080/videojuegos'
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(url);
+        setVideoJuegos(response.data);
+      } catch (error) {
+        console.error("Hubo un error al hacer la solicitud:", error);
+      }
+    };
 
-  useEffect (() => {
-    axios.get(url)
-  .then(response => {
-    // Manejar la respuesta del servidor
-    console.log('Respuesta del servidor:', response.data);
-  })
-  .catch(error => {
-    // Manejar errores
-    console.error('Hubo un error al hacer la solicitud:', error);
-  });
-  }, [])
+    fetchData();
+  }, []);
 
-
+  console.log(videoJuegos);
   return (
     <div className="container-main">
       <div className="bg-h1 flex">
@@ -32,12 +33,12 @@ function Main() {
           <BarraBuscador />
         </div>
       </div>
-      <div className="container-slider">
-      <h2 className="subtitulo">Categorias</h2>
-      <Slider />
+      <div className="container-cards">
+        <h2 className="subtitulo">Recomendados</h2>
+        {videoJuegos.map((videojuego) => (
+          <CardJuego key={videojuego.nombre} videojuego={videojuego} />
+        ))}
       </div>
-      <h2 className="subtitulo">Recomendados</h2>
-      <Slider />
     </div>
   );
 }

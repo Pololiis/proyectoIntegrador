@@ -7,6 +7,10 @@
   scroll-behavior: smooth;
 }
 
+body{
+  background-color:  #f3f3e4;
+}
+
 :root {
   --color1: #0a1d56;
   --color2: #492e87;

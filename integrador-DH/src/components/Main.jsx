@@ -9,7 +9,6 @@ function Main() {
   const [videoJuegos, setVideoJuegos] = useState([]);
   const [cantidad, setCantidad] = useState(10);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,10 +29,10 @@ function Main() {
         <div className="container-h1 flex">
           <h1>Bienvenido a</h1>
           <span className="glow text-outline">GameShare</span>
-          <BarraBuscador />
         </div>
       </div>
       <div className="container-cards-section flex">
+        <BarraBuscador />
         <h2>Recomendados</h2>
         <div className="container-cards  flex ">
           {videoJuegos.slice(0, cantidad).map((videojuego) => (

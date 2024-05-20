@@ -35,12 +35,12 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 10vh;
+  margin: 10vh 0px;
 }
 
 
 .container-cards-section h2{
-  margin: 10vh 0px;
+  margin: 5vh 0px;
 }
 
 

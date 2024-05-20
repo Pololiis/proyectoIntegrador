@@ -11,7 +11,7 @@ const CardJuego = ({ videojuego }) => {
         <h5 className="card-title">{videojuego.nombre}</h5>
       </div>
         <Link to={`/detalleProducto/${videojuego.id}`} className="btn btn-bd-primary">
-          Ver más
+          Detalle
         </Link>
     </div>
   );

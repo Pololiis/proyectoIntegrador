@@ -1,8 +1,8 @@
-
+import "./buscador.css"
 
 function BarraBuscador() {
   return (
-    <div className="container">
+    <div className="container buscador">
       <div className="row justify-content-center">
         <div className="col-sm-12">
           <div className="input-group mb-3 " >

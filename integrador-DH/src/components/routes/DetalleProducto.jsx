@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function DetalleProducto() {
-  const {nombre} = useParams();
+  const {id} = useParams();
   
-  console.log("esta es la id", nombre);
-  const url = `http://localhost:8080/videojuegos${nombre}`;
+  console.log("esta es la id", id);
+  const url = `http://localhost:8080/videojuegos${id}`;
   const [videoJuegoSeleccionado, setVideoJuegoSelecionado] = useState({});
 
 
@@ -25,7 +25,7 @@ function DetalleProducto() {
     };
 
     fetchData();
-  }, [nombre]);
+  }, [id]);
 
   console.log( "este es el video juego",videoJuegoSeleccionado);
   return (

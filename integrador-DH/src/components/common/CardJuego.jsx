@@ -1,18 +1,21 @@
-
-
 import { Link } from "react-router-dom";
+import "./cardJuego.css";
+
 
 const CardJuego = ({ videojuego }) => {
   return (
-    <div>
-      <div>
-        <img src={videojuego.imagenes} alt={videojuego.nombre} />
-        <Link to={`/detalleProducto/${videojuego.nombre}`}>
-          <p>Ver más</p>
-        </Link>
+    <div className="card mb-3">
+      <img src={videojuego.imagenes} className="card-img-top" alt={videojuego.nombre} />
+        <hr />
+      <div className="card-body flex">
+        <h5 className="card-title">{videojuego.nombre}</h5>
       </div>
+        <Link to={`/detalleProducto/${videojuego.id}`} className="btn btn-bd-primary">
+          Ver más
+        </Link>
     </div>
   );
-};
+}
+
 
 export default CardJuego;

@@ -1,5 +1,3 @@
-
-
 import "../styles/main.css";
 import BarraBuscador from "./common/BarraBuscador";
 import { useEffect, useState } from "react";
@@ -9,6 +7,8 @@ import CardJuego from "./common/CardJuego";
 function Main() {
   const url = `http://localhost:8080/videojuegos`;
   const [videoJuegos, setVideoJuegos] = useState([]);
+  const [cantidad, setCantidad] = useState(10);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,11 +33,13 @@ function Main() {
           <BarraBuscador />
         </div>
       </div>
-      <div className="container-cards">
-        <h2 className="subtitulo">Recomendados</h2>
-        {videoJuegos.map((videojuego) => (
-          <CardJuego key={videojuego.nombre} videojuego={videojuego} />
-        ))}
+      <div className="container-cards-section flex">
+        <h2>Recomendados</h2>
+        <div className="container-cards  flex ">
+          {videoJuegos.slice(0, cantidad).map((videojuego) => (
+            <CardJuego key={videojuego.id} videojuego={videojuego} />
+          ))}
+        </div>
       </div>
     </div>
   );

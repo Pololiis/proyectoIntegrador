@@ -28,14 +28,30 @@
   justify-content: center;
 }
 
-.subtitulo{
-  margin: 30px 0px 30px 5vw;
+
+
+
+.container-cards-section{
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 10vh;
+}
+
+
+.container-cards-section h2{
+  margin: 10vh 0px;
 }
 
 
 .container-cards{
-  margin-bottom: 10vh;
+  max-width: 50%;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
 }
+
+
 
 @media screen and (min-width: 378px) and (max-width: 600px) {
   .container-h1 {
@@ -46,3 +62,4 @@
     height: 40vh;
   }
 }
+

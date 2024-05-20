@@ -16,7 +16,7 @@ function App() {
             <Route path="/carrito" element={<Carrito/>}/>
             <Route path="/categorias" element={<Categorias/>}/>
             <Route path="/administrador" element={<Agregador/>}/>
-            <Route path="/detalleProducto/:nombre" element={<DetalleProducto/>} />
+            <Route path="/detalleProducto/:id" element={<DetalleProducto/>} />
             <Route path="*" element={<h1>404</h1>} />
           </Route>
         </Routes>

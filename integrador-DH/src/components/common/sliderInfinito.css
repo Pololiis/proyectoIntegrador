@@ -1,0 +1,61 @@
+.mySwiper{
+    width: 30vw;
+}
+
+
+.img-categoria{
+  width: 20vw;
+  height: 40vh;
+  margin-left: 5vw;
+}
+.container-img-categoria {
+  position: relative;
+}
+
+.img-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad del overlay */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* Por defecto, el overlay estará oculto */
+  transition: opacity 0.3s ease; /* Agrega una transición suave */
+}
+
+.img-container:hover .img-overlay {
+  opacity: 1; /* Mostrar el overlay cuando el mouse pase por encima de la imagen */
+}
+
+.img-text {
+  font-size: 20px;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+@media screen and (min-width:320px) and (max-width:775px) {
+    
+    .mySwiper{
+        height: 50vh;
+        width: 90%;
+    }
+
+    .card-categoria{
+        width: 100%;
+    }
+}

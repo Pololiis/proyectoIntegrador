@@ -1,0 +1,20 @@
+/* DetalleProducto.css */
+.main-image {
+    max-height: 500px;
+  }
+  
+  .row > .col-6 {
+    padding: 0 5px;
+  }
+  
+  .btn-link {
+    text-decoration: none;
+    font-weight: bold;
+    color:var(--color1);
+  }
+  
+  .btn-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  

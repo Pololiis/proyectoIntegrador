@@ -3,11 +3,12 @@ import BarraBuscador from "./common/BarraBuscador";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CardJuego from "./common/CardJuego";
+import SliderInfinito from "./common/SliderInfinito";
 
 function Main() {
   const url = `http://localhost:8080/videojuegos`;
   const [videoJuegos, setVideoJuegos] = useState([]);
-  const [cantidad, setCantidad] = useState(10   );
+  const [cantidad, setCantidad] = useState(10);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +37,8 @@ function Main() {
       </div>
       <div className="container-cards-section flex">
         <BarraBuscador />
+        <h2>Categorias</h2>
+        <SliderInfinito/>
         <h2>Recomendados</h2>
         <div className="container-cards  flex ">
           {videoJuegos.slice(0, cantidad).map((videojuego) => (

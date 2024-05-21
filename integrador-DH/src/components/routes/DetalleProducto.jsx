@@ -1,6 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import GaleriaImagenes from "../common/GaleriaImagenes";
+import Volver from "../common/Volver";
+import "./detalleProducto.css";
 
 function DetalleProducto() {
   const { id } = useParams();
@@ -13,9 +16,8 @@ function DetalleProducto() {
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
-        
-        setVideoJuegoSelecionado(response.data);
 
+        setVideoJuegoSelecionado(response.data);
       } catch (error) {
         console.error("Hubo un error al hacer la solicitud:", error);
       }
@@ -24,11 +26,22 @@ function DetalleProducto() {
     fetchData();
   }, [id]);
 
-  console.log("este es el video juego", videoJuegoSeleccionado);
+  if (!videoJuegoSeleccionado.nombre) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div>
-      <img src={videoJuegoSeleccionado.imaganes} alt={videoJuegoSeleccionado.nombre} />
-      <h1>{videoJuegoSeleccionado.nombre}</h1>
+    <div className="container-fluid">
+     <Volver/>
+    <div className="flex justify-center aling-center container-general-detalle">
+      <div className="container-detalle">
+        <h1 className="m-0">{videoJuegoSeleccionado.nombre}</h1>
+        <div className="container col-sm-12 mt-4">
+          <p>{videoJuegoSeleccionado.descripcion}</p>
+          <GaleriaImagenes images={videoJuegoSeleccionado.imagenes} />
+        </div>
+      </div>
+    </div>
     </div>
   );
 }

@@ -11,6 +11,8 @@ import java.util.List;
 
 @Data
 public class VideojuegoDTO {
+    private Long id;
+
     @Column(unique = true)
     @NotEmpty(message = "El campo nombre del videojuego no puede estar vacío.")
     @NotNull(message = "El campo nombre del videojuego no puede ser nulo")

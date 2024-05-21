@@ -42,6 +42,7 @@ public class VideojuegoServicio {
             Videojuego videojuego = videojuegoRepositorio.findById(id).get();
 
             VideojuegoDTO videojuegoDTO = new VideojuegoDTO();
+            videojuegoDTO.setId(videojuego.getId());
             videojuegoDTO.setNombre(videojuego.getNombre());
             videojuegoDTO.setDescripcion(videojuego.getDescripcion());
 

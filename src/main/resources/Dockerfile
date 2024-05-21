@@ -11,7 +11,7 @@ ENV MYSQL_ROOT_PASSWORD=123456
 EXPOSE 3306
 
 # 2. Dentro de una terminal Bash, nos posicionamos en la carpeta /resources de nuestro Backend ya que contiene este archivo Dockerfile.
-# 3. Creamos nuestra imagen corriendo el siguiente comando en la terminal: docker build -t my-mysql-server
+# 3. Creamos nuestra imagen corriendo el siguiente comando en la terminal: docker build -t my-mysql-server .
 # Puedes corroborar la creación de la imagen en tu Docker Desktop, en la sección de "Images".
 
 # 4. Creamos nuestro contenedor (instancia de la imagen) corriendo el siguiente comando en la terminal:

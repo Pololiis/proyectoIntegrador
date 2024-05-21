@@ -14,7 +14,7 @@ function BarraBuscador() {
               aria-describedby="button-addon2"
             />
             <button
-              className="btn btn-bd-primary"
+              className="btn btn-buscador btn-bd-primary"
               type="button"
               id="button-addon2"
             >

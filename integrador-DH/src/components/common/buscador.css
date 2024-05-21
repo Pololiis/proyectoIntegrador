@@ -1,8 +1,7 @@
-.form-control{
-    height: 4vh;
-
-}
-
-.btn{
-    width: 4vw;
+@media screen and (min-width: 1440px) {
+ 
+  .btn-buscador {
+    height: 2vw;
+    width: 2vw;
+  }
 }

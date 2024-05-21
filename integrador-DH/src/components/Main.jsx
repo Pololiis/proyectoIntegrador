@@ -7,12 +7,15 @@ import CardJuego from "./common/CardJuego";
 function Main() {
   const url = `http://localhost:8080/videojuegos`;
   const [videoJuegos, setVideoJuegos] = useState([]);
-  const [cantidad, setCantidad] = useState(10);
+  const [cantidad, setCantidad] = useState(10   );
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
+
+        
+
         setVideoJuegos(response.data);
       } catch (error) {
         console.error("Hubo un error al hacer la solicitud:", error);

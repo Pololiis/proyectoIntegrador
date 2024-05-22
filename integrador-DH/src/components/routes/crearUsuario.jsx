@@ -18,8 +18,8 @@ const CrearUsuario = () => {
       .required("El apellido es requerido")
       .min(5, "El apellido es muy corto")
       .max(200, "El apellido es muy largo"),
-    mail: Yup.string()
-      .required("El mail es requerido")
+    email: Yup.string()
+      .required("El email es requerido")
       .matches(
         /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
         "*El email es invalido"
@@ -44,9 +44,10 @@ const CrearUsuario = () => {
     const formData = new FormData();
     formData.append("nombre", values.nombre);
     formData.append("apellido", values.apellido);
-    formData.append("mail", values.mail);
-    formData.append("contrasenia", values.constrasenia);
-    // formData.append("repetirContrasenia", values.repetirContrasenia);
+    formData.append("email", values.email);
+    formData.append("contrasenia", values.contrasenia);
+    formData.append("rol", "usuario");
+
     try {
       // Send POST request to the server
       const response = await axios.post(
@@ -85,7 +86,7 @@ const CrearUsuario = () => {
             initialValues={{
               nombre: "",
               apellido: "",
-              mail: "",
+              email: "",
               contrasenia: "",
               // repetirContrasenia: "",
             }}
@@ -138,18 +139,18 @@ const CrearUsuario = () => {
                   <label className="form-label">E-Mail:</label>
                   <Field
                     className={`form-control ${
-                      errors.mail && touched.mail
+                      errors.email && touched.email
                         ? "is-invalid"
-                        : touched.mail
+                        : touched.email
                         ? "is-valid"
                         : ""
                     }`}
                     type="text"
-                    name="mail"
-                    placeholder="mail"
+                    name="email"
+                    placeholder="Email"
                   />
                   <ErrorMessage
-                    name="mail"
+                    name="email"
                     component="div"
                     className="text-danger"
                   />
@@ -177,7 +178,7 @@ const CrearUsuario = () => {
                 </div>
 
                 {/* <div className="mb-3">
-                  <label className="form-label"> Repetir Contraseña:</label>
+                  <label className="form-label"> Confirmar Contraseña:</label>
                   <Field
                     className={`form-control ${
                       errors.repetirContrasenia && touched.repetirContrasenia
@@ -188,7 +189,7 @@ const CrearUsuario = () => {
                     }`}
                     type="text"
                     name="repetirContrasenia"
-                    placeholder="Repetir Contraseña"
+                    placeholder="Confirmar Contraseña"
                   />
                   <ErrorMessage
                     name="repetirContrasenia"
@@ -207,7 +208,7 @@ const CrearUsuario = () => {
               </Form>
             )}
           </Formik>
-          {mensaje.isSubmitting && (
+          {mensaje && (
             <div
               className={`alert ${
                 mensaje.includes("éxito") ? "alert-success" : "alert-danger"

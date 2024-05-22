@@ -1,0 +1,65 @@
+.borde {
+  border: 1px solid red;
+}
+.nav-link{
+  margin-right: 3vw;
+  color: white;
+  font-size: clamp(0.75rem, 0rem + 2.5vw, 1.7rem);
+}
+
+.nav-link:hover{
+  color: var(--color3);
+}
+
+.nav-link:active{
+  color: var(--color3);
+}
+
+.eslogan {
+  color: white;
+  font-size: clamp(0.75rem, 0rem + 2.5vw, 1.3rem);
+}
+
+.eslogan:hover {
+  color: white;
+}
+
+.navbar-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  margin: auto;
+}
+
+
+
+.container-logo{
+  border: 1px solid red;
+  margin-left: 3vw;
+}
+
+.logo {
+  width: 7vw;
+}
+
+.container-buttons {
+
+  margin-right: 3vw;
+}
+
+.container-buttons button{
+  font-size: clamp(0.75rem, 0rem + 2.5vw, 1.3rem);
+}
+
+.navbar-toggler {
+
+  background-color: white;
+  margin-right: 20px;
+}
+
+@media screen and (max-width: 992px) {
+  .navbar-nav{
+    margin: 0px;
+  }
+}

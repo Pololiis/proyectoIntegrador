@@ -27,21 +27,21 @@ function DetalleProducto() {
   }, [id]);
 
   if (!videoJuegoSeleccionado.nombre) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="container-fluid">
-     <Volver/>
-    <div className="flex justify-center aling-center container-general-detalle">
-      <div className="container-detalle">
-        <h1 className="m-0">{videoJuegoSeleccionado.nombre}</h1>
-        <div className="container col-sm-12 mt-4">
-          <p>{videoJuegoSeleccionado.descripcion}</p>
-          <GaleriaImagenes images={videoJuegoSeleccionado.imagenes} />
+      <Volver />
+      <div className="flex justify-center aling-center container-general-detalle">
+        <div className="container-detalle">
+          <GaleriaImagenes
+            titulo={videoJuegoSeleccionado.nombre}
+            descripcion={videoJuegoSeleccionado.descripcion}
+            imagenes={videoJuegoSeleccionado.imagenes}
+          />
         </div>
       </div>
-    </div>
     </div>
   );
 }

@@ -27,7 +27,7 @@ const CrearUsuario = () => {
     contrasenia: Yup.string()
       .required("La contraseña es requerida")
       .min(8, "")
-      .max(50, "")
+      .max(12, "")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         "*La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial"

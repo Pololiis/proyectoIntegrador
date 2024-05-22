@@ -1,0 +1,14 @@
+*{
+  padding: 0px;
+  margin-top: 0px;
+  box-sizing: border-box;
+}
+
+
+.flex{
+  display: flex;
+}
+
+.space-around{
+  justify-content: space-around;
+}

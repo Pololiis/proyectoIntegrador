@@ -13,21 +13,26 @@ import java.util.List;
 @Transactional
 @AllArgsConstructor
 public class PlataformaServicio {
+
     private PlataformaRepositorio plataformaRepositorio;
 
     public List<Plataforma> buscarTodaPlataformas() {
+
         return plataformaRepositorio.findAll();
     }
 
-    public Plataforma buscarPlataformaPorId(Long id) {
+    public Plataforma buscarPlataformaPorId(Integer id) {
+
         return plataformaRepositorio.findById(id).orElse(null);
     }
 
     public Plataforma guardarPlataforma(Plataforma plataforma) {
+
         return plataformaRepositorio.save(plataforma);
     }
 
-    public void borrarPlataforma(Long id) {
+    public void borrarPlataforma(Integer id) {
+
         plataformaRepositorio.deleteById(id);
     }
 

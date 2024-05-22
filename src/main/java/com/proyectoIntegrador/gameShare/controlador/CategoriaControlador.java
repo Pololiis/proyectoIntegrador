@@ -10,16 +10,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaControlador {
+
     @Autowired
     private CategoriaServicio categoriaServicio;
 
     @GetMapping
     public List<Categoria> buscarTodaCategorias(){
+
         return categoriaServicio.buscarTodasCategorias();
     }
 
     @GetMapping("/{id}")
-    public Categoria buscarCategoriaPorId(@PathVariable Long id) {
+    public Categoria buscarCategoriaPorId(@PathVariable Integer id) {
+
         return categoriaServicio.buscarCategoriaPorId(id);
     }
 
@@ -29,7 +32,7 @@ public class CategoriaControlador {
     }
 
     @DeleteMapping("/{id}")
-    public void borrarCategoria(@PathVariable Long id) {
+    public void borrarCategoria(@PathVariable Integer id) {
         categoriaServicio.borrarCategoria(id);
     }
 

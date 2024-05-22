@@ -8,17 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @Transactional
 @AllArgsConstructor
 public class CategoriaServicio {
+
     private CategoriaRepositorio categoriaRepositorio;
 
     public List<Categoria> buscarTodasCategorias() {
         return categoriaRepositorio.findAll();
     }
 
-    public Categoria buscarCategoriaPorId(Long id) {
+    public Categoria buscarCategoriaPorId(Integer id) {
         return categoriaRepositorio.findById(id).orElse(null);
     }
 
@@ -26,7 +28,7 @@ public class CategoriaServicio {
         return categoriaRepositorio.save(categoria);
     }
 
-    public void borrarCategoria(Long id) {
+    public void borrarCategoria(Integer id) {
         categoriaRepositorio.deleteById(id);
     }
 }

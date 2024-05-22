@@ -10,26 +10,29 @@ import java.util.List;
 @RestController
 @RequestMapping("/plataformas")
 public class PlataformaControlador {
+
     @Autowired
-    private PlataformaServicio plataformaService;
+    private PlataformaServicio plataformaServicio;
 
     @GetMapping
     public List<Plataforma> buscarTodaPlataformas() {
-        return plataformaService.buscarTodaPlataformas();
+
+        return plataformaServicio.buscarTodaPlataformas();
     }
 
     @GetMapping("/{id}")
-    public Plataforma buscarPlataformaPorId(@PathVariable Long id) {
-        return plataformaService.buscarPlataformaPorId(id);
+    public Plataforma buscarPlataformaPorId(@PathVariable Integer id) {
+
+        return plataformaServicio.buscarPlataformaPorId(id);
     }
 
     @PostMapping
     public Plataforma guardarPlataforma(@RequestBody Plataforma plataforma) {
-        return plataformaService.guardarPlataforma(plataforma);
+        return plataformaServicio.guardarPlataforma(plataforma);
     }
 
     @DeleteMapping("/{id}")
-    public void borrarPlataforma(@PathVariable Long id) {
-        plataformaService.borrarPlataforma(id);
+    public void borrarPlataforma(@PathVariable Integer id) {
+        plataformaServicio.borrarPlataforma(id);
     }
 }

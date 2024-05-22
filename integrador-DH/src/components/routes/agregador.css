@@ -2,9 +2,12 @@
   background-color: var(--color1);
   color: white;
   padding: 10vh 0px;
-  border: 1px solid red;
 }
 
+
+.imagen-preview{
+  
+}
 
 
 textarea{

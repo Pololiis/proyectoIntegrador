@@ -1,34 +1,67 @@
-import React from 'react'
-import "./galeriaImagenes.css"
+import React from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
-function GaleriaImagenes({images}) {
-    if (!images || images.length === 0) {
-        return <div>No hay imágenes disponibles.</div>;
-      }
-    
-      const [mainImage, ...otherImages] = images;
-
+const GaleriaImagenes = () => {
   return (
-    <div className="container-fluid">
-      <div className="row borde">
-        <div className="col-lg-6 d-flex justify-content-center align-items-center">
-          <img src={mainImage} alt="Imagen principal" className="img-fluid main-image" />
-        </div>
-        <div className="col-lg-6">
-          <div className="row">
-            {otherImages.map((image, index) => (
-              <div key={index} className="col-6 mb-3">
-                <img src={image} alt={`Imagen ${index + 2}`} className="img-fluid" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className="d-flex justify-content-end mt-2">
-        <button className="btn btn-link">Ver más</button>
-      </div>
-    </div>
+    <Container fluid>
+      <Row>
+        {/* Main Image */}
+        <Col md={6}>
+          <img
+            src="path/to/main-image.jpg"
+            alt="Main"
+            className="img-fluid"
+            style={{ width: '100%', height: 'auto' }}
+          />
+        </Col>
+
+        {/* Thumbnail Images */}
+        <Col md={6}>
+          <Row>
+            <Col xs={6} className="pb-2">
+              <img
+                src="path/to/image1.jpg"
+                alt="Image 1"
+                className="img-fluid"
+                style={{ width: '100%', height: 'auto' }}
+              />
+            </Col>
+            <Col xs={6} className="pb-2">
+              <img
+                src="path/to/image2.jpg"
+                alt="Image 2"
+                className="img-fluid"
+                style={{ width: '100%', height: 'auto' }}
+              />
+            </Col>
+            <Col xs={6} className="pb-2">
+              <img
+                src="path/to/image3.jpg"
+                alt="Image 3"
+                className="img-fluid"
+                style={{ width: '100%', height: 'auto' }}
+              />
+            </Col>
+            <Col xs={6} className="pb-2">
+              <img
+                src="path/to/image4.jpg"
+                alt="Image 4"
+                className="img-fluid"
+                style={{ width: '100%', height: 'auto' }}
+              />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Row>
+        <Col className="text-end mt-2">
+          <Button variant="link" onClick={() => alert('Show all images')}>
+            Ver más
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
-export default GaleriaImagenes
+export default GaleriaImagenes;

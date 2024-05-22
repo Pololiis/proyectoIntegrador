@@ -27,7 +27,7 @@ function DetalleProducto() {
   }, [id]);
 
   if (!videoJuegoSeleccionado.nombre) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>; 
   }
 
   return (

@@ -23,34 +23,45 @@ const Agregador = () => {
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    // Create FormData instance
     const formData = new FormData();
     formData.append("nombre", values.nombre);
     formData.append("descripcion", values.descripcion);
+  
+    // Append selected images to formData
     imagenesSeleccionadas.forEach((imagen) => {
-      formData.append("imagenes", imagen);
+      formData.append("imagen", imagen);
     });
-
+  
     try {
+      // Send POST request to the server
       const response = await axios.post(
         "http://localhost:8080/videojuegos/nuevo",
         formData,
         {
-          headers: {
+          headers: {  // Correct header key
             "Content-Type": "multipart/form-data",
           },
         }
       );
-
+  
+      // Log response for debugging
+      console.log(response);
+  
+      // Display success message and reset form
       setMensaje("Producto agregado con éxito");
       resetForm();
       setImagenesSeleccionadas([]);
     } catch (error) {
+      // Display error message
+      console.error("Error al enviar el producto:", error);
       setMensaje("Error al enviar el producto");
-      console.error("Error al enviar el objeto:", error);
+    } finally {
+      // Ensure submitting state is always reset
+      setSubmitting(false);
     }
-
-    setSubmitting(false);
   };
+  
 
   const handleImagenChange = (event) => {
     const files = Array.from(event.currentTarget.files);
@@ -126,13 +137,13 @@ const Agregador = () => {
                     onChange={handleImagenChange}
                   />
                 </div>
-                <div className="mb-3 img-btn-borrar  d-flex borde">
+                <div className="mb-3 img-btn-borrar d-flex">
                   {imagenesSeleccionadas.map((imagen, index) => (
                     <div key={index} className="imagen-preview borde">
                       <img
                         src={URL.createObjectURL(imagen)}
                         alt={`Imagen ${index + 1}`}
-                        className=" img-seleccionada"
+                        className="img-seleccionada"
                       />
                       <button
                         type="button"

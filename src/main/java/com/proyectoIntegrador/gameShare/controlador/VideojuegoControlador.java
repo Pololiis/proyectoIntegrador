@@ -2,26 +2,21 @@ package com.proyectoIntegrador.gameShare.controlador;
 
 import com.proyectoIntegrador.gameShare.dto.VideojuegoDTO;
 import com.proyectoIntegrador.gameShare.entidad.Videojuego;
+import com.proyectoIntegrador.gameShare.servicio.S3Servicio;
 import com.proyectoIntegrador.gameShare.servicio.VideojuegoServicio;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.core.env.Environment;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +27,9 @@ import java.util.List;
 @AllArgsConstructor
 public class VideojuegoControlador {
     private final VideojuegoServicio videojuegoServicio;
-    private Environment env;
+    private final S3Servicio s3Servicio;
 
-    @PostMapping("/nuevo")
+    @PostMapping(path = "/nuevo", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Object> registrarVideojuego(@RequestParam("imagen") List<@Valid MultipartFile> imagenes,
                                                       @RequestParam("nombre") @NotEmpty @Size(min = 2, max = 450) String nombre,
                                                       @Valid @RequestParam("descripcion") @NotEmpty @Size(min = 30) String descripcion)
@@ -43,32 +38,22 @@ public class VideojuegoControlador {
         VideojuegoDTO videojuego = new VideojuegoDTO();
         videojuego.setNombre(nombre);
         videojuego.setDescripcion(descripcion);
-        String carpetaAlmacenamiento = env.getProperty("carpeta.de.imagenes");
 
         List<String> urisImagenes = new ArrayList<>();
 
         for (MultipartFile imagen : imagenes) {
-            System.out.println(imagen);
             if (imagen != null && !imagen.isEmpty()) {
-                String nombreImagen = StringUtils.cleanPath(imagen.getOriginalFilename());
+                String nombreImagen = imagen.getOriginalFilename();
 
                 if (nombreImagen.contains("..")) {
                     return ResponseEntity.badRequest().body("Nombre de archivo no válido.");
                 }
 
                 try {
-                    File currentDir = new File(".");
-                    String projectPath = currentDir.getCanonicalPath();
-                    Path directorioAlmacenamiento = Paths.get(projectPath, carpetaAlmacenamiento).toAbsolutePath().normalize();
-                    Files.createDirectories(directorioAlmacenamiento);
+                    s3Servicio.subirImagen(nombreImagen, imagen);
+                    String imagenUri = s3Servicio.construirUriImagen(nombreImagen);
 
-                    Path rutaAlmacenamiento = directorioAlmacenamiento.resolve(nombreImagen).normalize();
-                    Files.copy(imagen.getInputStream(), rutaAlmacenamiento, StandardCopyOption.REPLACE_EXISTING);
-                    String uriImagen = ServletUriComponentsBuilder.fromCurrentContextPath()
-                            .path("/images/")
-                            .path(nombreImagen)
-                            .toUriString();
-                    urisImagenes.add(uriImagen);
+                    urisImagenes.add(imagenUri);
 
                 } catch (IOException e) {
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar la imagen: " + e.getMessage());

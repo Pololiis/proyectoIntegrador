@@ -34,23 +34,10 @@ public class Videojuego {
     @NotEmpty(message = "El campo imagen del videojuego no puede estar vacío.")
     @NotNull(message = "El campo imagen del videojuego no puede ser nulo")
     private String imagenes;
-/*
-    @NotEmpty(message = "El campo categoría del videojuego no puede estar vacío.")
-    @NotNull(message = "El campo categoría del videojuego no puede ser nulo")
 
- */
     private String categoria;
-/*
-    @NotEmpty(message = "El campo plataforma del videojuego no puede estar vacío.")
-    @NotNull(message = "El campo plataforma del videojuego no puede ser nulo")
 
- */
     private String plataforma;
-/*
-    @Column(name = "restriccion_edad")
-    @NotEmpty(message = "El campo restricción del videojuego no puede estar vacío.")
-    @NotNull(message = "El campo restricción del videojuego no puede ser nulo")
 
- */
     private String restriccionEdad;
 }

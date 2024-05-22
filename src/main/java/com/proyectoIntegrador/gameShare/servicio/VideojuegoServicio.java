@@ -63,6 +63,7 @@ public class VideojuegoServicio {
 
         for (Videojuego videojuego : videojuegos) {
             VideojuegoDTO videojuegoDTO = new VideojuegoDTO();
+            videojuegoDTO.setId(videojuego.getId());
             videojuegoDTO.setNombre(videojuego.getNombre());
             videojuegoDTO.setDescripcion(videojuego.getDescripcion());
 

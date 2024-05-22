@@ -4,7 +4,26 @@
     align-items: center;
 }
 
+.card-juego > img{
+    height: 50vh;
+}
+
 .card-body{
     text-align: center;
+}
+
+
+@media screen and (min-width: 320px) and (max-width:750px){
+    .card-juego > img{
+        height: 20vh;
+        width: 15vw;
+    }
+}
+
+@media screen and (min-width: 751px) and (max-width:991px){
+    .card-juego > img{
+        height: 40vh;
+        width: 20vw;
+    }
 }
 

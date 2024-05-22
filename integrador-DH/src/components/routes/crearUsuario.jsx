@@ -11,14 +11,32 @@ const CrearUsuario = () => {
     nombre: Yup.string()
       .required("El nombre es requerido")
       .min(2, "El nombre es muy corto")
-      .max(50, "El nombre es muy largo"),
+      .max(50, "El nombre es muy largo")
+      .matches(/^[A-Z]+$/i, "*Nombre invalido"),
+
     apellido: Yup.string()
       .required("El apellido es requerido")
       .min(5, "El apellido es muy corto")
       .max(200, "El apellido es muy largo"),
-      mail: Yup.string()
+    mail: Yup.string()
       .required("El mail es requerido")
-
+      .matches(
+        /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
+        "*El email es invalido"
+      ),
+    contrasenia: Yup.string()
+      .required("La contraseña es requerida")
+      .min(8, "")
+      .max(50, "")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "*La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial"
+      ),
+    // repetirContrasenia: Yup.string()
+    //   .required("La contraseña es requerida")
+    //   .oneOf([Yup.ref("contrasenia")], "*Las contraseñas no coinciden")
+    //   .min(8, "La contraseña es muy corta")
+    //   .max(50, "La contraseña es muy larga"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
@@ -26,23 +44,25 @@ const CrearUsuario = () => {
     const formData = new FormData();
     formData.append("nombre", values.nombre);
     formData.append("apellido", values.apellido);
-    formData.append("mail", values.mail );
-  
+    formData.append("mail", values.mail);
+    formData.append("contrasenia", values.constrasenia);
+    // formData.append("repetirContrasenia", values.repetirContrasenia);
     try {
       // Send POST request to the server
       const response = await axios.post(
-        "http://localhost:8080/videojuegos/nuevo",
+        "http://localhost:8080/usuarios",
         formData,
         {
-          headers: {  // Correct header key
-            "Content-Type": "multipart/form-data",
+          headers: {
+            // Correct header key
+            "Content-Type": "application/json",
           },
         }
       );
-  
+
       // Log response for debugging
       console.log(response);
-  
+
       // Display success message and reset form
       setMensaje("Usuario Registrado con éxito");
       resetForm();
@@ -56,14 +76,19 @@ const CrearUsuario = () => {
     }
   };
 
-
   return (
     <div className="container my-5 container-form">
       <div className="row justify-content-center">
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">Registrar Usuario</h2>
           <Formik
-            initialValues={{ nombre: "", descripcion: "", mail: "" }}
+            initialValues={{
+              nombre: "",
+              apellido: "",
+              mail: "",
+              contrasenia: "",
+              // repetirContrasenia: "",
+            }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
@@ -101,7 +126,7 @@ const CrearUsuario = () => {
                     }`}
                     name="apellido"
                     placeholder="Apellido"
-                   />
+                  />
                   <ErrorMessage
                     name="apellido"
                     component="div"
@@ -130,36 +155,59 @@ const CrearUsuario = () => {
                   />
                 </div>
 
+                <div className="mb-3">
+                  <label className="form-label">Contraseña:</label>
+                  <Field
+                    className={`form-control ${
+                      errors.contrasenia && touched.contrasenia
+                        ? "is-invalid"
+                        : touched.contrasenia
+                        ? "is-valid"
+                        : ""
+                    }`}
+                    type="text"
+                    name="contrasenia"
+                    placeholder="contraseña"
+                  />
+                  <ErrorMessage
+                    name="contrasenia"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                {/* <div className="mb-3">
+                  <label className="form-label"> Repetir Contraseña:</label>
+                  <Field
+                    className={`form-control ${
+                      errors.repetirContrasenia && touched.repetirContrasenia
+                        ? "is-invalid"
+                        : touched.repetirContrasenia
+                        ? "is-valid"
+                        : ""
+                    }`}
+                    type="text"
+                    name="repetirContrasenia"
+                    placeholder="Repetir Contraseña"
+                  />
+                  <ErrorMessage
+                    name="repetirContrasenia"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div> */}
 
                 <button
                   className="btn btn-primary w-100"
                   type="submit"
                   disabled={isSubmitting}
                 >
-                  Agregar Producto
+                  Registrarse
                 </button>
               </Form>
             )}
           </Formik>
-          {mensaje && (
+          {mensaje.isSubmitting && (
             <div
               className={`alert ${
                 mensaje.includes("éxito") ? "alert-success" : "alert-danger"
@@ -173,6 +221,5 @@ const CrearUsuario = () => {
       </div>
     </div>
   );
-
 };
 export default CrearUsuario;

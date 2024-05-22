@@ -44,8 +44,8 @@ function NavBar() {
             </li> */}
           </ul>
           <div className="d-flex container-buttons ">
-            <button className="btn btn-bd-primary me-2">Iniciar Sesión</button>
-            <button className="btn btn-bd-primary">Registrarse</button>
+            <Link to="#" className="btn btn-bd-primary me-2">Iniciar Sesión</Link>
+            <Link to="/crearUsuario" className="btn btn-bd-primary">Registrarse</Link>
           </div>
         </div>
       </div>

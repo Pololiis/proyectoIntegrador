@@ -4,6 +4,9 @@
   padding: 10vh 0px;
 }
 
+.restringido {
+  display: none;
+}
 
 .imagen-preview{
   
@@ -24,4 +27,15 @@ textarea{
 .img-btn-borrar{
   flex-wrap: wrap;
   gap: 2vh;
+}
+
+
+@media (max-width: 768px) {
+  .restringido {
+    display: block;
+  }
+
+  .formulario {
+    display: none;
+  }
 }

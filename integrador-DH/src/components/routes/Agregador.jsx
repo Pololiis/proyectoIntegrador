@@ -76,7 +76,14 @@ const Agregador = () => {
 
   return (
     <div className="container my-5 container-form">
-      <div className="row justify-content-center">
+      <div className="restringido row justify-content-center">
+      <div className="col-12 col-md-8">
+          <h2 className="text-center mb-4">No disponible.</h2>
+          <h4 className="text-center mb-6">Esta funcionalidad no esta disponible en dispositivos moviles.</h4>
+
+          </div>
+      </div>
+      <div className="row justify-content-center formulario">
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">Agregar Producto</h2>
           <Formik

@@ -3,14 +3,17 @@ package com.proyectoIntegrador.gameShare.entidad;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
-@Table(name = "Plataformas")
-public class Plataforma {
+@Table(name = "Roles")
+public class Rol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, unique = true)
     private String nombre;
+
+    @OneToMany(mappedBy = "rol")
+    private List<Usuario> usuarios;
 }

@@ -17,51 +17,47 @@ const Agregador = () => {
       .required("La descripción es requerida")
       .min(5, "La descripción es muy corta")
       .max(200, "La descripción es muy larga"),
+    genero: Yup.string().required("La categoría es requerida"),
+    plataforma: Yup.string().required("La categoría es requerida"),
     imagenes: Yup.array()
       .min(1, "Al menos una imagen es requerida")
       .max(5, "Máximo 5 imágenes permitidas"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    // Create FormData instance
     const formData = new FormData();
     formData.append("nombre", values.nombre);
     formData.append("descripcion", values.descripcion);
-  
-    // Append selected images to formData
+    formData.append("categoria", values.categoria);
+    formData.append("plataforma", values.plataforma);
+
     imagenesSeleccionadas.forEach((imagen) => {
       formData.append("imagen", imagen);
     });
-  
+
     try {
-      // Send POST request to the server
       const response = await axios.post(
         "http://localhost:8080/videojuegos/nuevo",
         formData,
         {
-          headers: {  // Correct header key
+          headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
-  
-      // Log response for debugging
+
       console.log(response);
-  
-      // Display success message and reset form
+
       setMensaje("Producto agregado con éxito");
       resetForm();
       setImagenesSeleccionadas([]);
     } catch (error) {
-      // Display error message
       console.error("Error al enviar el producto:", error);
       setMensaje("Error al enviar el producto");
     } finally {
-      // Ensure submitting state is always reset
       setSubmitting(false);
     }
   };
-  
 
   const handleImagenChange = (event) => {
     const files = Array.from(event.currentTarget.files);
@@ -77,17 +73,18 @@ const Agregador = () => {
   return (
     <div className="container my-5 container-form">
       <div className="restringido row justify-content-center">
-      <div className="col-12 col-md-8">
+        <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">No disponible.</h2>
-          <h4 className="text-center mb-6">Esta funcionalidad no esta disponible en dispositivos moviles.</h4>
-
-          </div>
+          <h4 className="text-center mb-6">
+            Esta funcionalidad no esta disponible en dispositivos moviles.
+          </h4>
+        </div>
       </div>
       <div className="row justify-content-center formulario">
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">Agregar Producto</h2>
           <Formik
-            initialValues={{ nombre: "", descripcion: "" }}
+            initialValues={{ nombre: "", descripcion: "", categoria: "" }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
@@ -134,6 +131,58 @@ const Agregador = () => {
                     className="text-danger"
                   />
                 </div>
+                <div className="mb-3">
+                  <label className="form-label">Genero:</label>
+                  <Field
+                    as="select"
+                    className={`form-control ${
+                      errors.genero && touched.genero
+                        ? "is-invalid"
+                        : touched.genero
+                        ? "is-valid"
+                        : ""
+                    }`}
+                    name="genero"
+                  >
+                    <option value="" label="Seleccionar genero" />
+                    <option value="rol" label="Rol" />
+                    <option value="accion" label="Acción" />
+                    <option value="estrategia" label="Estrategia" />
+                    <option value="terror" label="Terror" />
+                  </Field>
+                  <ErrorMessage
+                    name="genero"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Plataforma:</label>
+                  <Field
+                    as="select"
+                    className={`form-control ${
+                      errors.plataforma && touched.plataforma
+                        ? "is-invalid"
+                        : touched.plataforma
+                        ? "is-valid"
+                        : ""
+                    }`}
+                    name="plataforma"
+                  >
+                    <option value="" label="Seleccionar plataforma" />
+                    <option value="playStation" label="playStation" />
+                    <option value="xBox" label="xBox" />
+                    <option value="pc" label="pc" />
+                    <option value="nintendoSwitch" label="nintendoSwitch" />
+                  </Field>
+                  <ErrorMessage
+                    name="plataforma"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+
                 <div className="mb-3">
                   <label className="form-label">Imágenes:</label>
                   <input

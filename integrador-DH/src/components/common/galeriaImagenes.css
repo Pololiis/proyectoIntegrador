@@ -5,15 +5,23 @@
 }
 
 .img-secundaria{
-  max-width: 10vw;
+
 }
 
-.container-img-secundaria{
-  gap:20px;
+.container-img-secundaria-general{
   margin-left: 5vw;
   flex-wrap: wrap;
   display: flex;
-  width: 80%;
+  width: 30vw;
+  gap: 10px;
+}
+
+
+.container-img-secundaria{
+width: 45%;
+height: 18vh;
+border: 1px solid yellow;
+margin: auto;
 }
 
 .titulo-descripcion-detalle{
@@ -25,5 +33,6 @@
 }
 
 .titulo-descripcion-detalle > p{
-  
+  font-size: clamp(1rem, 0.6rem + 2vw, 1.5rem);
+  font-weight: 200;
 }

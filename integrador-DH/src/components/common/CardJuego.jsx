@@ -4,6 +4,8 @@ import "./cardJuego.css";
 
 const CardJuego = ({ videojuego }) => {
   return (
+    
+    
     <div className="card card-juego mb-3">
       <img src={videojuego.imagenes[0]} className="card-img-top" alt={videojuego.nombre} />
         <hr />
@@ -14,6 +16,7 @@ const CardJuego = ({ videojuego }) => {
           Detalle
         </Link>
     </div>
+
   );
 }
 

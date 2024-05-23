@@ -37,7 +37,7 @@ function Main() {
         <h2>Categorias</h2>
         <SliderInfinito/>
         <h2>Recomendados</h2>
-        <div className="container-cards flex">
+        <div className="container-cards borde flex">
           {videoJuegos.slice(0, cantidad).map((videojuego) => (
             <CardJuego key={videojuego.id} videojuego={videojuego} />
           ))}

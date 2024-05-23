@@ -55,7 +55,8 @@
         width: 90%;
     }
 
-    .card-categoria{
-        width: 100%;
-    }
+   .img-categoria{
+    width: 100%;
+    margin-left: 0px;
+   }
 }

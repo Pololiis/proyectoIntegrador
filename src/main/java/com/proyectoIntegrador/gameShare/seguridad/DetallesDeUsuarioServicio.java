@@ -1,4 +1,4 @@
-package com.proyectoIntegrador.gameShare.servicio;
+package com.proyectoIntegrador.gameShare.seguridad;
 
 import com.proyectoIntegrador.gameShare.entidad.Rol;
 import com.proyectoIntegrador.gameShare.entidad.Usuario;
@@ -15,24 +15,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
 @AllArgsConstructor
-public class UsuarioServicio {
+public class DetallesDeUsuarioServicio implements UserDetailsService {
     private UsuarioRepositorio usuarioRepositorio;
-    public Usuario registrarUsuario(Usuario usuario) { return usuarioRepositorio.save(usuario);}
-    public Optional<Usuario> buscarUsuarioPorID(Long id){
-        return usuarioRepositorio.findById(id);
+
+    // Método para traer lista de autoridades basadas en el rol del usuario.
+    public Collection<GrantedAuthority> mapearAutoridad(Rol rol) {
+        return Collections.singletonList(new SimpleGrantedAuthority(rol.getNombre()));
     }
-    public Optional<Usuario> buscarUsuarioPorEmail(String email){
-        return usuarioRepositorio.findByEmail(email);
+
+    // Método para traernos los datos del usuario por medio de su email.
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepositorio.findByEmail(email)
+                .orElseThrow( () -> new UsernameNotFoundException("Email no encontrado."));
+        return new User(usuario.getEmail(), usuario.getContrasenia(), mapearAutoridad(usuario.getRol()));
     }
-    public List<Usuario> listarUsuarios() {
-        return usuarioRepositorio.findAll();
-    }
-    public void actualizarUsuario(Usuario usuario) { usuarioRepositorio.save(usuario);}
-    public void eliminarUsuario(Long id) { usuarioRepositorio.deleteById(id);}
 }

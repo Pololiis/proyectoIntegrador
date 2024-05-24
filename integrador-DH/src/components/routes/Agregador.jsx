@@ -17,7 +17,6 @@ const Agregador = () => {
       .required("La descripción es requerida")
       .min(5, "La descripción es muy corta")
       .max(200, "La descripción es muy larga"),
-    genero: Yup.string().required("La categoría es requerida"),
     plataforma: Yup.string().required("La categoría es requerida"),
     imagenes: Yup.array()
       .min(1, "Al menos una imagen es requerida")
@@ -28,8 +27,7 @@ const Agregador = () => {
     const formData = new FormData();
     formData.append("nombre", values.nombre);
     formData.append("descripcion", values.descripcion);
-    formData.append("categoria", values.categoria);
-    formData.append("plataforma", values.plataforma);
+      formData.append("plataforma", values.plataforma);
 
     imagenesSeleccionadas.forEach((imagen) => {
       formData.append("imagen", imagen);
@@ -131,33 +129,7 @@ const Agregador = () => {
                     className="text-danger"
                   />
                 </div>
-                <div className="mb-3">
-                  <label className="form-label">Genero:</label>
-                  <Field
-                    as="select"
-                    className={`form-control ${
-                      errors.genero && touched.genero
-                        ? "is-invalid"
-                        : touched.genero
-                        ? "is-valid"
-                        : ""
-                    }`}
-                    name="genero"
-                  >
-                    <option value="" label="Seleccionar genero" />
-                    <option value="rol" label="Rol" />
-                    <option value="accion" label="Acción" />
-                    <option value="estrategia" label="Estrategia" />
-                    <option value="terror" label="Terror" />
-                  </Field>
-                  <ErrorMessage
-                    name="genero"
-                    component="div"
-                    className="text-danger"
-                  />
-                </div>
-
-                <div className="mb-3">
+                                <div className="mb-3">
                   <label className="form-label">Plataforma:</label>
                   <Field
                     as="select"

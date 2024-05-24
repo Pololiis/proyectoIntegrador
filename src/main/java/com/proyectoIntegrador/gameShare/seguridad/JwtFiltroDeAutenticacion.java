@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,13 +18,13 @@ import java.io.IOException;
 import java.util.List;
 
 // Valida la info del token y, de ser exitoso, establece la autenticación del usuario.
-@AllArgsConstructor
+@Data
 public class JwtFiltroDeAutenticacion extends OncePerRequestFilter {
 
     private DetallesDeUsuarioServicio detallesDeUsuarioServicio;
 
     private JwtGenerador jwtGenerador;
-    public String obtenerTokenDeSolicitud(HttpServletRequest solicitud) {
+    private String obtenerTokenDeSolicitud(HttpServletRequest solicitud) {
         String bearerToken = solicitud.getHeader("Authorization");
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());

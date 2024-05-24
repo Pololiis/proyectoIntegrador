@@ -1,51 +1,87 @@
-import React, { useState } from 'react';
-import './panel.css'; // Asegúrate de crear y enlazar este archivo de estilos
+import React, { useState } from "react";
+import "./panel.css"; // Asegúrate de crear y enlazar este archivo de estilos
 
-import ListaUsuarios from './ListaUsuarios';
-import ListaVideojuegos from './ListaVideojuegos';
-import CrearUsuario from './crearUsuario';
-import Agregador from './Agregador';
-import AbmPlataforma from './AbmPlataforma';
-import ListaPlataformas from './ListaPlataformas'
+import ListaUsuarios from "./ListaUsuarios";
+import ListaVideojuegos from "./ListaVideojuegos";
+import CrearUsuario from "./crearUsuario";
+import Agregador from "./Agregador";
+import AbmPlataforma from "./AbmPlataforma";
+import ListaPlataformas from "./ListaPlataformas";
+import Volver from "../common/Volver";
 
 const Panel = () => {
   const [componenteActivo, setComponenteActivo] = useState(null);
 
   const renderComponente = () => {
     switch (componenteActivo) {
-      case 'usuarios':
+      case "usuarios":
         return <CrearUsuario />;
-      case 'videojuegos':
+      case "videojuegos":
         return <Agregador />;
-      case 'plataforma':
+      case "plataforma":
         return <AbmPlataforma />;
-      case 'listaUsuarios':
+      case "listaUsuarios":
         return <ListaUsuarios />;
-      case 'listaVideojuegos':
+      case "listaVideojuegos":
         return <ListaVideojuegos />;
-      case 'listaPlataformas':
+      case "listaPlataformas":
         return <ListaPlataformas />;
       default:
-        return <div>Bienvenido al panel de administración</div>;
+        return (
+          <h2 className="panel-titulo">
+            Bienvenido al panel de administración
+          </h2>
+        );
     }
   };
 
   return (
     <>
-      <div>PANEL DE ADMINISTRACIÓN.</div>
+      <div>
+        <Volver />
+        <h2 className="panel-titulo">PANEL DE ADMINISTRACIÓN.</h2>
+      </div>
       <div className="button-row">
-        <button className="btn-panel" onClick={() => setComponenteActivo('usuarios')}>Registrar Usuarios</button>
-        <button className="btn-panel" onClick={() => setComponenteActivo('videojuegos')}>Agregar Videojuegos</button>
-        <button className="btn-panel" onClick={() => setComponenteActivo('plataforma')}>Crear Categorías</button>
-        <button className="btn-panel" onClick={() => setComponenteActivo('listaUsuarios')}>Lista de Usuarios</button>
-        <button className="btn-panel" onClick={() => setComponenteActivo('listaVideojuegos')}>Lista de Videojuegos</button>
-        <button className="btn-panel" onClick={() => setComponenteActivo('listaPlataformas')}>Lista de Categorías</button>
+        <button
+          className="btn btn-bd-primary"
+          onClick={() => setComponenteActivo("usuarios")}
+        >
+          Registrar Usuarios
+        </button>
+        <button
+          className="btn btn-bd-primary"
+          onClick={() => setComponenteActivo("videojuegos")}
+        >
+          Agregar Videojuegos
+        </button>
+        <button
+          className="btn btn-bd-primary"
+          onClick={() => setComponenteActivo("plataforma")}
+        >
+          Crear Categorías
+        </button>
+        <button
+          className="btn btn-bd-primary"
+          onClick={() => setComponenteActivo("listaUsuarios")}
+        >
+          Lista de Usuarios
+        </button>
+        <button
+          className="btn btn-bd-primary"
+          onClick={() => setComponenteActivo("listaVideojuegos")}
+        >
+          Lista de Videojuegos
+        </button>
+        <button
+          className="btn btn-bd-primary"
+          onClick={() => setComponenteActivo("listaPlataformas")}
+        >
+          Lista de Categorías
+        </button>
       </div>
-      <div className="componente-activo">
-        {renderComponente()}
-      </div>
+      <div className="componente-activo">{renderComponente()}</div>
     </>
   );
-}
+};
 
 export default Panel;

@@ -126,7 +126,7 @@ const AbmPlataforma = () => {
                   </div>
                 )}
                 <button
-                  className="btn btn-primary w-100"
+                  className="btn btn-bd-primary w-100"
                   type="submit"
                   disabled={isSubmitting}
                 >

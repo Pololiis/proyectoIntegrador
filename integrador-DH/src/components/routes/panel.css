@@ -1,0 +1,86 @@
+.container-form{
+        background-color: var(--color1);
+        color: white;
+        padding: 10vh 0px;
+      }
+      
+      .restringido {
+        display: none;
+      }
+      
+      .imagen-preview{
+        
+      }
+      
+      .button-row {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px; /* Espacio entre el div y los botones */
+      }
+      
+      .btn-panel {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      .btn-panel:hover {
+        background-color: #0056b3;
+      }
+      textarea{
+        resize: none;
+      }
+      
+      .img-seleccionada{
+        width: 10vw;
+        margin-bottom: 2vh;
+      }
+      
+      
+      
+      .img-btn-borrar{
+        flex-wrap: wrap;
+        gap: 2vh;
+      }
+      
+      
+      @media (max-width: 768px) {
+        .restringido {
+          display: block;
+        }
+      
+        .formulario {
+          display: none;
+        }
+      }
+
+      .button-row {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px; /* Espacio entre el div y los botones */
+      }
+      
+      .btn-panel {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      .btn-panel:hover {
+        background-color: #0056b3;
+      }
+      
+      .componente-activo {
+        margin-top: 20px; /* Espacio entre los botones y el componente activo */
+      }
+      

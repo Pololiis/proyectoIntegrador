@@ -1,9 +1,0 @@
-footer{ 
-    
-    color: rgb(190, 189, 189);
-    background-color: var(--color1);
-}
-
-footer > div > img{
-    max-width: 30vh;
-}

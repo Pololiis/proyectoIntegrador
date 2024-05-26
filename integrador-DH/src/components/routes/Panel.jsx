@@ -76,7 +76,7 @@ const Panel = () => {
           className="btn btn-bd-primary"
           onClick={() => setComponenteActivo("listaPlataformas")}
         >
-          Lista de Categorías
+          Lista de Plataformas
         </button>
       </div>
       <div className="componente-activo">{renderComponente()}</div>

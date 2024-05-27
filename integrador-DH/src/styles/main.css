@@ -7,7 +7,7 @@
 
 .bg-h1 h1 {
   color: white;
-
+  
   font-size: clamp(1.5rem, 2.0138rem + 3.3218vw, 4.5rem);
 }
 

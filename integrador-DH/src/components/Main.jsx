@@ -5,6 +5,9 @@ import BarraBuscador from "./common/BarraBuscador";
 import CardJuego from "./common/CardJuego";
 import SliderInfinito from "./common/SliderInfinito";
 
+
+
+
 function Main() {
   const url = `http://localhost:8080/videojuegos`;
   const [videoJuegos, setVideoJuegos] = useState([]);
@@ -22,29 +25,11 @@ function Main() {
     };
 
     fetchData();
-  }, []);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  }, [])
 
 
   return (
-    <div className="container-main">
+    <div>
       <div className="bg-h1 flex">
         <div className="container-h1 flex">
           <h1>Bienvenido a</h1>
@@ -56,7 +41,7 @@ function Main() {
         <h2>Categorias</h2>
         <SliderInfinito/>
         <h2>Recomendados</h2>
-        <div className="container-cards borde flex">
+        <div className="container-cards  flex">
           {videoJuegos.slice(0, cantidad).map((videojuego) => (
             <CardJuego key={videojuego.id} videojuego={videojuego} />
           ))}

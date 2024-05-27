@@ -4,8 +4,27 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function SliderInfinito() {
+  const url = `http://localhost:8080/plataformas`;
+  const [plataformas, setPlataformas] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(url);
+        setPlataformas(response.data);
+        console.log(response);
+      } catch (error) {
+        console.error("Hubo un error al hacer la solicitud:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const categorias = [
     {
       nombre: "PUZLE",
@@ -55,20 +74,13 @@ function SliderInfinito() {
           },
         }}
       >
-        {categorias.map((categoria, index) => (
-          <SwiperSlide key={index} className="mySwiper container-img-categoria">
-            <div className="img-container">
-              <img
-                src={categoria.imagen}
-                className="img-fluid img-categoria"
-                alt={categoria.nombre}
-              />
-              <div className="img-overlay">
-                <div className="img-text">{categoria.nombre}</div>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
+        <div>{plataformas.map((plataformas) => {
+          return (
+            <SwiperSlide>
+              {plataformas.nombre}
+            </SwiperSlide>
+          );
+        })}</div>
       </Swiper>
     </>
   );

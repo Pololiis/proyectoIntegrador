@@ -11,6 +11,12 @@ body{
   background-color:  #f3f3e4;
 }
 
+footer{ 
+  color: rgb(190, 189, 189);
+  background-color: var(--color1);
+  height: 30vh;
+}
+
 :root {
   --color1: #0a1d56;
   --color2: #492e87;

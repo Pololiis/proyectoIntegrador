@@ -6,6 +6,7 @@
 
 .card-juego > img {
   height: 50vh;
+  width: auto;
 }
 
 .card-body {
@@ -14,7 +15,7 @@
 
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .card-juego > img {
-    height: 30vh;
+    height: auto;
     width: 30vw;
   }
 
@@ -25,7 +26,7 @@
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   .card-juego > img {
-    height: 50vh;
+    height: auto;
     width: 40vw;
   }
 

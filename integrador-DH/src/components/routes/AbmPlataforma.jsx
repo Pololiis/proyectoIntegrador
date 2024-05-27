@@ -6,41 +6,31 @@ import "./abmPlataforma.css"; // Estilos personalizados
 
 const AbmPlataforma = () => {
   const [mensaje, setMensaje] = useState("");
-  const [imagenSeleccionada, setImagenSeleccionada] = useState(null);
+  // const [imagenSeleccionada, setImagenSeleccionada] = useState(null);
 
   const validationSchema = Yup.object().shape({
     nombre: Yup.string()
       .required("El nombre es requerido")
       .min(2, "El nombre es muy corto")
       .max(50, "El nombre es muy largo"),
-
-    plataforma: Yup.string().required("La categoría es requerida"),
-    imagen: Yup.mixed().required("Una imagen es requerida"),
+    // imagen: Yup.mixed().required("Una imagen es requerida"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    const formData = new FormData();
-    formData.append("nombre", values.nombre);
-    if (imagenSeleccionada) {
-      formData.append("imagen", imagenSeleccionada);
-    }
+   
+    // el append
+    const data = { nombre: values.nombre };
+
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/plataformas/nueva",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        "http://localhost:8080/plataformas",
+        data
       );
-
       console.log(response);
 
       setMensaje("Categoría agregada con éxito");
       resetForm();
-      setImagenSeleccionada(null);
     } catch (error) {
       console.error("Error al crear la categoría:", error);
       setMensaje("Error al crear la categoría");
@@ -49,14 +39,14 @@ const AbmPlataforma = () => {
     }
   };
 
-  const handleImagenChange = (event) => {
-    const file = event.currentTarget.files[0];
-    setImagenSeleccionada(file);
-  };
+  // const handleImagenChange = (event) => {
+  //   const file = event.currentTarget.files[0];
+  //   setImagenSeleccionada(file);
+  // };
 
-  const handleBorrarImagen = () => {
-    setImagenSeleccionada(null);
-  };
+  // const handleBorrarImagen = () => {
+  //   setImagenSeleccionada(null);
+  // };
 
   return (
     <div className="container my-5 container-form">
@@ -98,7 +88,7 @@ const AbmPlataforma = () => {
                     className="text-danger"
                   />
                 </div>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <label className="form-label">Imágen:</label>
                   <input
                     className={`form-control`}
@@ -125,6 +115,7 @@ const AbmPlataforma = () => {
                     </div>
                   </div>
                 )}
+                */}
                 <button
                   className="btn btn-bd-primary w-100"
                   type="submit"

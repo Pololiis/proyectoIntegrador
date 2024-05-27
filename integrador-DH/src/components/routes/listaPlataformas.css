@@ -1,33 +1,8 @@
-.bg-h1 {
-    background-image: url(../assets/baner.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 90vh;
-  }
+
+
+
   
-  .bg-h1 h1 {
-    color: white;
-  
-    font-size: clamp(1.5rem, 2.0138rem + 3.3218vw, 4.5rem);
-  }
-  
-  /* Estilo del texto con contorno sin relleno */
-  .text-outline {
-    -webkit-text-stroke: 3px var(--color3);
-    color: transparent;
-  }
-  
-  .glow {
-    font-size: clamp(1.5rem, 0.3571rem + 5.7143vw, 7.5rem);
-  }
-  
-  .container-h1 {
-    margin-left: 5vw;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  
+
   
   
   

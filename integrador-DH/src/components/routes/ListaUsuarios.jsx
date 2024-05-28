@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from 'react';
 
 const ListaUsuarios = () => {
 // Estado inicial con un array de plataformas

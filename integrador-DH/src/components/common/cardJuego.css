@@ -1,11 +1,11 @@
-.card {
+.card-juego{
   width: 45%;
-  padding: 40px;
+  padding:40px;
   align-items: center;
 }
 
 .card-juego > img {
-  height: 50vh;
+  height: 40vh;
   width: auto;
 }
 
@@ -32,5 +32,18 @@
 
   .card-juego {
     width: auto;
+  }
+}
+@media screen and (min-width: 1025px)  {
+
+  .card-juego>img{
+    width: 20vw;
+  }
+}
+
+@media screen and (min-width: 1320px)  {
+
+  .card-juego>img{
+    width: 35vh;
   }
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import emailjs from 'emailjs-com';
 import "./crearUsuario.css"; // Estilos personalizados
 
 const CrearUsuario = () => {
@@ -13,7 +14,6 @@ const CrearUsuario = () => {
       .min(2, "El nombre es muy corto")
       .max(50, "El nombre es muy largo")
       .matches(/^[A-Z]+$/i, "*Nombre invalido"),
-
     apellido: Yup.string()
       .required("El apellido es requerido")
       .min(5, "El apellido es muy corto")
@@ -32,15 +32,27 @@ const CrearUsuario = () => {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         "*La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial"
       ),
-    // repetirContrasenia: Yup.string()
-    //   .required("La contraseña es requerida")
-    //   .oneOf([Yup.ref("contrasenia")], "*Las contraseñas no coinciden")
-    //   .min(8, "La contraseña es muy corta")
-    //  .max(50, "La contraseña es muy larga"),
   });
 
+  const sendEmail = (userEmail, userName) => {
+    console.log('Enviando email a:', userEmail, userName);
+
+    const templateParams = {
+      to_email: userEmail,
+      to_name: userName,
+    };
+
+    emailjs.send('service_edy99o7', 'template_fk62684', templateParams, 'xuAeGJr1E_Q9WvTkO')
+      .then((response) => {
+        console.log('Email enviado exitosamente!', response.status, response.text);
+      }, (error) => {
+        console.error('Error al enviar el email:', error);
+      });
+  };
+
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    // Create FormData instance
+    console.log('Valores del formulario:', values);
+
     const formData = new FormData();
     formData.append("nombre", values.nombre);
     formData.append("apellido", values.apellido);
@@ -49,30 +61,28 @@ const CrearUsuario = () => {
     formData.append("rol", "usuario");
 
     try {
-      // Send POST request to the server
       const response = await axios.post(
         "http://localhost:8080/usuarios",
         formData,
         {
           headers: {
-            // Correct header key
             "Content-Type": "application/json",
           },
         }
       );
 
-      // Log response for debugging
       console.log(response);
 
-      // Display success message and reset form
       setMensaje("Usuario Registrado con éxito");
       resetForm();
+
+      console.log('Llamando a sendEmail con:', values.email, values.nombre);
+      sendEmail(values.email, values.nombre);
+
     } catch (error) {
-      // Display error message
       console.error("Error al registrar el Usuario:", error);
       setMensaje("Error al registrar el Usuario");
     } finally {
-      // Ensure submitting state is always reset
       setSubmitting(false);
     }
   };
@@ -88,7 +98,6 @@ const CrearUsuario = () => {
               apellido: "",
               email: "",
               contrasenia: "",
-              // repetirContrasenia: "",
             }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
@@ -177,27 +186,6 @@ const CrearUsuario = () => {
                   />
                 </div>
 
-                {/* <div className="mb-3">
-                  <label className="form-label"> Confirmar Contraseña:</label>
-                  <Field
-                    className={`form-control ${
-                      errors.repetirContrasenia && touched.repetirContrasenia
-                        ? "is-invalid"
-                        : touched.repetirContrasenia
-                        ? "is-valid"
-                        : ""
-                    }`}
-                    type="text"
-                    name="repetirContrasenia"
-                    placeholder="Confirmar Contraseña"
-                  />
-                  <ErrorMessage
-                    name="repetirContrasenia"
-                    component="div"
-                    className="text-danger"
-                  />
-                </div> */}
-
                 <button
                   className="btn btn-primary w-100"
                   type="submit"
@@ -223,4 +211,5 @@ const CrearUsuario = () => {
     </div>
   );
 };
+
 export default CrearUsuario;

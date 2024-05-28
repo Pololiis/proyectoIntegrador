@@ -151,13 +151,13 @@ const handleEditar = async (id, datosActualizados) => {
 
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}> VIDEOJUEGOS
+    <div style={{ display: 'flex', justifyContent: 'center' }}> 
       <table style={{ borderCollapse: 'collapse', width: '80%', margin: '20px auto' }}>
         <thead>
           <tr>
             <th style={{ border: '1px solid black', padding: '8px' }}>Nombre</th>
             <th style={{ border: '1px solid black', padding: '8px' }}>Descripción</th>
-            <th style={{ border: '1px solid black', padding: '8px' }}>Cantidad de Imágenes</th>
+            {/* <th style={{ border: '1px solid black', padding: '8px' }}>Cantidad de Imágenes</th> */}
             <th style={{ border: '1px solid black', padding: '8px' }}>Acciones</th>
           </tr>
         </thead>
@@ -166,7 +166,7 @@ const handleEditar = async (id, datosActualizados) => {
             <tr key={juego.id}>
               <td style={{ border: '1px solid black', padding: '8px' }}>{juego.nombre}</td>
               <td style={{ border: '1px solid black', padding: '8px' }}>{juego.descripcion}</td>
-              <td style={{ border: '1px solid black', padding: '8px' }}>{juego.imagenes.length}</td>
+              {/* <td style={{ border: '1px solid black', padding: '8px' }}>{juego.imagenes.length}</td> */}
               <td style={{ border: '1px solid black', padding: '8px' }}>
                 <button onClick={() => handleEditar(juego.id)} style={{ marginRight: '10px' }}>Editar</button>
                 <button onClick={() => handleEliminar(juego.id)}>Eliminar</button>

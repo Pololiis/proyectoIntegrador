@@ -36,7 +36,7 @@ const CrearUsuario = () => {
     //   .required("La contraseña es requerida")
     //   .oneOf([Yup.ref("contrasenia")], "*Las contraseñas no coinciden")
     //   .min(8, "La contraseña es muy corta")
-    //   .max(50, "La contraseña es muy larga"),
+    //  .max(50, "La contraseña es muy larga"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {

@@ -18,14 +18,21 @@ const AbmPlataforma = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
    
-    // el append
-    const data = { nombre: values.nombre };
-
-
+      const formData = new FormData();
+      formData.append("nombre", values.nombre);
+      formData.append("descripcion", values.descripcion);
+     // formData.append("imagen", imagen);
+    //verificar imagen
     try {
       const response = await axios.post(
         "http://localhost:8080/plataformas",
-        data
+        formData,
+        {
+          headers: {
+            // Correct header key
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log(response);
 
@@ -60,7 +67,7 @@ const AbmPlataforma = () => {
       </div>
       <div className="row justify-content-center formulario">
         <div className="col-12 col-md-8">
-          <h2 className="text-center mb-4">Crear Categoría</h2>
+          <h2 className="text-center mb-4">Agregar Plataforma</h2>
           <Formik
             initialValues={{ nombre: "" }}
             validationSchema={validationSchema}
@@ -88,6 +95,31 @@ const AbmPlataforma = () => {
                     className="text-danger"
                   />
                 </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Descripción:</label>
+                  <Field
+                    className={`form-control ${
+                      errors.descripcion && touched.descripcion
+                        ? "is-invalid"
+                        : touched.descripcion
+                        ? "is-valid"
+                        : ""
+                    }`}
+                    type="text"
+                    name="descripcion"
+                    placeholder="Descripción"
+                  />
+                  <ErrorMessage
+                    name="descripcion"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+
+
+
+
                 {/* <div className="mb-3">
                   <label className="form-label">Imágen:</label>
                   <input

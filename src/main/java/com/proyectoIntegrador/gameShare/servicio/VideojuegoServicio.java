@@ -86,7 +86,7 @@ public class VideojuegoServicio {
             videojuegoParaActualizar.setDescripcion(videojuego.getDescripcion());
             videojuegoParaActualizar.setImagenes(videojuego.getImagenes());
             videojuegoParaActualizar.setCategoria(videojuego.getCategoria());
-            videojuegoParaActualizar.setPlataforma(videojuego.getPlataforma());
+            /*videojuegoParaActualizar.setPlataforma(videojuego.getPlataforma());*/
             videojuegoParaActualizar.setRestriccionEdad(videojuego.getRestriccionEdad());
 
             return videojuegoRepositorio.save(videojuegoParaActualizar);

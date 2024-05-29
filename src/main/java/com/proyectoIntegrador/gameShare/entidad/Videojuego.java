@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "Videojuegos")
+@Table(name = "videojuegos")
 public class Videojuego {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +35,18 @@ public class Videojuego {
     @NotNull(message = "El campo imagen del videojuego no puede ser nulo")
     private String imagenes;
 
-    private String categoria;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "categoria_id" )
+    private Categoria categoria;
 
-    private String plataforma;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @JoinTable(name = "videojuego_caracteristica",
+    joinColumns =  @JoinColumn(name="videojuego_id"), inverseJoinColumns = @JoinColumn(name = "caracteristica_id"))
+    @NotNull
+    private List<Caracteristica> caracteristicas;
+
+    private String requisitos;
 
     private String restriccionEdad;
 }

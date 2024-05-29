@@ -32,7 +32,7 @@ INSERT INTO Caracteristicas (nombre, imagen) VALUES
 ("Carrera", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/carrera.png"),
 ("Moba", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/moba.png"),
 ("Deportes", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/deporte.png"),
-("Estrategia", "imgEstrat"),
+("Estrategia", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/estrategia.png"),
 ("Musica", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/musica.png"),
 ("Arcade", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/arcade.png"),
 ("Accion", "imgAcc"),
@@ -43,9 +43,9 @@ INSERT INTO Caracteristicas (nombre, imagen) VALUES
 ("Contenido Violento", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/contenido+violento.png"),
 ("Mayor 16años", "img+16"),
 ("Mayor 18 años", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/18.png"),
-("Dificultad facil", "imgDificultad"),
-("Dificultad intermedia", "imgDificultad"),
-("Dificultad dificil", "imgDificultad"),
+("Dificultad baja", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/nivelBajo.png"),
+("Dificultad media", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/nivelMedio.png"),
+("Dificultad alta", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/nivelAlto.png"),
 ("Single Player", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/joystick.png"),
 ("MultiPlayer", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/joystick.png");
 

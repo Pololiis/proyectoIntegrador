@@ -1,7 +1,9 @@
 package com.proyectoIntegrador.gameShare.servicio;
 
+import com.proyectoIntegrador.gameShare.dto.UsuarioRegistroDTO;
 import com.proyectoIntegrador.gameShare.entidad.Rol;
 import com.proyectoIntegrador.gameShare.entidad.Usuario;
+import com.proyectoIntegrador.gameShare.repositorio.RolRepositorio;
 import com.proyectoIntegrador.gameShare.repositorio.UsuarioRepositorio;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -23,7 +26,22 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UsuarioServicio {
     private UsuarioRepositorio usuarioRepositorio;
-    public Usuario registrarUsuario(Usuario usuario) { return usuarioRepositorio.save(usuario);}
+    private PasswordEncoder encriptarContrasenia;
+    private RolRepositorio rolRepositorio;
+    public Usuario registrarUsuario(UsuarioRegistroDTO usuarioDTO) {
+        Usuario usuario = new Usuario();
+        usuario.setNombre(usuarioDTO.getNombre());
+        usuario.setApellido(usuarioDTO.getApellido());
+        usuario.setEmail(usuarioDTO.getEmail());
+        usuario.setFechaNacimiento(usuarioDTO.getFechaNacimiento());
+        usuario.setEdad(usuario.calcularEdad(usuarioDTO.getFechaNacimiento()));
+        usuario.setContrasenia(encriptarContrasenia.encode(usuarioDTO.getContrasenia()));
+
+        Rol rol = rolRepositorio.findByName("USUARIO").orElse(null);
+        usuario.setRol(rol);
+
+        return usuarioRepositorio.save(usuario);
+    }
     public Optional<Usuario> buscarUsuarioPorID(Long id){
         return usuarioRepositorio.findById(id);
     }

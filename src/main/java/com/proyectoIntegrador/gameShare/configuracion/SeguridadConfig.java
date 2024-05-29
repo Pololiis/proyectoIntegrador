@@ -45,16 +45,18 @@ public class SeguridadConfig {
     // Bean para establecer una cadena de filtros de seguridad en la app. Aquí se determinan los permisos según rol del usuario.
     @Bean
     SecurityFilterChain filtrar(HttpSecurity peticion) throws Exception {
-        peticion.exceptionHandling(exceptionHandling -> exceptionHandling
+        peticion.csrf(csrf -> csrf.disable())
+                .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint(jwtAutenticacionDeEntrada)
                 )
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("").hasRole("ADMINISTRADOR")
-                        .requestMatchers("").hasRole("USUARIO")
-                        .requestMatchers("").permitAll()
+                        //.requestMatchers("/").hasRole("ADMINISTRADOR")
+                        //.requestMatchers("/").hasRole("USUARIO")
+                        .requestMatchers("/usuarios/**").permitAll()
+                        .requestMatchers("/conectarse").permitAll()
                         .anyRequest().authenticated()
                 );
         peticion.addFilterBefore(jwtFiltroDeAutenticacion(), UsernamePasswordAuthenticationFilter.class);

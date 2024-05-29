@@ -2,7 +2,6 @@ package com.proyectoIntegrador.gameShare.seguridad;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
@@ -25,7 +24,7 @@ public class JwtGenerador {
                 .subject(email)
                 .issuedAt(horaActual)
                 .expiration(expiracionToken)
-                .signWith(SignatureAlgorithm.HS512, ConstantesDeSeguridad.FIRMA_JWT)
+                .signWith(ConstantesDeSeguridad.FIRMA_JWT)
                 .compact();
 
         return token;
@@ -42,7 +41,7 @@ public class JwtGenerador {
         return claims.getSubject();
     }
     public SecretKey generarKey() {
-        return Keys.hmacShaKeyFor(ConstantesDeSeguridad.FIRMA_JWT.getBytes());
+        return Keys.hmacShaKeyFor(ConstantesDeSeguridad.stringKeyParser().getBytes());
     }
 
     // Método para validar token.

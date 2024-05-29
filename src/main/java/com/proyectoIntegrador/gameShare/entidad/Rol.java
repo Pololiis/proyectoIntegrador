@@ -1,5 +1,6 @@
 package com.proyectoIntegrador.gameShare.entidad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,8 +13,11 @@ public class Rol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
+
+    @Column(name = "nombre")
+    private String name;
 
     @OneToMany(mappedBy = "rol")
+    @JsonIgnore
     private List<Usuario> usuarios;
 }

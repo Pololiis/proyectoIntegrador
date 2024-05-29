@@ -16,3 +16,37 @@ INSERT INTO Videojuegos (nombre, descripcion, imagenes) VALUES
 ("Ori and the Will of the Wisps", "Ori and the Will of the Wisps es la continuación del emblemático videojuego de plataformas y aventuras Ori and the Blind Forest, desarrollado por Moon Studios. Se trata de una secuela que sigue ofreciéndonos un estilo impecable a nivel visual y jugable.", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Ori-1.jpg,https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Ori-2.jpg");
 
 INSERT INTO Roles (nombre_rol) VALUES ("USUARIO"), ("ADMINISTRADOR");
+
+INSERT INTO Categorias (nombre, imagen) VALUES
+("PlayStation 3", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-play-station-48.png"),
+("PlayStation 4", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-play-station-48.png"),
+("PlayStation 5", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-play-station-48.png"),
+("Xbox", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-xbox-48.png"),
+("Nintendo Switch", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-nintendo-switch-60.png");
+
+
+INSERT INTO Caracteristicas (nombre, imagen) VALUES
+("Terror", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/terror.png"),
+("Suspenso", "imgSuspenso"),
+("Rol", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/rol.png"),
+("Carrera", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/carrera.png"),
+("Moba", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/moba.png"),
+("Deportes", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/deporte.png"),
+("Estrategia", "imgEstrat"),
+("Musica", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/musica.png"),
+("Arcade", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/arcade.png"),
+("Accion", "imgAcc"),
+("Simulacion", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/simulacion.png"),
+("FPS", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/arma.png"),
+("ATP", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/ATP.png"),
+("Contenido Sexual", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/contenido+sexual.png"),
+("Contenido Violento", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/contenido+violento.png"),
+("Mayor 16años", "img+16"),
+("Mayor 18 años", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/18.png"),
+("Dificultad facil", "imgDificultad"),
+("Dificultad intermedia", "imgDificultad"),
+("Dificultad dificil", "imgDificultad"),
+("Single Player", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/joystick.png"),
+("MultiPlayer", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/joystick.png");
+
+

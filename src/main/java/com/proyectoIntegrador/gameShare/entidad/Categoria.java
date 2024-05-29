@@ -19,7 +19,7 @@ public class Categoria {
 
     @NotNull
     @Column
-    private Blob imagen;
+    private String imagen;
 
 
 }

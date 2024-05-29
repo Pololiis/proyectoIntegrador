@@ -57,7 +57,8 @@ public class SeguridadConfig {
                         //.requestMatchers("/").hasRole("USUARIO")
                         .requestMatchers("/usuarios/**").permitAll()
                         .requestMatchers("/conectarse").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
+
                 );
         peticion.addFilterBefore(jwtFiltroDeAutenticacion(), UsernamePasswordAuthenticationFilter.class);
         return peticion.build();

@@ -43,7 +43,7 @@ public class Videojuego {
 
     @JoinTable(name = "videojuego_caracteristica",
     joinColumns =  @JoinColumn(name="videojuego_id"), inverseJoinColumns = @JoinColumn(name = "caracteristica_id"))
-    @NotNull
+
     private List<Caracteristica> caracteristicas;
 
     private String requisitos;

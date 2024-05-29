@@ -25,5 +25,5 @@ public class Caracteristica {
     @Column
     @NotNull
     @NotEmpty
-    private Blob imagen;
+    private String imagen;
 }

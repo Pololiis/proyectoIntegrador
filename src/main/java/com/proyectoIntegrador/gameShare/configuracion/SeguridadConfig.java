@@ -5,6 +5,7 @@ import com.proyectoIntegrador.gameShare.seguridad.JwtFiltroDeAutenticacion;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -53,12 +54,14 @@ public class SeguridadConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        //.requestMatchers("/").hasRole("ADMINISTRADOR")
-                        //.requestMatchers("/").hasRole("USUARIO")
-                        .requestMatchers("/usuarios/**").permitAll()
-                        .requestMatchers("/conectarse").permitAll()
-                        .anyRequest().permitAll()
-
+                        .requestMatchers(HttpMethod.POST, "/videojuegos/nuevo").hasAnyAuthority("ADMINISTRADOR", "USUARIO")
+                        .requestMatchers(HttpMethod.GET, "/videojuegos/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios/nuevo").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/usuarios/**").hasAnyAuthority("ADMINISTRADOR", "USUARIO")
+                        .requestMatchers(HttpMethod.DELETE, "/usuarios/**").hasAuthority("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.POST, "/conectarse").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/registrarAdmin").permitAll()
+                        .anyRequest().authenticated()
                 );
         peticion.addFilterBefore(jwtFiltroDeAutenticacion(), UsernamePasswordAuthenticationFilter.class);
         return peticion.build();

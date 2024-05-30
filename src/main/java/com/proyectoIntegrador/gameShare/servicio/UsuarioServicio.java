@@ -42,6 +42,20 @@ public class UsuarioServicio {
 
         return usuarioRepositorio.save(usuario);
     }
+    public Usuario registrarUsuarioAdmin(UsuarioRegistroDTO usuarioDTO) {
+        Usuario usuario = new Usuario();
+        usuario.setNombre(usuarioDTO.getNombre());
+        usuario.setApellido(usuarioDTO.getApellido());
+        usuario.setEmail(usuarioDTO.getEmail());
+        usuario.setFechaNacimiento(usuarioDTO.getFechaNacimiento());
+        usuario.setEdad(usuario.calcularEdad(usuarioDTO.getFechaNacimiento()));
+        usuario.setContrasenia(encriptarContrasenia.encode(usuarioDTO.getContrasenia()));
+
+        Rol rol = rolRepositorio.findByName("ADMINISTRADOR").orElse(null);
+        usuario.setRol(rol);
+
+        return usuarioRepositorio.save(usuario);
+    }
     public Optional<Usuario> buscarUsuarioPorID(Long id){
         return usuarioRepositorio.findById(id);
     }

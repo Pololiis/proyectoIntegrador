@@ -24,7 +24,7 @@ public class JwtGenerador {
                 .subject(email)
                 .issuedAt(horaActual)
                 .expiration(expiracionToken)
-                .signWith(ConstantesDeSeguridad.FIRMA_JWT)
+                .signWith(generarKey())
                 .compact();
 
         return token;

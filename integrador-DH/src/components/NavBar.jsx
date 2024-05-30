@@ -1,16 +1,27 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/index.css";
 import "../styles/navbar.css";
 import logo from "../assets/logo.png";
-import LoginForm from "./LoginForm";
+import LoginForm from "./routes/LoginForm";
+import CrearUsuario from "./routes/crearUsuario";
 import Modal from "react-modal";
 
-Modal.setAppElement('#Login');
+Modal.setAppElement('#root');
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Check if there's a logged-in user
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
 
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,6 +33,41 @@ function NavBar() {
 
   const closeLoginModal = () => {
     setIsLoginModalOpen(false);
+  };
+
+  const openRegisterModal = () => {
+    setIsRegisterModalOpen(true);
+  };
+
+  const closeRegisterModal = () => {
+    setIsRegisterModalOpen(false);
+  };
+
+  const handleLoginSuccess = (user) => {
+    setUser(user);
+    closeLoginModal();
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+  };
+
+  const renderUserAvatar = (user) => {
+    const initials = user.nombre
+      .split(" ")
+      .map((name) => name[0])
+      .join("");
+    return (
+      <div className="user-info">
+        <span className="avatar">{initials}</span>
+        <span className="user-name">{user.nombre}</span>
+        <button onClick={handleLogout} className="btn btn-logout">
+          Cerrar Sesión
+        </button>
+      </div>
+    );
   };
 
   return (
@@ -45,22 +91,20 @@ function NavBar() {
                   Inicio
                 </Link>
               </li>
-              {/* <li className="nav-item">
-                <Link to="/categorias" className="nav-link">
-                  Categorías
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/carrito" className="nav-link">
-                  Carrito
-                </Link>
-              </li> */}
             </ul>
             <div className="d-flex container-buttons">
-              <button className="btn btn-bd-primary me-2" onClick={openLoginModal}>
-                Iniciar Sesión
-              </button>
-              <button className="btn btn-bd-primary">Registrarse</button>
+              {user ? (
+                renderUserAvatar(user)
+              ) : (
+                <>
+                  <button className="btn btn-bd-primary me-2" onClick={openLoginModal}>
+                    Iniciar Sesión
+                  </button>
+                  <button className="btn btn-bd-primary" onClick={openRegisterModal}>
+                    Registrarse
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -74,10 +118,22 @@ function NavBar() {
         overlayClassName="Overlay"
       >
         <button onClick={closeLoginModal} className="close-modal">X</button>
-        <LoginForm />
+        <LoginForm onLoginSuccess={handleLoginSuccess} />
+      </Modal>
+
+      <Modal
+        isOpen={isRegisterModalOpen}
+        onRequestClose={closeRegisterModal}
+        contentLabel="Formulario de Registro de Usuario"
+        className="Modal"
+        overlayClassName="Overlay"
+      >
+        <button onClick={closeRegisterModal} className="close-modal">X</button>
+        <CrearUsuario />
       </Modal>
     </>
   );
 }
 
 export default NavBar;
+

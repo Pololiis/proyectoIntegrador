@@ -1,0 +1,67 @@
+.container-form {
+max-width: 500px;
+margin: auto;
+padding: 20px;
+background-color: #f7f7f7;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+font-weight: bold;
+}
+
+.is-invalid {
+border-color: #dc3545;
+}
+
+.is-valid {
+border-color: #28a745;
+}
+
+.text-danger {
+color: #dc3545;
+}
+
+.alert {
+text-align: center;
+}
+
+/* Modal */
+
+.Modal {
+position: absolute;
+top: 50%;
+left: 50%;
+right: auto;
+bottom: auto;
+margin-right: -50%;
+transform: translate(-50%, -50%);
+background: white;
+padding: 20px;
+border-radius: 10px;
+outline: none;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+max-width: 500px;
+width: 100%;
+}
+
+.Overlay {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: rgba(0, 0, 0, 0.75);
+}
+
+.close-modal {
+position: absolute;
+top: 10px;
+right: 10px;
+background: none;
+border: none;
+font-size: 20px;
+cursor: pointer;
+}
+

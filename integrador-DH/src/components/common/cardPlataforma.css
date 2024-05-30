@@ -1,0 +1,19 @@
+.container-plataformas{
+  margin: 10vh 0px;
+  flex-wrap: wrap;
+  gap:10px;
+}
+
+
+.contenido-plataforma{
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px;
+}
+
+
+
+.contenido-plataforma>img{
+  width: 5vw;
+}

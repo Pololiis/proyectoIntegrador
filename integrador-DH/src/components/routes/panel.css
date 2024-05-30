@@ -36,7 +36,7 @@
       
       .panel-titulo{
         text-align: center;
-        margin: 5vh 0vh;
+        margin: 10vh 0vh;
       }
       
       .img-btn-borrar{
@@ -55,9 +55,7 @@
         }
       }
 
-      .button-row {
-        
-      }
+    
       
       .btn-panel {
         padding: 10px 20px;

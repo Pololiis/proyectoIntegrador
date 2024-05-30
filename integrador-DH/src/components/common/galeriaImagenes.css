@@ -1,38 +1,43 @@
 /* DetalleProducto.css */
-.img-principal{
+.img-principal {
   max-width: 30vw;
   margin-left: 5vw;
 }
 
-.img-secundaria{
 
+.container-galeria{
+  background-color: #39226c;
+  padding: 20px;
+  border-radius: 2rem;
 }
 
-.container-img-secundaria-general{
-  margin-left: 5vw;
-  flex-wrap: wrap;
+.container-img-secundaria-general {
   display: flex;
-  width: 30vw;
-  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center; /* Centra las imágenes horizontalmente */
 }
 
-
-.container-img-secundaria{
-width: 45%;
-height: 18vh;
-border: 1px solid yellow;
-margin: auto;
+.container-img-secundaria {
+  width: 50%; /* Cada imagen ocupa el 50% del ancho del contenedor */
+  padding: 5px; /* Espacio entre las imágenes */
 }
 
-.titulo-descripcion-detalle{
-  padding: 10px ;
+.img-secundaria {
+  width: 100%; /* Para ocupar todo el ancho del contenedor */
+  height: auto; /* Altura automática para mantener la proporción */
+  display: block;
+  margin-bottom: 0; /* Elimina el espacio adicional debajo de las imágenes */
 }
 
-.titulo-descripcion-detalle> h2{
+.titulo-descripcion-detalle {
+  padding: 10px;
+}
+
+.titulo-descripcion-detalle > h2 {
   font-size: clamp(1rem, 0.6rem + 2vw, 3rem);
 }
 
-.titulo-descripcion-detalle > p{
+.titulo-descripcion-detalle > p {
   font-size: clamp(1rem, 0.6rem + 2vw, 1.5rem);
   font-weight: 200;
 }

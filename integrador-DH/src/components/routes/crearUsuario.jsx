@@ -62,7 +62,7 @@ const CrearUsuario = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/usuarios",
+        "http://localhost:8080/usuarios/nuevo",
         formData,
         {
           headers: {

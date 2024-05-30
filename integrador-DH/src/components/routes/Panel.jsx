@@ -58,7 +58,7 @@ const Panel = () => {
           className="btn btn-bd-primary"
           onClick={() => setComponenteActivo("plataforma")}
         >
-          Crear Categorías
+          Agregar Plataforma
         </button>
         <button
           className="btn btn-bd-primary"

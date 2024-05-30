@@ -15,4 +15,38 @@ INSERT INTO Videojuegos (nombre, descripcion, imagenes) VALUES
 ("The Witcher 3: Wild Hunt", "El jugador controlará una vez más a Geralt de Rivia, el afamado cazador de monstruos, (también conocido como el Lobo Blanco) y se enfrentará a un diversificadísimo bestiario y a unos peligros de unas dimensiones nunca vistas hasta el momento en la serie, mientras recorre los reinos del Norte. Durante su aventura, tendrá que hacer uso de un gran arsenal de armas, armaduras y todo tipo de magias para enfrentarse al que hasta ahora ha sido su mayor desafío, la cacería salvaje.", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Witcher1.jpg,https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Witcher2.jpg"),
 ("Ori and the Will of the Wisps", "Ori and the Will of the Wisps es la continuación del emblemático videojuego de plataformas y aventuras Ori and the Blind Forest, desarrollado por Moon Studios. Se trata de una secuela que sigue ofreciéndonos un estilo impecable a nivel visual y jugable.", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Ori-1.jpg,https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Ori-2.jpg");
 
-INSERT INTO Roles (nombre) VALUES ("USUARIO"), ("ADMINISTRADOR");
+INSERT INTO Roles (nombre_rol) VALUES ("USUARIO"), ("ADMINISTRADOR");
+
+INSERT INTO Categorias (nombre, imagen) VALUES
+("PlayStation 3", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-play-station-48.png"),
+("PlayStation 4", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-play-station-48.png"),
+("PlayStation 5", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-play-station-48.png"),
+("Xbox", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-xbox-48.png"),
+("Nintendo Switch", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-nintendo-switch-60.png");
+
+
+INSERT INTO Caracteristicas (nombre, imagen) VALUES
+("Terror", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/terror.png"),
+("Suspenso", "imgSuspenso"),
+("Rol", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/rol.png"),
+("Carrera", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/carrera.png"),
+("Moba", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/moba.png"),
+("Deportes", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/deporte.png"),
+("Estrategia", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/estrategia.png"),
+("Musica", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/musica.png"),
+("Arcade", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/arcade.png"),
+("Accion", "imgAcc"),
+("Simulacion", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/simulacion.png"),
+("FPS", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/arma.png"),
+("ATP", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/ATP.png"),
+("Contenido Sexual", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/contenido+sexual.png"),
+("Contenido Violento", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/contenido+violento.png"),
+("Mayor 16años", "img+16"),
+("Mayor 18 años", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/18.png"),
+("Dificultad baja", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/nivelBajo.png"),
+("Dificultad media", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/nivelMedio.png"),
+("Dificultad alta", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/nivelAlto.png"),
+("Single Player", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/joystick.png"),
+("MultiPlayer", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/joystick.png");
+
+

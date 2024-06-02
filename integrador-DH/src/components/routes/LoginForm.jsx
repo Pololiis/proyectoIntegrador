@@ -2,19 +2,15 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import "./loginForm.css"; // Estilos personalizados
+import "./loginForm.css";
 
 const LoginForm = ({ onLoginSuccess }) => {
 const [mensaje, setMensaje] = useState("");
 
-
 const validationSchema = Yup.object().shape({
 email: Yup.string()
     .required("El email es requerido")
-    .matches(
-    /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
-    "*El email es invalido"
-    ),
+    .email("*El email es invalido"),
 contrasenia: Yup.string().required("La contraseña es requerida"),
 });
 
@@ -127,4 +123,6 @@ return (
 };
 
 export default LoginForm;
+
+
 

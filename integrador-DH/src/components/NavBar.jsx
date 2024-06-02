@@ -16,7 +16,6 @@ function NavBar() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if there's a logged-in user
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
       setUser(JSON.parse(savedUser));
@@ -61,8 +60,10 @@ function NavBar() {
       .join("");
     return (
       <div className="user-info">
-        <span className="avatar">{initials}</span>
-        <span className="user-name">{user.nombre}</span>
+        <Link to="/usuario" className="avatar-link">
+          <span className="avatar">{initials}</span>
+          <span className="user-name">{user.nombre}</span>
+        </Link>
         <button onClick={handleLogout} className="btn btn-logout">
           Cerrar Sesión
         </button>
@@ -75,7 +76,7 @@ function NavBar() {
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
           <Link to="/" className="navbar-brand eslogan">
-            <img src={logo} alt="Logo" className="logo" /> ¡Juga más, paga menos!
+            <img src={logo} alt="Logo" className="logo" /> ¡Juega más, paga menos!
           </Link>
           <button
             className="navbar-toggler"

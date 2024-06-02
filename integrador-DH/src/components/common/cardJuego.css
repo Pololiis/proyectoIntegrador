@@ -1,36 +1,180 @@
+/* Importando la fuente Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  
+  --title-color: hsl(0, 0%, 15%);
+  --text-color: hsl(0, 0%, 35%);
+  --container-color: hsl(0, 0%, 100%);
+}
+/*=============== CARD ===============*/
+/* Estilos de la card */
+.container {
+  place-items: center;
+  margin-inline: 1.5rem;
+  padding-block: 3.5rem;
+}
+
+.card__container {
+  display: contents;
+  row-gap: 1rem;
+}
+
 .card {
-  width: 45%;
-  padding: 40px;
-  align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.card-juego > img {
-  height: 50vh;
-  width: auto;
+.card__img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
 }
 
-.card-body {
-  text-align: center;
+.card__data {
+  width: 40%;
+  background-color: var(--container-color);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 8px 24px hsla(0, 0%, 0%, .15);
+  border-radius: 1rem;
+  position: absolute;
+  bottom: -9rem;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  opacity: 0;
+  transition: opacity 1s 1s;
 }
 
-@media screen and (min-width: 320px) and (max-width: 767px) {
-  .card-juego > img {
-    height: auto;
-    width: 30vw;
+.card__description {
+  display: block;
+  font-size: var(--small-font-size);
+  margin-bottom: 2rem;
+  
+}
+
+.card__title {
+  font-size: var(--h2-font-size);
+  font-weight: 500;
+  color: var(--title-color);
+  margin-bottom: 1rem;
+
+}
+
+.card__button {
+  text-decoration: none;
+  font-size: var(--small-font-size);
+  font-weight: 500;
+  color: var(--first-color);
+}
+
+.card__button:hover {
+  text-decoration: underline;
+}
+
+/* Naming animations in hover */
+.card:hover .card__data {
+  animation: show-data 1s forwards;
+  opacity: 1;
+  transition: opacity .3s;
+}
+
+.card:hover {
+  animation: remove-overflow 2s forwards;
+}
+
+.card:not(:hover) {
+  animation: show-overflow 2s forwards;
+}
+
+.card:not(:hover) .card__data {
+  animation: remove-data 1s forwards;
+}
+
+/* Card animation */
+@keyframes show-data {
+  50% {
+    transform: translateY(-10rem);
+  }
+  100% {
+    transform: translateY(-7rem);
+  }
+}
+
+@keyframes remove-overflow {
+  to {
+    overflow: initial;
+  }
+}
+
+@keyframes remove-data {
+  0% {
+    transform: translateY(-7rem);
+  }
+  50% {
+    transform: translateY(-10rem);
+  }
+  100% {
+    transform: translateY(.5rem);
+  }
+}
+
+@keyframes show-overflow {
+  0% {
+    overflow: initial;
+    pointer-events: none;
+  }
+  50% {
+    overflow: hidden;
+  }
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For small devices */
+@media screen and (min-width: 340px) {
+  .container {
+    margin-inline: 1rem;
   }
 
-  .card-juego {
-    width: auto;
+  .card__data {
+    width: 100%; 
+    padding: 1rem; 
+    bottom: -4rem; 
+  }
+  .card__description {
+    display: block;
+    font-size: var(--small-font-size);
+    margin-bottom: 2rem;
+    overflow: hidden; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical; 
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-  .card-juego > img {
-    height: auto;
-    width: 40vw;
+/* For medium devices */
+@media screen and (min-width: 768px) {
+  .card__container {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1.5rem;
   }
+}
 
-  .card-juego {
-    width: auto;
+
+/* For large devices */
+@media screen and (min-width: 1120px) {
+
+  .card__container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card__img {
+    width: 348px;
+  }
+  .card__data {
+    width: 316px;
+    padding-inline: 2.5rem;
   }
 }

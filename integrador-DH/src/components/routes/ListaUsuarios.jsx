@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const ListaUsuarios = () => {
 
@@ -24,13 +25,10 @@ return (
   <div className="container-main">
     <div className="container-cards-section flex">
       <h2>Usuarios</h2>
-      <div className="container-cards borde flex">
-        {usuarios.map((plataforma) => (
-          <div key={plataforma.id} className="card">
-            <img src={plataforma.imagen} alt={plataforma.nombre} />
-            <h2>{plataforma.nombre}</h2>
-            <button onClick={() => eliminarPlataforma(plataforma.id)}>Eliminar</button>
-            <button onClick={() => editarPlataforma(plataforma.id)}>Editar</button>
+      <div className="container-cards  flex">
+        {usuarios.map((usuario) => (
+          <div key={usuario.id} className="card">
+            <h2>{usuario.nombre}</h2>
           </div>
         ))}
       </div>

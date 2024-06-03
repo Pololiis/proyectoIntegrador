@@ -52,7 +52,7 @@ function Main() {
       </section>
       <section className="cards-recomendado">
         <h2>Recomendados</h2>
-        <div className="container-cards  flex">
+        <div className="container-cards   flex">
           {videoJuegos.slice(0, cantidad).map((videojuego) => (
             <CardJuego key={videojuego.id} videojuego={videojuego} />
           ))}

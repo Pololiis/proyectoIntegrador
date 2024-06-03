@@ -163,6 +163,10 @@ button:hover .button-text {
   margin: 5vh 0px;
 }
 
+.container-cards{
+  margin-bottom: 5vh;
+}
+
 @media screen and (max-width: 768px) {
   .container-h1 {
     margin-left: 2vw;  

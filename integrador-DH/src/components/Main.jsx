@@ -34,18 +34,34 @@ function Main() {
         <div className="container-h1 flex">
           <h1>Bienvenido a</h1>
           <span className="glow text-outline">GameShare</span>
+
+          <a href="#body"><button class="btn-father">
+            <span class="circle" aria-hidden="true"></span>
+            <span class="button-text">Comenzar!</span>
+          </button></a>
+
         </div>
       </div>
+
+      <a name="body"></a>
       <div className="container-cards-section flex">
         <BarraBuscador />
         <h2>Plataforma</h2>
         <CardPlataforma/>
+
+      <section className="cards-recomendado">
+
+    
+    
         <h2>Recomendados</h2>
-        <div className="container-cards  flex">
+        <div className="container-cards   flex">
           {videoJuegos.slice(0, cantidad).map((videojuego) => (
             <CardJuego key={videojuego.id} videojuego={videojuego} />
           ))}
         </div>
+        
+        
+        </section>
       </div>
     </div>
   );

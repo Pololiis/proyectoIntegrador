@@ -8,7 +8,7 @@ export default function Footer() {
       <div className='flex align-left justify-left'>
       <img src={logo} alt="logo"/>
       </div>
-      <div className='flex justify-flex-start'>
+      <div>
       <p>&copy; 2024 gameShare. Todos los derechos reservados.</p>
       </div>
     </footer>

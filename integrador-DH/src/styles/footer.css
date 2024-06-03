@@ -1,8 +1,18 @@
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 footer > div > img{
-    max-width: 20vh;
+
+    max-width: 15vh;
+    
 }
 
 footer > div > p {
-    padding-left: 15px;
+    text-align: center;
+    position: relative;
+    margin-top: 2rem;
 }

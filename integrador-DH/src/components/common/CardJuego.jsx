@@ -7,21 +7,17 @@ const CardJuego = ({ videojuego }) => {
 
   console.log(videojuego.nombre);
   return (
-    
-    
-    <div className="card card-juego mb-3">
-      <img src={videojuego.imagenes[0]} className="card-img-top" alt={videojuego.nombre} />
-        <hr />
-      <div className="card-body flex">
-        <h5 className="card-title">{videojuego.nombre}</h5>
-      </div>
-        <Link to={`/detalleProducto/${videojuego.id}`} className="btn btn-bd-primary">
-          Detalle
-        </Link>
+    <div className="card__container">
+        <article className="card">
+        <img src={videojuego.imagenes[0]} alt={videojuego.nombre} className="card__img" />
+        <div className="card__data">
+          <h2 className="card__title">{videojuego.nombre}</h2>
+          <span className="card__description">{videojuego.descripcion}</span>
+          <Link to={`/detalleProducto/${videojuego.id}`} className="btn btn-bd-primary">Ver Más</Link>
+        </div>
+      </article>
     </div>
-
   );
 }
-
 
 export default CardJuego;

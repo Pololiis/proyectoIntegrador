@@ -22,7 +22,7 @@ const ListaUsuarios = () => {
 
 return (
 
-  <div className="container-main">
+  <div className="container-main m-auto">
     <div className="container-cards-section flex">
       <h2>Usuarios</h2>
       <div className="container-cards  flex">

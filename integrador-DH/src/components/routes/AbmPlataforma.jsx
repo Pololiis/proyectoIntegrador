@@ -46,7 +46,7 @@ const AbmPlataforma = () => {
   };
 
   return (
-    <div className="container my-5 container-form">
+    <div className="container m-auto my-5 container-form">
       <div className="restringido row justify-content-center">
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">No disponible.</h2>

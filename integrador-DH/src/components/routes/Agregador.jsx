@@ -47,6 +47,14 @@ const Agregador = () => {
     ),
   });
 
+
+
+
+
+
+
+
+
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const formData = new FormData();
     formData.append("nombre", values.nombre);
@@ -83,6 +91,22 @@ const Agregador = () => {
     }
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const handleImagenChange = (event) => {
     const files = Array.from(event.currentTarget.files);
     setImagenesSeleccionadas([...imagenesSeleccionadas, ...files]);
@@ -95,7 +119,7 @@ const Agregador = () => {
   };
 
   return (
-    <div className="container my-5 container-form">
+    <div className="container my-5 m-auto container-form">
       <div className="restringido row justify-content-center">
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">No disponible.</h2>

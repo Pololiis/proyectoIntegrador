@@ -37,8 +37,9 @@ const Panel = () => {
 
   return (
     <>
+
       <div>
-        <Volver />
+        
         <h2 className="panel-titulo">PANEL DE ADMINISTRACIÓN.</h2>
       </div>
       <div className="button-row">
@@ -80,6 +81,7 @@ const Panel = () => {
         </button>
       </div>
       <div className="componente-activo">{renderComponente()}</div>
+    
     </>
   );
 };

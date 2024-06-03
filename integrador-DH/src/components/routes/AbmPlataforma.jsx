@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -6,7 +7,6 @@ import "./abmPlataforma.css"; // Estilos personalizados
 
 const AbmPlataforma = () => {
   const [mensaje, setMensaje] = useState("");
-  // const [imagenSeleccionada, setImagenSeleccionada] = useState(null);
 
   const validationSchema = Yup.object().shape({
     nombre: Yup.string()
@@ -17,43 +17,33 @@ const AbmPlataforma = () => {
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-   
-      const formData = new FormData();
-      formData.append("nombre", values.nombre);
-      formData.append("descripcion", values.descripcion);
-     // formData.append("imagen", imagen);
-    //verificar imagen
+    const formData = new FormData();
+    formData.append("nombre", values.nombre);
+    // formData.append("imagen", values.imagen);
+
     try {
       const response = await axios.post(
-        "http://localhost:8080/plataformas",
+        "http://localhost:8080/categorias",
         formData,
         {
           headers: {
-            // Correct header key
             "Content-Type": "application/json",
           },
         }
       );
-      console.log(response);
-
       setMensaje("Categoría agregada con éxito");
       resetForm();
+      console.log(response);
     } catch (error) {
       console.error("Error al crear la categoría:", error);
-      setMensaje("Error al crear la categoría");
+      setMensaje(
+        "Error al crear la categoría: " +
+          (error.response?.data?.message || error.message)
+      );
     } finally {
       setSubmitting(false);
     }
   };
-
-  // const handleImagenChange = (event) => {
-  //   const file = event.currentTarget.files[0];
-  //   setImagenSeleccionada(file);
-  // };
-
-  // const handleBorrarImagen = () => {
-  //   setImagenSeleccionada(null);
-  // };
 
   return (
     <div className="container my-5 container-form">
@@ -69,11 +59,20 @@ const AbmPlataforma = () => {
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">Agregar Plataforma</h2>
           <Formik
-            initialValues={{ nombre: "" }}
+            initialValues={{
+              nombre: "",
+              imagen: null,
+            }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ isSubmitting, errors, touched }) => (
+            {({
+              isSubmitting,
+              setFieldValue,
+              errors,
+              touched,
+              values
+            }) => (
               <Form>
                 <div className="mb-3">
                   <label className="form-label">Nombre:</label>
@@ -96,64 +95,54 @@ const AbmPlataforma = () => {
                   />
                 </div>
 
-                <div className="mb-3">
-                  <label className="form-label">Descripción:</label>
-                  <Field
+                {/* <div className="mb-3">
+                  <label className="form-label">Imagen:</label>
+                  <input
                     className={`form-control ${
-                      errors.descripcion && touched.descripcion
+                      errors.imagen && touched.imagen
                         ? "is-invalid"
-                        : touched.descripcion
+                        : touched.imagen
                         ? "is-valid"
                         : ""
                     }`}
-                    type="text"
-                    name="descripcion"
-                    placeholder="Descripción"
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => {
+                      setFieldValue("imagen", event.currentTarget.files[0]);
+                    }}
                   />
                   <ErrorMessage
-                    name="descripcion"
+                    name="imagen"
                     component="div"
                     className="text-danger"
                   />
                 </div>
 
-
-
-
-                {/* <div className="mb-3">
-                  <label className="form-label">Imágen:</label>
-                  <input
-                    className={`form-control`}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImagenChange}
-                  />
-                </div>
-                {imagenSeleccionada && (
+                {values.imagen && (
                   <div className="mb-3 img-btn-borrar d-flex">
                     <div className="imagen-preview borde">
                       <img
-                        src={URL.createObjectURL(imagenSeleccionada)}
+                        src={URL.createObjectURL(values.imagen)}
                         alt="Imagen seleccionada"
                         className="img-seleccionada"
                       />
                       <button
                         type="button"
                         className="btn btn-sm btn-danger"
-                        onClick={handleBorrarImagen}
+                        onClick={() => setFieldValue("imagen", null)}
                       >
                         Borrar
                       </button>
                     </div>
                   </div>
-                )}
-                */}
+                )} */}
+
                 <button
-                  className="btn btn-bd-primary w-100"
+                  className="btn btn-primary w-100"
                   type="submit"
                   disabled={isSubmitting}
                 >
-                  Crear Categoría
+                  Agregar Producto
                 </button>
               </Form>
             )}
@@ -175,3 +164,4 @@ const AbmPlataforma = () => {
 };
 
 export default AbmPlataforma;
+

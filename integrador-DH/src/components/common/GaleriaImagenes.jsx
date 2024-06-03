@@ -18,7 +18,7 @@ function GaleriaImagenes({ titulo, descripcion, imagenes }) {
           <h2 className="mb-3">{titulo}</h2>
           <p className="mb-4">{descripcion}</p>
         </div>
-        <div className="col-12 d-flex borde">
+        <div className="col-12 d-flex container-galeria">
           <div>
           <img
             src={imagenes[0]}
@@ -26,7 +26,7 @@ function GaleriaImagenes({ titulo, descripcion, imagenes }) {
             className="img-fluid img-principal"
           />
           </div>
-          <div className="container-img-secundaria-general borde">
+          <div className="container-img-secundaria-general ">
             {imagenesRepetidas
               .slice(0, mostrarMas ? imagenesRepetidas.length : 4)
               .map((imagen, index) => (

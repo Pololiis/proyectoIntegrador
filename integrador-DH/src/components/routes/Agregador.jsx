@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -6,7 +6,28 @@ import "./agregador.css"; // Estilos personalizados
 
 const Agregador = () => {
   const [mensaje, setMensaje] = useState("");
+  const [categorias, setCategorias] = useState([]);
+  const [caracteristicas, setCaracteristicas] = useState([]);
   const [imagenesSeleccionadas, setImagenesSeleccionadas] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [categoriasResponse, caracteristicasResponse] = await Promise.all(
+          [
+            axios.get("http://localhost:8080/categorias"),
+            axios.get("http://localhost:8080/caracteristicas/listar"),
+          ]
+        );
+        setCategorias(categoriasResponse.data);
+        setCaracteristicas(caracteristicasResponse.data);
+      } catch (error) {
+        console.error("Hubo un error al hacer la solicitud:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const validationSchema = Yup.object().shape({
     nombre: Yup.string()
@@ -17,18 +38,23 @@ const Agregador = () => {
       .required("La descripción es requerida")
       .min(5, "La descripción es muy corta")
       .max(200, "La descripción es muy larga"),
-    plataforma: Yup.string().required("La categoría es requerida"),
+    categoria: Yup.string().required("La plataforma es requerida"),
     imagenes: Yup.array()
       .min(1, "Al menos una imagen es requerida")
       .max(5, "Máximo 5 imágenes permitidas"),
+    caracteristicas: Yup.array().required(
+      "Seleccione al menos una característica"
+    ),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const formData = new FormData();
     formData.append("nombre", values.nombre);
     formData.append("descripcion", values.descripcion);
-      formData.append("plataforma", values.plataforma);
-
+    formData.append("categoria", values.categoria);
+    values.caracteristicas.forEach((caracteristica) => {
+      formData.append("caracteristicas", caracteristica);
+    });
     imagenesSeleccionadas.forEach((imagen) => {
       formData.append("imagen", imagen);
     });
@@ -74,7 +100,7 @@ const Agregador = () => {
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">No disponible.</h2>
           <h4 className="text-center mb-6">
-            Esta funcionalidad no esta disponible en dispositivos moviles.
+            Esta funcionalidad no está disponible en dispositivos móviles.
           </h4>
         </div>
       </div>
@@ -82,7 +108,12 @@ const Agregador = () => {
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">Agregar Producto</h2>
           <Formik
-            initialValues={{ nombre: "", descripcion: "", categoria: "" }}
+            initialValues={{
+              nombre: "",
+              descripcion: "",
+              categoria: "",
+              caracteristicas: [],
+            }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
@@ -129,32 +160,58 @@ const Agregador = () => {
                     className="text-danger"
                   />
                 </div>
-                                <div className="mb-3">
+                <div className="mb-3">
                   <label className="form-label">Plataforma:</label>
                   <Field
                     as="select"
                     className={`form-control ${
-                      errors.plataforma && touched.plataforma
+                      errors.categoria && touched.categoria
                         ? "is-invalid"
-                        : touched.plataforma
+                        : touched.categoria
                         ? "is-valid"
                         : ""
                     }`}
-                    name="plataforma"
+                    name="categoria"
                   >
                     <option value="" label="Seleccionar plataforma" />
-                    <option value="playStation" label="playStation" />
-                    <option value="xBox" label="xBox" />
-                    <option value="pc" label="pc" />
-                    <option value="nintendoSwitch" label="nintendoSwitch" />
+                    {categorias.map((categoria) => (
+                      <option key={categoria.id} value={categoria.id}>
+                        {categoria.nombre}
+                      </option>
+                    ))}
                   </Field>
                   <ErrorMessage
-                    name="plataforma"
+                    name="categoria"
                     component="div"
                     className="text-danger"
                   />
                 </div>
-
+                <div className="mb-3">
+                  <label className="form-label">Características:</label>
+                  <Field
+                    as="select"
+                    className={`form-control ${
+                      errors.caracteristicas && touched.caracteristicas
+                        ? "is-invalid"
+                        : touched.caracteristicas
+                        ? "is-valid"
+                        : ""
+                    }`}
+                    name="caracteristicas"
+                    multiple
+                  >
+                    {caracteristicas.map((caracteristica) => (
+                      <option key={caracteristica.id} value={caracteristica.id}>
+                        {caracteristica.nombre}
+                      </option>
+                    ))}
+                  </Field>
+                  <ErrorMessage
+                    name="caracteristicas"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
                 <div className="mb-3">
                   <label className="form-label">Imágenes:</label>
                   <input
@@ -183,6 +240,7 @@ const Agregador = () => {
                     </div>
                   ))}
                 </div>
+
                 <button
                   className="btn btn-primary w-100"
                   type="submit"

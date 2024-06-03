@@ -3,6 +3,9 @@ import "./cardJuego.css";
 
 
 const CardJuego = ({ videojuego }) => {
+
+
+  console.log(videojuego.nombre);
   return (
     <div className="card__container">
         <article className="card">

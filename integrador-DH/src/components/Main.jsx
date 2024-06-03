@@ -3,7 +3,7 @@ import axios from "axios";
 import "../styles/main.css";
 import BarraBuscador from "./common/BarraBuscador";
 import CardJuego from "./common/CardJuego";
-import SliderInfinito from "./common/SliderInfinito";
+import CardPlataforma from "./common/CardPlataforma";
 
 
 
@@ -45,12 +45,14 @@ function Main() {
 
       <a name="body"></a>
       <div className="container-cards-section flex">
-      <section className="cards-categoria">
-        <h2>Categorias</h2>
-        <SliderInfinito/>
         <BarraBuscador />
-      </section>
+        <h2>Plataforma</h2>
+        <CardPlataforma/>
+
       <section className="cards-recomendado">
+
+    
+    
         <h2>Recomendados</h2>
         <div className="container-cards   flex">
           {videoJuegos.slice(0, cantidad).map((videojuego) => (

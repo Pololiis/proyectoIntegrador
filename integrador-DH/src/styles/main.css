@@ -128,7 +128,11 @@ button:hover .button-text {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin: 10vh 0px;
+  
+
   color: white;
+
 }
 
 .cards-categoria{
@@ -164,7 +168,13 @@ button:hover .button-text {
 }
 
 .container-cards{
+  
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+
   margin-bottom: 5vh;
+
 }
 
 @media screen and (max-width: 768px) {
@@ -200,6 +210,8 @@ button:hover .button-text {
   }
   
 
+@media screen and (min-width: 1025px)  {
+
   .bg-h1 h1 {
     font-size: 3rem; 
   }
@@ -211,3 +223,4 @@ button:hover .button-text {
     opacity: 0%;
   }
 }
+

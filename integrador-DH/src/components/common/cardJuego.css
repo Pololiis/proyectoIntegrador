@@ -1,3 +1,4 @@
+
 /* Importando la fuente Poppins */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
 
@@ -10,6 +11,7 @@
   --text-color: hsl(0, 0%, 35%);
   --container-color: hsl(0, 0%, 100%);
 }
+
 /*=============== CARD ===============*/
 /* Estilos de la card */
 .container {
@@ -53,7 +55,6 @@
   display: block;
   font-size: var(--small-font-size);
   margin-bottom: 2rem;
-  
 }
 
 .card__title {
@@ -61,7 +62,6 @@
   font-weight: 500;
   color: var(--title-color);
   margin-bottom: 1rem;
-
 }
 
 .card__button {
@@ -163,7 +163,6 @@
   }
 }
 
-
 /* For large devices */
 @media screen and (min-width: 1120px) {
 
@@ -178,3 +177,5 @@
     padding-inline: 2.5rem;
   }
 }
+
+

@@ -24,7 +24,6 @@ public class Usuario {
     private String email;
 
     @Column(name = "fecha_nacimiento")
-    @NotNull
     private LocalDate fechaNacimiento;
 
     private Integer edad;

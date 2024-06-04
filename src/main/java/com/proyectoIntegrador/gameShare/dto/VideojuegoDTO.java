@@ -1,7 +1,8 @@
 package com.proyectoIntegrador.gameShare.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Lob;
+import com.proyectoIntegrador.gameShare.entidad.Caracteristica;
+import com.proyectoIntegrador.gameShare.entidad.Categoria;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -29,4 +30,10 @@ public class VideojuegoDTO {
     @NotEmpty(message = "El campo imagen del videojuego no puede estar vacío.")
     @NotNull(message = "El campo imagen del videojuego no puede ser nulo")
     private List<String> imagenes;
+
+
+    private Categoria categoria;
+
+
+    private List<Caracteristica> caracteristicas;
 }

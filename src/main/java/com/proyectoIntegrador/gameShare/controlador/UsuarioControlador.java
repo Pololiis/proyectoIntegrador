@@ -45,6 +45,7 @@ public class UsuarioControlador {
         return ResponseEntity.ok(usuarioServicio.listarUsuarios());
     }
 
+    /* TODO: Corregir PUT
     @PutMapping("/{id}")
     public ResponseEntity<String> actualizarUsuario(@RequestBody Usuario usuario){
         Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorID(usuario.getId());
@@ -55,6 +56,7 @@ public class UsuarioControlador {
             return ResponseEntity.badRequest().body("Usuario no encontrado en la base de datos.")  ;
         }
     }
+     */
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarUsario(@PathVariable Long id){

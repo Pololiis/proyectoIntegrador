@@ -1,6 +1,8 @@
 package com.proyectoIntegrador.gameShare.controlador;
 
 import com.proyectoIntegrador.gameShare.dto.VideojuegoDTO;
+import com.proyectoIntegrador.gameShare.entidad.Caracteristica;
+import com.proyectoIntegrador.gameShare.entidad.Categoria;
 import com.proyectoIntegrador.gameShare.entidad.Videojuego;
 import com.proyectoIntegrador.gameShare.servicio.S3Servicio;
 import com.proyectoIntegrador.gameShare.servicio.VideojuegoServicio;
@@ -32,12 +34,16 @@ public class VideojuegoControlador {
     @PostMapping(path = "/nuevo", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Object> registrarVideojuego(@RequestParam("imagen") List<@Valid MultipartFile> imagenes,
                                                       @RequestParam("nombre") @NotEmpty @Size(min = 2, max = 450) String nombre,
-                                                      @Valid @RequestParam("descripcion") @NotEmpty @Size(min = 30) String descripcion)
+                                                      @Valid @RequestParam("descripcion") @NotEmpty @Size(min = 30) String descripcion,
+                                                      @RequestParam("plataforma") Categoria categoria,
+                                                      @RequestParam() List<Caracteristica> caracteristicas)
             throws IOException {
 
         VideojuegoDTO videojuego = new VideojuegoDTO();
         videojuego.setNombre(nombre);
         videojuego.setDescripcion(descripcion);
+        videojuego.setCategoria(categoria);
+        videojuego.setCaracteristicas(caracteristicas);
 
         List<String> urisImagenes = new ArrayList<>();
 
@@ -86,6 +92,55 @@ public class VideojuegoControlador {
     public ResponseEntity<Object> listarVideojuegos() {
         return ResponseEntity.ok(videojuegoServicio.listarVideojuegos());
     }
+
+    @PutMapping(path = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Object> actualizarVideojuego(@RequestParam Long id,
+                                                       @RequestParam("imagen") List<@Valid MultipartFile> imagenes,
+                                                       @RequestParam("nombre") @NotEmpty @Size(min = 2, max = 450) String nombre,
+                                                       @Valid @RequestParam("descripcion") @NotEmpty @Size(min = 30) String descripcion,
+                                                       @RequestParam("plataforma") Categoria categoria,
+                                                       @RequestParam() List<Caracteristica> caracteristicas)
+            throws IOException {
+
+        VideojuegoDTO videojuego = videojuegoServicio.buscarVideojuegoPorId(id);
+        videojuego.setNombre(nombre);
+        videojuego.setDescripcion(descripcion);
+        videojuego.setCategoria(categoria);
+        videojuego.setCaracteristicas(caracteristicas);
+
+        List<String> urisImagenes = new ArrayList<>();
+
+        for (MultipartFile imagen : imagenes) {
+            if (imagen != null && !imagen.isEmpty()) {
+                String nombreImagen = imagen.getOriginalFilename();
+
+                if (nombreImagen.contains("..")) {
+                    return ResponseEntity.badRequest().body("Nombre de archivo no válido.");
+                }
+
+                try {
+                    s3Servicio.subirImagen(nombreImagen, imagen);
+                    String imagenUri = s3Servicio.construirUriImagen(nombreImagen);
+
+                    urisImagenes.add(imagenUri);
+
+                } catch (IOException e) {
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar la imagen: " + e.getMessage());
+                }
+            }
+        }
+
+        videojuego.setImagenes(urisImagenes);
+
+        Videojuego registroDeVideojuego = videojuegoServicio.registrarVideojuego(videojuego);
+
+        if(registroDeVideojuego != null) {
+            return new ResponseEntity(registroDeVideojuego, HttpStatus.CREATED);
+        }
+
+        return new ResponseEntity<>("El videojuego no se encuentra en la base de datos.", HttpStatus.CONFLICT);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarVideojuego(@PathVariable Long id) {
         try {

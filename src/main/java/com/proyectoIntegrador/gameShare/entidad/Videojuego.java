@@ -35,15 +35,15 @@ public class Videojuego {
     @NotNull(message = "El campo imagen del videojuego no puede ser nulo")
     private String imagenes;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "categoria_id" )
     private Categoria categoria;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-
-    @JoinTable(name = "videojuego_caracteristica",
-    joinColumns =  @JoinColumn(name="videojuego_id"), inverseJoinColumns = @JoinColumn(name = "caracteristica_id"))
-
+    @JoinTable(
+            name = "videojuego_caracteristica",
+            joinColumns =  @JoinColumn(name = "videojuego_id"),
+            inverseJoinColumns = @JoinColumn(name = "caracteristica_id"))
     private List<Caracteristica> caracteristicas;
 
     private String requisitos;

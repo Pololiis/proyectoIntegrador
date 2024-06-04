@@ -27,12 +27,12 @@ public class UsuarioRegistroDTO {
     @Pattern(regexp = "^[-\\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\\.){1,125}[A-Z]{2,63}$",
             message = "El formato del email es incorrecto.")
     private String email;
-
+    /*
     @Column(name = "fecha_de_nacimiento")
     @NotEmpty(message = "El campo fecha de nacimiento del usuario no puede estar vacío.")
     @NotNull(message = "El campo fecha de nacimiento del usuario no puede ser nulo")
     private LocalDate fechaNacimiento;
-
+*/
     @NotEmpty(message = "El campo contraseña del usuario no puede estar vacío.")
     @NotNull(message = "El campo contraseña del usuario no puede ser nulo")
     @Size(min = 8, max = 12, message = "El campo contraseña debe tener mínimo 8 caracteres y máximo 12 caracteres.")

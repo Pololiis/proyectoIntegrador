@@ -33,8 +33,10 @@ public class UsuarioServicio {
         usuario.setNombre(usuarioDTO.getNombre());
         usuario.setApellido(usuarioDTO.getApellido());
         usuario.setEmail(usuarioDTO.getEmail());
+        /*
         usuario.setFechaNacimiento(usuarioDTO.getFechaNacimiento());
         usuario.setEdad(usuario.calcularEdad(usuarioDTO.getFechaNacimiento()));
+         */
         usuario.setContrasenia(encriptarContrasenia.encode(usuarioDTO.getContrasenia()));
 
         Rol rol = rolRepositorio.findByName("USUARIO").orElse(null);
@@ -47,8 +49,10 @@ public class UsuarioServicio {
         usuario.setNombre(usuarioDTO.getNombre());
         usuario.setApellido(usuarioDTO.getApellido());
         usuario.setEmail(usuarioDTO.getEmail());
+        /*
         usuario.setFechaNacimiento(usuarioDTO.getFechaNacimiento());
         usuario.setEdad(usuario.calcularEdad(usuarioDTO.getFechaNacimiento()));
+        */
         usuario.setContrasenia(encriptarContrasenia.encode(usuarioDTO.getContrasenia()));
 
         Rol rol = rolRepositorio.findByName("ADMINISTRADOR").orElse(null);

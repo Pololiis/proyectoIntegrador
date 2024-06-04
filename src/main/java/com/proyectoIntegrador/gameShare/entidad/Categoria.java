@@ -1,10 +1,12 @@
 package com.proyectoIntegrador.gameShare.entidad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Blob;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,5 +23,7 @@ public class Categoria {
     @Column
     private String imagen;
 
-
+    @OneToMany(mappedBy = "categoria")
+    @JsonIgnore
+    private List<Videojuego> videojuegos;
 }

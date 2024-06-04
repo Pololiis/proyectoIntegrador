@@ -66,6 +66,8 @@ public class VideojuegoServicio {
             videojuegoDTO.setId(videojuego.getId());
             videojuegoDTO.setNombre(videojuego.getNombre());
             videojuegoDTO.setDescripcion(videojuego.getDescripcion());
+            videojuegoDTO.setCategoria(videojuego.getCategoria());
+            videojuegoDTO.setCaracteristicas(videojuego.getCaracteristicas());
 
             String stringImagenes = videojuego.getImagenes();
             List<String> listaImagenes = List.of(stringImagenes.split(","));
@@ -76,7 +78,7 @@ public class VideojuegoServicio {
         return videojuegosDTO;
     }
 
-    public Videojuego actualizarVideojuego(Long id, Videojuego videojuego) {
+    public Videojuego actualizarVideojuego(Long id, VideojuegoDTO videojuego) {
         Boolean videojuegoExiste = videojuegoRepositorio.existsById(id);
 
         if(videojuegoExiste) {
@@ -84,10 +86,11 @@ public class VideojuegoServicio {
 
             videojuegoParaActualizar.setNombre(videojuego.getNombre());
             videojuegoParaActualizar.setDescripcion(videojuego.getDescripcion());
-            videojuegoParaActualizar.setImagenes(videojuego.getImagenes());
             videojuegoParaActualizar.setCategoria(videojuego.getCategoria());
-            /*videojuegoParaActualizar.setPlataforma(videojuego.getPlataforma());*/
-            videojuegoParaActualizar.setRestriccionEdad(videojuego.getRestriccionEdad());
+            videojuegoParaActualizar.setCaracteristicas(videojuego.getCaracteristicas());
+
+            List<String> imagenes = videojuego.getImagenes();
+            videojuegoParaActualizar.setImagenes(String.join(",", imagenes));
 
             return videojuegoRepositorio.save(videojuegoParaActualizar);
         }

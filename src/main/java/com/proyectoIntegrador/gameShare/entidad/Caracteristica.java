@@ -7,6 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Blob;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,13 +18,14 @@ public class Caracteristica {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     @NotNull
     @NotEmpty
     private String nombre;
 
-    @Column
     @NotNull
     @NotEmpty
     private String imagen;
+
+    @ManyToMany(mappedBy = "caracteristicas")
+    private List<Videojuego> videojuegos;
 }

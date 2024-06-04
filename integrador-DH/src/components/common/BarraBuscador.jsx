@@ -1,11 +1,14 @@
+
 import "./buscador.css";
 
 import React from 'react';
+
 
 function BarraBuscador() {
   return (
     <div className="container buscador">
       <div className="row justify-content-center">
+
         <div className="col-sm-12 col-md-6 col-lg-4">
           <div className="input-group mb-2 buscador-pequeno">
             <input

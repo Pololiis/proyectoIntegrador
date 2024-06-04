@@ -5,6 +5,7 @@ import logo from '../assets/logo.png'
 export default function Footer() {
   return (
     <footer>
+
       <div className='flex align-left justify-left'>
       <img src={logo} alt="logo"/>
       </div>

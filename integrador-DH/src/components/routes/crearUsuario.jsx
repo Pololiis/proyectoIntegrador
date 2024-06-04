@@ -5,6 +5,7 @@ import axios from "axios";
 import emailjs from 'emailjs-com';
 import "./crearUsuario.css"; // Estilos personalizados
 
+
 const CrearUsuario = () => {
   const [mensaje, setMensaje] = useState("");
 
@@ -16,23 +17,30 @@ const CrearUsuario = () => {
       .matches(/^[A-Z]+$/i, "*Nombre invalido"),
     apellido: Yup.string()
       .required("El apellido es requerido")
-      .min(5, "El apellido es muy corto")
-      .max(200, "El apellido es muy largo"),
+
+      .min(2, "El apellido es muy corto")
+      .max(50, "El apellido es muy largo"),
+
     email: Yup.string()
       .required("El email es requerido")
       .matches(
         /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
         "*El email es invalido"
       ),
+
+    fechaNacimiento: Yup.date()
+      .required("La fecha de nacimiento es requerida")
+      .nullable(),
     contrasenia: Yup.string()
       .required("La contraseña es requerida")
-      .min(8, "")
-      .max(12, "")
+      .min(8, "La contraseña debe tener al menos 8 caracteres")
+      .max(12, "La contraseña no debe tener más de 12 caracteres")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         "*La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial"
       ),
   });
+
 
   const sendEmail = (userEmail, userName) => {
     console.log('Enviando email a:', userEmail, userName);
@@ -88,6 +96,7 @@ const CrearUsuario = () => {
   };
 
   return (
+
     <div className="container my-5 m-auto container-form">
       <div className="row justify-content-center">
         <div className="col-12 col-md-8">
@@ -97,6 +106,7 @@ const CrearUsuario = () => {
               nombre: "",
               apellido: "",
               email: "",
+              fechaNacimiento: "",
               contrasenia: "",
             }}
             validationSchema={validationSchema}
@@ -134,6 +144,9 @@ const CrearUsuario = () => {
                         ? "is-valid"
                         : ""
                     }`}
+
+                    type="text"
+
                     name="apellido"
                     placeholder="Apellido"
                   />
@@ -154,7 +167,8 @@ const CrearUsuario = () => {
                         ? "is-valid"
                         : ""
                     }`}
-                    type="text"
+                    type="email"
+
                     name="email"
                     placeholder="Email"
                   />
@@ -166,6 +180,28 @@ const CrearUsuario = () => {
                 </div>
 
                 <div className="mb-3">
+
+                  <label className="form-label">Fecha de Nacimiento:</label>
+                  <Field
+                    className={`form-control ${
+                      errors.fechaNacimiento && touched.fechaNacimiento
+                        ? "is-invalid"
+                        : touched.fechaNacimiento
+                        ? "is-valid"
+                        : ""
+                    }`}
+                    type="date"
+                    name="fechaNacimiento"
+                  />
+                  <ErrorMessage
+                    name="fechaNacimiento"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
+
+                <div className="mb-3">
+
                   <label className="form-label">Contraseña:</label>
                   <Field
                     className={`form-control ${
@@ -175,9 +211,11 @@ const CrearUsuario = () => {
                         ? "is-valid"
                         : ""
                     }`}
-                    type="text"
+
+                    type="password"
                     name="contrasenia"
-                    placeholder="contraseña"
+                    placeholder="Contraseña"
+
                   />
                   <ErrorMessage
                     name="contrasenia"
@@ -213,3 +251,4 @@ const CrearUsuario = () => {
 };
 
 export default CrearUsuario;
+

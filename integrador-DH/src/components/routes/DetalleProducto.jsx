@@ -1,9 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 import GaleriaImagenes from "../common/GaleriaImagenes";
 import Volver from "../common/Volver";
 import "./detalleProducto.css";
+
 
 function DetalleProducto() {
   const { id } = useParams();
@@ -11,13 +13,16 @@ function DetalleProducto() {
   console.log("esta es la id", id);
   const url = `http://localhost:8080/videojuegos/${id}`;
   const [videoJuegoSeleccionado, setVideoJuegoSelecionado] = useState({});
+
   const [caracteristica, setCaracteristicas] = useState([]);
   const [cantidad, setCantidad] = useState(6);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
+=
         const responseCaracteristicas = await axios.get(
           `http://localhost:8080/caracteristicas/listar`
         );
@@ -31,6 +36,7 @@ function DetalleProducto() {
 
     fetchData();
   }, [id]);
+
 
   if (!videoJuegoSeleccionado.nombre) {
     return <div>Loading...</div>;

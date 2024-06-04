@@ -11,6 +11,7 @@ body{
   background-color:  #f3f3e4;
 }
 
+
 footer{ 
   color: rgb(190, 189, 189);
   background-color: var(--color1);
@@ -63,6 +64,7 @@ footer{
 .btn-bd-primary:hover{
   border: 1px solid var(--color3);
 }
+
 
 
 

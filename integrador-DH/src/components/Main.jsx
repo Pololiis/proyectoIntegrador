@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/main.css";
@@ -5,15 +6,20 @@ import BarraBuscador from "./common/BarraBuscador";
 import CardJuego from "./common/CardJuego";
 import CardPlataforma from "./common/CardPlataforma";
 
+
 function Main() {
   const url = `http://localhost:8080/videojuegos`;
   const [videoJuegos, setVideoJuegos] = useState([]);
+
+
   const [cantidad, setCantidad] = useState(10);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
+
         const shuffledData = shuffleArray(response.data);
         setVideoJuegos(shuffledData);
       } catch (error) {
@@ -24,12 +30,15 @@ function Main() {
     fetchData();
   }, []);
 
+
   return (
     <div>
+
       <div className="bg-h1 flex">
         <div className="container-h1 flex">
           <h1>Bienvenido a</h1>
           <span className="glow text-outline">GameShare</span>
+
 
           <a href="#body">
             <button class="btn-father">
@@ -54,10 +63,12 @@ function Main() {
             ))}
           </div>
         </section>
+
       </div>
     </div>
   );
 }
+
 
 // Función de barajado
 function shuffleArray(array) {

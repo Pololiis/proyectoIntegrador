@@ -1,3 +1,4 @@
+
 footer {
     display: flex;
     align-items: center;
@@ -15,4 +16,5 @@ footer > div > p {
     text-align: center;
     position: relative;
     margin-top: 2rem;
+
 }

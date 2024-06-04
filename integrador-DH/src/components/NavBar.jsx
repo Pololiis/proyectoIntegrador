@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+
 import { useState, useEffect } from "react";
 import "../styles/index.css";
 import "../styles/navbar.css";
@@ -133,6 +134,7 @@ function NavBar() {
         <CrearUsuario />
       </Modal>
     </>
+
   );
 }
 

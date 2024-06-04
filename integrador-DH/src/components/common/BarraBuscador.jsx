@@ -1,14 +1,19 @@
-import "./buscador.css"
+
+import "./buscador.css";
+
+import React from 'react';
+
 
 function BarraBuscador() {
   return (
     <div className="container buscador">
       <div className="row justify-content-center">
-        <div className="col-sm-12">
-          <div className="input-group mb-3 " >
+
+        <div className="col-sm-12 col-md-6 col-lg-4">
+          <div className="input-group mb-2 buscador-pequeno">
             <input
               type="text"
-              className="form-control"
+              className="form-control buscador-input"
               placeholder="Buscar..."
               aria-label="Buscar"
               aria-describedby="button-addon2"
@@ -28,3 +33,4 @@ function BarraBuscador() {
 }
 
 export default BarraBuscador;
+

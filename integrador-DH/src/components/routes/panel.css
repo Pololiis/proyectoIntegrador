@@ -1,0 +1,80 @@
+.container-form{
+        background-color: var(--color1);
+        color: white;
+        padding: 10vh 0px;
+      }
+      
+      .restringido {
+        display: none;
+      }
+      
+    
+      
+      .button-row {
+        
+        display: flex;
+       
+        flex-wrap: wrap;
+        
+        gap: 10px;
+        margin-top: 20px; /* Espacio entre el div y los botones */
+      }
+      
+      .button-row> button{
+        margin: auto;
+        padding: 10px 10px;
+      }
+      
+      textarea{
+        resize: none;
+      }
+      
+      .img-seleccionada{
+        width: 10vw;
+        margin-bottom: 2vh;
+      }
+      
+      .panel-titulo{
+        text-align: center;
+        margin: 10vh 0vh;
+        color: white;
+      }
+      
+      .img-btn-borrar{
+        flex-wrap: wrap;
+        gap: 2vh;
+      }
+      
+ 
+
+      @media (max-width: 768px) {
+        .restringido {
+          display: block;
+        }
+      
+        .formulario {
+          display: none;
+        }
+      }
+
+    
+      
+      .btn-panel {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      
+      .btn-panel:hover {
+        background-color: #0056b3;
+      }
+      
+      .componente-activo {
+        margin-top: 20px; /* Espacio entre los botones y el componente activo */
+      }
+      

@@ -40,16 +40,19 @@
 }
 
 .logo {
+
   width: 7vw;
 }
 
-.container-buttons {
 
+
+.container-buttons {
   margin-right: 3vw;
 }
 
-.container-buttons button{
-  font-size: clamp(0.75rem, 0rem + 2.5vw, 1.3rem);
+.container-buttons {
+  font-size: clamp(0.75rem, 0rem + 2.5vw, 1.2rem);
+
 }
 
 .navbar-toggler {

@@ -1,0 +1,30 @@
+.container-detalle{
+    padding: 25vh 10vw;
+    margin-bottom: 8vh;
+    background-color: var(--color2);
+    color: white;
+    opacity: 90%;
+}
+
+.h3-caracteristicas{
+  margin: 10vh;
+}
+
+.container-caracteristicas {
+    
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan a la siguiente línea si no hay suficiente espacio */
+    justify-content: space-between; /* Distribuye el espacio entre las características */
+  }
+  
+  .caract {
+    padding: 10px;
+    margin-bottom: 10px; /* Espacio entre las características */
+    ; /* Ancho de cada característica (33.33% del contenedor menos el margen) */
+  }
+  
+  .img-caracteristicas {
+    max-width: 2vw;
+    height: auto;
+  }
+  

@@ -1,9 +1,20 @@
-footer{ 
-    
-    color: rgb(190, 189, 189);
-    background-color: var(--color1);
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+
 footer > div > img{
-    max-width: 30vh;
+
+    max-width: 15vh;
+    
+}
+
+footer > div > p {
+    text-align: center;
+    position: relative;
+    margin-top: 2rem;
+
 }

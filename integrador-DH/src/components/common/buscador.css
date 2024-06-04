@@ -1,7 +1,37 @@
-@media screen and (min-width: 1440px) {
- 
-  .btn-buscador {
-    height: 2vw;
-    width: 2vw;
+
+.buscador {
+    margin-top: 20px;
   }
-}
+  
+  .buscador-pequeno {
+    max-width: 100%;
+    padding: 5px;
+  }
+  
+  .buscador-input {
+    height: 30px;
+    font-size: 14px;
+  }
+  
+  .input-group .form-control {
+    border-radius: 0.25rem 0 0 0.25rem;
+    border: 1px solid var(--color3);
+  }
+  
+  .input-group .btn-buscador {
+    height: 30px;
+    border-radius: 0 0.25rem 0.25rem 0;
+    background-color: var(--color3);
+    color: white;
+  }
+  
+  .input-group .btn-buscador:hover {
+    background-color: var(--color1);
+    color: var(--color3);
+  }
+  
+  .input-group .form-control:focus {
+    border-color: var(--color3);
+    box-shadow: 0 0 0 0.2rem rgba(55, 181, 182, 0.25);
+  }
+

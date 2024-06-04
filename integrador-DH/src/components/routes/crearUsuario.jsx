@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import "./crearUsuario.css"; 
+import emailjs from 'emailjs-com';
+import "./crearUsuario.css"; // Estilos personalizados
+
 
 const CrearUsuario = () => {
   const [mensaje, setMensaje] = useState("");
@@ -15,14 +17,17 @@ const CrearUsuario = () => {
       .matches(/^[A-Z]+$/i, "*Nombre invalido"),
     apellido: Yup.string()
       .required("El apellido es requerido")
+
       .min(2, "El apellido es muy corto")
       .max(50, "El apellido es muy largo"),
+
     email: Yup.string()
       .required("El email es requerido")
       .matches(
         /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
         "*El email es invalido"
       ),
+
     fechaNacimiento: Yup.date()
       .required("La fecha de nacimiento es requerida")
       .nullable(),
@@ -36,30 +41,54 @@ const CrearUsuario = () => {
       ),
   });
 
+
+  const sendEmail = (userEmail, userName) => {
+    console.log('Enviando email a:', userEmail, userName);
+
+    const templateParams = {
+      to_email: userEmail,
+      to_name: userName,
+    };
+
+    emailjs.send('service_edy99o7', 'template_fk62684', templateParams, 'xuAeGJr1E_Q9WvTkO')
+      .then((response) => {
+        console.log('Email enviado exitosamente!', response.status, response.text);
+      }, (error) => {
+        console.error('Error al enviar el email:', error);
+      });
+  };
+
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    console.log('Valores del formulario:', values);
+
+    const formData = new FormData();
+    formData.append("nombre", values.nombre);
+    formData.append("apellido", values.apellido);
+    formData.append("email", values.email);
+    formData.append("contrasenia", values.contrasenia);
+    formData.append("rol", "usuario");
+
     try {
       const response = await axios.post(
         "http://localhost:8080/usuarios/nuevo",
-        {
-          nombre: values.nombre,
-          apellido: values.apellido,
-          email: values.email,
-          fechaNacimiento: values.fechaNacimiento,
-          contrasenia: values.contrasenia,
-          rol: "usuario"
-        },
+        formData,
         {
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
 
       console.log(response);
+
       setMensaje("Usuario Registrado con éxito");
       resetForm();
+
+      console.log('Llamando a sendEmail con:', values.email, values.nombre);
+      sendEmail(values.email, values.nombre);
+
     } catch (error) {
-      console.error("Error al registrar el Usuario:", error.response || error.message);
+      console.error("Error al registrar el Usuario:", error);
       setMensaje("Error al registrar el Usuario");
     } finally {
       setSubmitting(false);
@@ -67,7 +96,8 @@ const CrearUsuario = () => {
   };
 
   return (
-    <div className="container my-5 container-form">
+
+    <div className="container my-5 m-auto container-form">
       <div className="row justify-content-center">
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">Registrar Usuario</h2>
@@ -114,7 +144,9 @@ const CrearUsuario = () => {
                         ? "is-valid"
                         : ""
                     }`}
+
                     type="text"
+
                     name="apellido"
                     placeholder="Apellido"
                   />
@@ -136,6 +168,7 @@ const CrearUsuario = () => {
                         : ""
                     }`}
                     type="email"
+
                     name="email"
                     placeholder="Email"
                   />
@@ -147,6 +180,7 @@ const CrearUsuario = () => {
                 </div>
 
                 <div className="mb-3">
+
                   <label className="form-label">Fecha de Nacimiento:</label>
                   <Field
                     className={`form-control ${
@@ -167,6 +201,7 @@ const CrearUsuario = () => {
                 </div>
 
                 <div className="mb-3">
+
                   <label className="form-label">Contraseña:</label>
                   <Field
                     className={`form-control ${
@@ -176,9 +211,11 @@ const CrearUsuario = () => {
                         ? "is-valid"
                         : ""
                     }`}
+
                     type="password"
                     name="contrasenia"
                     placeholder="Contraseña"
+
                   />
                   <ErrorMessage
                     name="contrasenia"

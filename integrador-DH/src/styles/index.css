@@ -11,6 +11,13 @@ body{
   background-color:  #f3f3e4;
 }
 
+
+footer{ 
+  color: rgb(190, 189, 189);
+  background-color: var(--color1);
+  height: 30vh;
+}
+
 :root {
   --color1: #0a1d56;
   --color2: #492e87;
@@ -58,6 +65,34 @@ body{
   border: 1px solid var(--color3);
 }
 
+
+
+
+.btn-bd-secondary {
+  --bs-btn-font-weight: 400;
+  --bs-btn-color: var(--color3);
+  --bs-btn-bg: white;
+  --bs-btn-border-color: var(--color3);
+  --bs-btn-border-radius: 0.5rem;
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-bg: var(--color3);
+  --bs-btn-active-color: white;
+  --bs-btn-active-bg: var(--color3);
+}
+
+
+
+
+
+.btn-bd-secondary:hover{
+  border: 1px solid white;
+}
+
+
 hr{
   width: 22.1vw;
+}
+
+h2{
+  font-size: 3rem;
 }

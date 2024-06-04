@@ -41,7 +41,6 @@ try {
     setSubmitting(false);
 }
 };
-
 return (
 <div className="container my-5 container-form">
     <div className="row justify-content-center">

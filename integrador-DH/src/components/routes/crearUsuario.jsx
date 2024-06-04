@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import "./crearUsuario.css"; // Estilos personalizados
+import "./crearUsuario.css"; 
 
 const CrearUsuario = () => {
   const [mensaje, setMensaje] = useState("");
@@ -39,7 +39,7 @@ const CrearUsuario = () => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/usuario/nuevo",
+        "http://localhost:8080/usuarios/nuevo",
         {
           nombre: values.nombre,
           apellido: values.apellido,
@@ -214,3 +214,4 @@ const CrearUsuario = () => {
 };
 
 export default CrearUsuario;
+

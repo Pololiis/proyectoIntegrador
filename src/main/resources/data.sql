@@ -1,4 +1,4 @@
-INSERT INTO Videojuegos (nombre, descripcion, imagenes) VALUES
+INSERT INTO videojuegos (nombre, descripcion, imagenes) VALUES
 ("Persona 5: Royal", "Los eventos de Persona 5 se desarrollan en Tokio y narran los sucesos de vida de Ren Amamiya, después de ser transferido al Instituto Shujin, al ser condenado a un año de libertad condicional por un delito de agresión del que fue falsamente acusado. Durante el curso escolar, él y varios de sus compañeros despiertan los poderes de sus Personas y se convierten en los \"Ladrones Fantasma de Corazones\" (Phantom Thieves of Hearts), justicieros enmascarados que se dedican a recorrer un mundo sobrenatural llamado Metaverso, robando y cambiando los deseos corruptos en el corazón de la gente.", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/P5R-1.jpg,https://gameshare-bucket.s3.sa-east-1.amazonaws.com/P5R-2.jpg"),
 ("Resident Evil 4", "En Resident Evil 4 , el agente especial Leon S. Kennedy es enviado en una misión para rescatar a la hija del presidente de los Estados Unidos que ha sido secuestrada. Al encontrar su camino hacia una aldea rural en Europa, se enfrenta a nuevas amenazas que se alejan de los tradicionales enemigos zombis pesados ​​de las entregas anteriores de la serie. León lucha contra nuevas criaturas horribles infestadas por una nueva amenaza llamada Las Plagas y se enfrenta a un grupo agresivo de enemigos, incluidos aldeanos controlados mentalmente que están vinculados a Los Iluminados, el misterioso culto que está detrás del secuestro.", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/img1.jpg,https://gameshare-bucket.s3.sa-east-1.amazonaws.com/img2.jpg"),
 ("Elden Ring", "Recorre este impresionante mundo a pie o a caballo, en solitario u online con otros jugadores. Sumérgete en las verdes llanuras, en los pantanos agobiantes, en las montañas tortuosas, en unos castillos que no auguran nada bueno y en otros parajes majestuosos.", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/ER1.jpg,https://gameshare-bucket.s3.sa-east-1.amazonaws.com/ER2.jpg"),
@@ -15,9 +15,9 @@ INSERT INTO Videojuegos (nombre, descripcion, imagenes) VALUES
 ("The Witcher 3: Wild Hunt", "El jugador controlará una vez más a Geralt de Rivia, el afamado cazador de monstruos, (también conocido como el Lobo Blanco) y se enfrentará a un diversificadísimo bestiario y a unos peligros de unas dimensiones nunca vistas hasta el momento en la serie, mientras recorre los reinos del Norte. Durante su aventura, tendrá que hacer uso de un gran arsenal de armas, armaduras y todo tipo de magias para enfrentarse al que hasta ahora ha sido su mayor desafío, la cacería salvaje.", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Witcher1.jpg,https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Witcher2.jpg"),
 ("Ori and the Will of the Wisps", "Ori and the Will of the Wisps es la continuación del emblemático videojuego de plataformas y aventuras Ori and the Blind Forest, desarrollado por Moon Studios. Se trata de una secuela que sigue ofreciéndonos un estilo impecable a nivel visual y jugable.", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Ori-1.jpg,https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Ori-2.jpg");
 
-INSERT INTO Roles (nombre_rol) VALUES ("USUARIO"), ("ADMINISTRADOR");
+INSERT INTO roles (nombre_rol) VALUES ("USUARIO"), ("ADMINISTRADOR");
 
-INSERT INTO Categorias (nombre, imagen) VALUES
+INSERT INTO categorias (nombre, imagen) VALUES
 ("PlayStation 3", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-play-station-48.png"),
 ("PlayStation 4", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-play-station-48.png"),
 ("PlayStation 5", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-play-station-48.png"),
@@ -25,7 +25,7 @@ INSERT INTO Categorias (nombre, imagen) VALUES
 ("Nintendo Switch", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-nintendo-switch-60.png");
 
 
-INSERT INTO Caracteristicas (nombre, imagen) VALUES
+INSERT INTO caracteristicas (nombre, imagen) VALUES
 ("Terror", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/terror.png"),
 ("Suspenso", "imgSuspenso"),
 ("Rol", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+caracteristicas/rol.png"),

@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 //Se modifica Long a Integer para mantener estructura BD, como tambien se cambia el nombre  de name a nombreRol
 public interface RolRepositorio extends JpaRepository<Rol, Integer> {
-    Optional<Rol> findByName(String nombreRol);
+    Optional<Rol> findByNombreRol(String nombreRol);
 }

@@ -22,7 +22,6 @@ function DetalleProducto() {
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
-=
         const responseCaracteristicas = await axios.get(
           `http://localhost:8080/caracteristicas/listar`
         );

@@ -24,7 +24,7 @@ public class DetallesDeUsuarioServicio implements UserDetailsService {
 
     // Método para traer lista de autoridades basadas en el rol del usuario.
     public Collection<GrantedAuthority> mapearAutoridad(Rol rol) {
-        return Collections.singletonList(new SimpleGrantedAuthority(rol.getName()));
+        return Collections.singletonList(new SimpleGrantedAuthority(rol.getNombreRol()));
     }
 
     // Método para traernos los datos del usuario por medio de su email.

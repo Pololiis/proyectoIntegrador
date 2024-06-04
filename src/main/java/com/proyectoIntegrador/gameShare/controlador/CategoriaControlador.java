@@ -23,7 +23,7 @@ public class CategoriaControlador {
         return categoriaServicio.buscarCategoriaPorId(id);
     }
 
-    @PostMapping
+    @PostMapping("/nuevo")
     public Categoria guardarCategoria(@RequestBody Categoria categoria) {
         return categoriaServicio.guardarCategoria(categoria);
     }

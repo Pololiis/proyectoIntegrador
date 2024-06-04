@@ -15,12 +15,31 @@ public class Rol {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_rol")
     @NotNull
-    private Long id;
+    private int idRol; //cambio de Long a int debido a lo indicado en BD
 
-    @Column(name = "nombre_rol")
-    private String name;
+    @Column(name = "nombre_rol", nullable = false)
+    private String nombreRol;
 
     @OneToMany(mappedBy = "rol")
     @JsonIgnore
     private List<Usuario> usuarios;
+
+
+    //Getters y Setters
+
+    public int getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
+    }
+
+    public String getNombreRol() {
+        return nombreRol;
+    }
+
+    public void setNombreRol(String nombreRol) {
+        this.nombreRol = nombreRol;
+    }
 }

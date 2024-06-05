@@ -2,6 +2,7 @@ package com.proyectoIntegrador.gameShare.servicio;
 
 import com.proyectoIntegrador.gameShare.dto.VideojuegoDTO;
 import com.proyectoIntegrador.gameShare.entidad.Videojuego;
+import com.proyectoIntegrador.gameShare.repositorio.CategoriaRepositorio;
 import com.proyectoIntegrador.gameShare.repositorio.VideojuegoRepositorio;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class VideojuegoServicio {
     private final VideojuegoRepositorio videojuegoRepositorio;
+    private final CategoriaRepositorio categoriaRepositorio;
 
     public Videojuego registrarVideojuego(VideojuegoDTO videojuego) {
         Boolean videojuegoExiste = videojuegoRepositorio.existsByNombre(videojuego.getNombre());
@@ -45,6 +47,8 @@ public class VideojuegoServicio {
             videojuegoDTO.setId(videojuego.getId());
             videojuegoDTO.setNombre(videojuego.getNombre());
             videojuegoDTO.setDescripcion(videojuego.getDescripcion());
+            videojuegoDTO.setCategoria((categoriaRepositorio.findById(videojuego.getCategoria().getId())).orElse(null));
+            videojuegoDTO.setCaracteristicas(videojuego.getCaracteristicas());
 
             String stringImagenes = videojuego.getImagenes();
             List<String> listaImagenes = List.of(stringImagenes.split(","));
@@ -66,7 +70,7 @@ public class VideojuegoServicio {
             videojuegoDTO.setId(videojuego.getId());
             videojuegoDTO.setNombre(videojuego.getNombre());
             videojuegoDTO.setDescripcion(videojuego.getDescripcion());
-            videojuegoDTO.setCategoria(videojuego.getCategoria());
+            videojuegoDTO.setCategoria((categoriaRepositorio.findById(videojuego.getCategoria().getId())).orElse(null));
             videojuegoDTO.setCaracteristicas(videojuego.getCaracteristicas());
 
             String stringImagenes = videojuego.getImagenes();

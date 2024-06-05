@@ -7,10 +7,11 @@ import { useState, useEffect } from "react";
 function BarraBuscador() {
   const url = `http://localhost:8080/videojuegos`;
   const [videoJuegos, setVideoJuegos] = useState([]);
-  const [cantidad, setCantidad] = useState(10);
+
   const [busqueda, setBusqueda] = useState("");
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
+  const [cantidad, setCantidad] = useState(10);
 
   const handleSearch = (e) => {
     setBusqueda(e.target.value);
@@ -29,8 +30,8 @@ function BarraBuscador() {
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
-        const shuffledData = shuffleArray(response.data);
-        setVideoJuegos(shuffledData);
+
+        setVideoJuegos(response.data);
       } catch (error) {
         console.error("Hubo un error al hacer la solicitud:", error);
       }
@@ -64,10 +65,10 @@ function BarraBuscador() {
         </div>
       </div>
       <section className="cards-recomendado">
-        <h2>Recomendados</h2>
+        <h2>Busqueda:</h2>
         {isSubmiting ? (
           <div className="container-cards flex">
-            {filteredData.slice(0, cantidad).map((videojuego) => (
+            {filteredData.map((videojuego) => (
               <CardJuego key={videojuego.id} videojuego={videojuego} />
             ))}
           </div>
@@ -85,11 +86,3 @@ function BarraBuscador() {
 
 export default BarraBuscador;
 
-function shuffleArray(array) {
-  const shuffledArray = array.slice(); // Crear una copia del array para no mutar el original
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-  }
-  return shuffledArray;
-}

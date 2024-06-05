@@ -8,7 +8,6 @@ import lombok.Data;
 public class AuthRespuestaDTO {
     private String tokenDeAcceso;
     private String tipoDeToken = "Bearer ";
-
     public AuthRespuestaDTO(String tokenDeAcceso) {
         this.tokenDeAcceso = tokenDeAcceso;
     }

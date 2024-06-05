@@ -3,6 +3,7 @@ package com.proyectoIntegrador.gameShare.controlador;
 import com.proyectoIntegrador.gameShare.dto.AuthRespuestaDTO;
 import com.proyectoIntegrador.gameShare.dto.UsuarioLoginDTO;
 import com.proyectoIntegrador.gameShare.dto.UsuarioRegistroDTO;
+import com.proyectoIntegrador.gameShare.dto.UsuarioRespuestaDTO;
 import com.proyectoIntegrador.gameShare.entidad.Usuario;
 import com.proyectoIntegrador.gameShare.seguridad.JwtGenerador;
 import com.proyectoIntegrador.gameShare.servicio.UsuarioServicio;
@@ -35,8 +36,18 @@ public class AuthControlador {
         ));
         SecurityContextHolder.getContext().setAuthentication(auth);
 
+        Usuario usuarioBuscado = usuarioServicio.buscarUsuarioPorEmail(usuarioLogin.getEmail()).orElse(null);
+        UsuarioRespuestaDTO usuarioRespuesta = new UsuarioRespuestaDTO();
+        usuarioRespuesta.setId(usuarioBuscado.getId());
+        usuarioRespuesta.setNombre(usuarioBuscado.getNombre());
+        usuarioRespuesta.setApellido(usuarioBuscado.getApellido());
+        usuarioRespuesta.setEmail(usuarioBuscado.getEmail());
+        usuarioRespuesta.setEdad(usuarioBuscado.getEdad());
+        usuarioRespuesta.setRol(usuarioBuscado.getRol());
+        usuarioRespuesta.setListaDeJuegos(usuarioBuscado.getListaDeJuegos());
+
         String token = jwtGenerador.generarToken(auth);
-        return new ResponseEntity<>( new AuthRespuestaDTO(token), HttpStatus.OK);
+        return new ResponseEntity<>( new AuthRespuestaDTO(token, usuarioRespuesta), HttpStatus.OK);
     }
     @PostMapping("/registrarAdmin")
     public  ResponseEntity<Usuario> registrarUsuarioAdmin(@Valid @RequestBody UsuarioRegistroDTO usuarioDTO){

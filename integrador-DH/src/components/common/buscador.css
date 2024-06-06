@@ -35,3 +35,7 @@
     box-shadow: 0 0 0 0.2rem rgba(55, 181, 182, 0.25);
   }
 
+
+.list-group{
+  z-index: 5;
+}

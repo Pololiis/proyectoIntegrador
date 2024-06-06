@@ -13,7 +13,7 @@ import Panel from "./components/routes/Panel";
 
 function App() {
   return (
-    <>
+    <div >
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
@@ -30,7 +30,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

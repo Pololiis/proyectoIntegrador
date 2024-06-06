@@ -54,6 +54,7 @@ function BarraBuscador() {
     <div className="container buscador">
       <div className="row justify-content-center">
         <div className="col-sm-12 col-md-6 col-lg-6 position-relative">
+            <h2>Busqueda:</h2>
           <div className="input-group mb-2 buscador-pequeno">
             <input
               onChange={handleSearch}
@@ -74,11 +75,11 @@ function BarraBuscador() {
             </button>
           </div>
           {showSuggestions && (
-            <ul className="list-group position-absolute w-100">
+            <ul className="list-group  position-absolute w-100">
               {filteredSuggestions.map((videojuego) => (
                 <li
                   key={videojuego.id}
-                  className="list-group-item list-group-item-action"
+                  className="list-group-item  list-group-item-action"
                   onClick={() => {
                     setBusqueda(videojuego.nombre);
                     setShowSuggestions(false);
@@ -92,7 +93,6 @@ function BarraBuscador() {
         </div>
       </div>
       <section className="cards-recomendado">
-        <h2>Busqueda:</h2>
         {isSubmiting ? (
           <div className="container-cards flex">
             {filteredData.map((videojuego) => (

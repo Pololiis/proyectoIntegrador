@@ -24,9 +24,10 @@
 .card__container {
   display: contents;
   row-gap: 1rem;
+  
 }
 
-border: 1px solid red;
+
 .card {
   position: relative;
   overflow: hidden;

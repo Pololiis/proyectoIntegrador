@@ -7,8 +7,8 @@ const CardJuego = ({ videojuego }) => {
 
 
   console.log(videojuego.nombre);
-  return (
-    <div className="card__container">
+  return ( 
+    <div className="card__container ">
         <article className="card">
         <img src={videojuego.imagenes[0]} alt={videojuego.nombre} className="card__img" />
         <div className="card__data">

@@ -29,9 +29,9 @@ const handleSubmit = async (values, { setSubmitting, resetForm }) => {
   
       if (response.data.tokenDeAcceso) {
         localStorage.setItem("token", response.data.tokenDeAcceso);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
   
-        onLoginSuccess(response.data.user);
+        onLoginSuccess(response.data.usuario);
   
         resetForm();
       } else {

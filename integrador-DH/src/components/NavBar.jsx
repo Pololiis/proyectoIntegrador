@@ -18,7 +18,7 @@ function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [usuario, setUser] = useState(null);
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -47,19 +47,19 @@ function NavBar() {
     setIsRegisterModalOpen(false);
   };
 
-  const handleLoginSuccess = (user) => {
-    setUser(user);
+  const handleLoginSuccess = (usuario) => {
+    setUser(usuario);
     closeLoginModal();
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem("usuario");
     setUser(null);
   };
 
-  const renderUserAvatar = (user) => {
-    const initials = user.nombre
+  const renderUserAvatar = (usuario) => {
+    const initials = usuario.nombre
       .split(" ")
       .map((name) => name[0])
       .join("");
@@ -67,7 +67,7 @@ function NavBar() {
       <div className="user-info">
         <Link to="/usuario" className="avatar-link">
           <span className="avatar">{initials}</span>
-          <span className="user-name">{user.nombre}</span>
+          <span className="user-name">{usuario.nombre}</span>
         </Link>
         <button onClick={handleLogout} className="btn btn-logout">
           Cerrar Sesión
@@ -99,8 +99,8 @@ function NavBar() {
               </li>
             </ul>
             <div className="d-flex container-buttons">
-              {user ? (
-                renderUserAvatar(user)
+              {usuario ? (
+                renderUserAvatar(usuario)
               ) : (
                 <>
                   <button className="btn btn-bd-primary me-2" onClick={openLoginModal}>

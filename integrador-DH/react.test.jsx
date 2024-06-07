@@ -1,34 +1,35 @@
 import { render,screen } from "@testing-library/react";
 import { describe,it,test,expect } from "vitest";
-import App from "./App";
-import Footer from "./components/Footer";
-import Main from "./components/Main";
-import Home from "./components/routes/Home";
-import Header from "./components/Header";
-import NavBar from "./components/NavBar";
+import App from "./src/App";
+import Footer from "./src/components/Footer";
+import Main from "./src/components/Main";
+import Home from "./src/components/routes/Home";
+import Header from "./src/components/Header";
+import NavBar from "./src/components/NavBar";
 
 
 describe("Test Home", () => {
     test("deberia renderizarse el componente Home en App", () => {
     render(<App/>);
     expect(<Home/>).toBeDefined();
+    screen.debug();
     })});
 
 describe("Test Main", () => {
     test("deberia renderizarse el componente  Main en Home", () => {
-    render(<Home/>);
+    render(<App/>);
     expect(<Main/>).toBeTruthy();
     })});
 describe("Test NavBar", () => {
     it("deberia renderizarse el componente NavBar en App", () => {
     render(<App/>);
-    expect(<NavBar/>).toBeTruthy();
+    expect(<NavBar/>).toBeDefined();
     })});
   
 describe("Test Header", () => {
     test("deberia renderizarse el componente header en App", () => {
     render(<App/>);
-    expect(<Header/>).toBeTruthy();
+    expect(<Header/>).toBeDefined();
     })});
 describe("Test Footer", () => {
     test("deberia renderizarse el componente footer en App", () => {
@@ -38,7 +39,7 @@ describe("Test Footer", () => {
 
 describe("Test Cards Juego", () => {
     test("deberia renderizarse el componente card container en el Main", () => {
-    render(<Main/>);
+    render(<App/>);
     expect(<card__container/>).toBeTruthy();
     })});
 describe("Test Boton registrarse", () => {
@@ -66,8 +67,21 @@ describe("Test Cards Juego", () => {
     })});
 describe("Test Cards Juego", () => {
     test("deberia renderizarse el componente container header y contener el boton Iniciar Sesión", () => {
-    render(<App/>);
+    render(<main/>);
     
     screen.findAllByText('Iniciar Sesión');
     expect("Iniciar Sesión").toBeTruthy();
     })});
+describe("Test Footer", () => {
+test("deberia renderizarse el componente container Footer y tener el logo", () => {
+render(<Footer/>);
+const mensaje =screen.queryAllByText('logo');
+expect(mensaje).toBeDefined();
+})});
+
+
+describe("Test Footer", () => {
+test("deberia renderizarse el componente container Footer y tener el logo", () => {
+render(<Footer/>);
+expect(screen.getAllByAltText('logo')).toBeDefined();
+})});

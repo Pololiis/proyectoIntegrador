@@ -24,11 +24,11 @@ try {
     }
     );
 
-    if (response.data.token) {
-    localStorage.setItem("token", response.data.token);
-    localStorage.setItem("user", JSON.stringify(response.data.user));
+    if (response.data.tokenDeAcceso) {
+    localStorage.setItem("tokenDeAcceso", response.data.tokenDeAcceso);
+    localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
 
-    onLoginSuccess(response.data.user);
+    onLoginSuccess(response.data.usuario);
 
     resetForm();
     } else {

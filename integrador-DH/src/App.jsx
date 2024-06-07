@@ -13,7 +13,7 @@ import Panel from "./components/routes/Panel";
 
 function App() {
   return (
-    <div >
+    <div className="App">
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>

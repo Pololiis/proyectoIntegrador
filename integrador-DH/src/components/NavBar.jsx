@@ -50,7 +50,7 @@ function NavBar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem("usuario");
     setUser(null);
   };
 
@@ -139,4 +139,3 @@ function NavBar() {
 }
 
 export default NavBar;
-

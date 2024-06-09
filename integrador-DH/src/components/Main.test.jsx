@@ -1,4 +1,7 @@
 import { describe,test,expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import Main from "../components/Main";
+import App from "../App";
 
 
 function shuffleArray(array) {
@@ -27,5 +30,45 @@ describe("Test shuffleArray", () => {
     const array = [1, 2, 3, 4, 5];
     const shuffledArray = shuffleArray(array);
     expect(shuffledArray.sort()).toEqual(array.sort());
+  });
+  
+});
+
+
+describe("Main component", () => {
+  test("should render the welcome message", () => {
+    render(<App />);
+    const welcomeMessage = screen.getByText("Bienvenido a");
+    expect(welcomeMessage).toBeInTheDocument();
+  });
+
+  test("should render the GameShare title", () => {
+    render(<App />);
+    const gameShareTitle = screen.getByText("GameShare");
+    expect(gameShareTitle).toBeInTheDocument();
+  });
+
+  test("should render the start button", () => {
+    render(<App />);
+    const startButton = screen.getByText("Comenzar!");
+    expect(startButton).toBeInTheDocument();
+  });
+
+  test("should render the platforms section", () => {
+    render(<App />);
+    const platformsSection = screen.getByText("Plataformas");
+    expect(platformsSection).toBeInTheDocument();
+  });
+
+  test("should render the search bar", () => {
+    render(<App />);
+    const searchBar = screen.getByRole("textbox");
+    expect(searchBar).toBeInTheDocument();
+  });
+
+  test("should render the recommended games section", () => {
+    render(<App />);
+    const recommendedGamesSection = screen.getAllByText("Recomendados");
+    expect(recommendedGamesSection).toBeDefined();
   });
 });

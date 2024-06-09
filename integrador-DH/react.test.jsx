@@ -8,25 +8,24 @@ import Header from "./src/components/Header";
 import NavBar from "./src/components/NavBar";
 
 
-describe("Test Home", () => {
+describe("Test Render Home", () => {
     test("deberia renderizarse el componente Home en App", () => {
     render(<App/>);
     expect(<Home/>).toBeDefined();
-    screen.debug();
     })});
 
-describe("Test Main", () => {
+describe("Test Render Main", () => {
     test("deberia renderizarse el componente  Main en Home", () => {
     render(<App/>);
     expect(<Main/>).toBeTruthy();
     })});
-describe("Test NavBar", () => {
+describe("Test Render NavBar", () => {
     it("deberia renderizarse el componente NavBar en App", () => {
     render(<App/>);
     expect(<NavBar/>).toBeDefined();
     })});
   
-describe("Test Header", () => {
+describe("Test Render Header", () => {
     test("deberia renderizarse el componente header en App", () => {
     render(<App/>);
     expect(<Header/>).toBeDefined();
@@ -68,7 +67,6 @@ describe("Test Cards Juego", () => {
 describe("Test Cards Juego", () => {
     test("deberia renderizarse el componente container header y contener el boton Iniciar Sesión", () => {
     render(<main/>);
-    
     screen.findAllByText('Iniciar Sesión');
     expect("Iniciar Sesión").toBeTruthy();
     })});

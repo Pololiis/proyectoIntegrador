@@ -24,7 +24,9 @@
 .card__container {
   display: contents;
   row-gap: 1rem;
+  
 }
+
 
 .card {
   position: relative;

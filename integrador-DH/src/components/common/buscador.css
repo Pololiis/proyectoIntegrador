@@ -35,3 +35,16 @@
     box-shadow: 0 0 0 0.2rem rgba(55, 181, 182, 0.25);
   }
 
+
+.list-group{
+  margin-left: 1vw;
+  z-index: 5;
+  border: 1px solid red;
+  max-width: 90%;
+}
+
+.cards-recomendado{
+  margin: auto;
+  padding: 20px 0px;
+}
+

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/main.css";
@@ -6,39 +5,29 @@ import BarraBuscador from "./common/BarraBuscador";
 import CardJuego from "./common/CardJuego";
 import CardPlataforma from "./common/CardPlataforma";
 
-
 function Main() {
   const url = `http://localhost:8080/videojuegos`;
   const [videoJuegos, setVideoJuegos] = useState([]);
-
-
   const [cantidad, setCantidad] = useState(10);
-
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
-
         const shuffledData = shuffleArray(response.data);
         setVideoJuegos(shuffledData);
       } catch (error) {
         console.error("Hubo un error al hacer la solicitud:", error);
       }
     };
-
     fetchData();
   }, []);
-
-
   return (
     <div>
-
       <div className="bg-h1 flex">
         <div className="container-h1 flex">
           <h1>Bienvenido a</h1>
           <span className="glow text-outline">GameShare</span>
-
 
           <a href="#body">
             <button class="btn-father">
@@ -54,23 +43,20 @@ function Main() {
         <h2>Plataformas</h2>
         <CardPlataforma />
         <BarraBuscador />
-
         <section className="cards-recomendado">
           <h2>Recomendados</h2>
-          <div className="container-cards   flex">
-            {videoJuegos.slice(0, cantidad).map((videojuego) => (
-              <CardJuego key={videojuego.id} videojuego={videojuego} />
-            ))}
-          </div>
+          {videoJuegos.slice(0, cantidad).map((videojuego) => (
+            <CardJuego key={videojuego.id} videojuego={videojuego} />
+          ))}
         </section>
-
       </div>
     </div>
   );
 }
 
+export default Main;
 
-// Función de barajado
+
 function shuffleArray(array) {
   const shuffledArray = array.slice(); // Crear una copia del array para no mutar el original
   for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -79,5 +65,3 @@ function shuffleArray(array) {
   }
   return shuffledArray;
 }
-
-export default Main;

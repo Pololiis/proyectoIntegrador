@@ -1,8 +1,15 @@
 import "./buscador.css";
 import CardJuego from "./CardJuego";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import {
+  Container,
+  TextField,
+  Button,
+  List,
+  ListItem,
+  CircularProgress,
+} from "@mui/material";
 
 function BarraBuscador() {
   const url = `http://localhost:8080/videojuegos`;
@@ -12,6 +19,21 @@ function BarraBuscador() {
   const [filteredData, setFilteredData] = useState([]);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
+  const handleStartDateChange = (event) => {
+    const selectedStartDate = event.target.value;
+    setStartDate(selectedStartDate);
+    if (endDate && selectedStartDate > endDate) {
+      setEndDate(selectedStartDate);
+    }
+  };
+
+  const handleEndDateChange = (event) => {
+    const selectedEndDate = event.target.value;
+    setEndDate(selectedEndDate);
+  };
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value;
@@ -31,11 +53,20 @@ function BarraBuscador() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmiting(true);
-    const filtered = videoJuegos.filter((videojuego) =>
-      videojuego.nombre.toLowerCase().includes(busqueda.toLowerCase())
-    );
+    
+    // Filtrado por nombre y fechas
+    const filtered = videoJuegos.filter((videojuego) => {
+      const isNameMatch = videojuego.nombre.toLowerCase().includes(busqueda.toLowerCase());
+      const isDateMatch = startDate && endDate
+        ? new Date(videojuego.disponibilidadInicio) <= new Date(endDate) &&
+          new Date(videojuego.disponibilidadFin) >= new Date(startDate)
+        : true;
+      return isNameMatch && isDateMatch;
+    });
+
     setFilteredData(filtered);
     setShowSuggestions(false);
+    setIsSubmiting(false);
   };
 
   useEffect(() => {
@@ -51,57 +82,90 @@ function BarraBuscador() {
   }, []);
 
   return (
-    <div className="container buscador">
-      <div className="row justify-content-center">
-        <div className="col-sm-12 col-md-6 col-lg-6 position-relative">
-            <h2>Busqueda:</h2>
-          <div className="input-group mb-2 buscador-pequeno">
-            <input
-              onChange={handleSearch}
-              type="text"
-              className="form-control buscador-input"
-              placeholder="Buscar..."
-              aria-label="Buscar"
-              aria-describedby="button-addon2"
-              value={busqueda}
-            />
-            <button
-              onClick={handleSubmit}
-              className="btn btn-buscador btn-bd-primary"
-              type="button"
-              id="button-addon2"
-            >
-              <i className="bi bi-search"></i>
-            </button>
-          </div>
-          {showSuggestions && (
-            <ul className="list-group  position-absolute w-100">
-              {filteredSuggestions.map((videojuego) => (
-                <li
-                  key={videojuego.id}
-                  className="list-group-item  list-group-item-action"
-                  onClick={() => {
-                    setBusqueda(videojuego.nombre);
-                    setShowSuggestions(false);
-                  }}
-                >
-                  {videojuego.nombre}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+    <Container className="buscador borde" maxWidth="md">
+      <div className="buscador-header">
+        <h2>Buscar Videojuegos</h2>
+        <form onSubmit={handleSubmit} className="buscador-form">
+          <TextField
+            onChange={handleSearch}
+            value={busqueda}
+            label="Buscar..."
+            variant="outlined"
+            className="buscador-input"
+            aria-label="Buscar videojuegos"
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className="buscador-button"
+            disabled={isSubmiting}
+          >
+            {isSubmiting ? <CircularProgress size={24} /> : "Buscar"}
+          </Button>
+        </form>
+        {showSuggestions && (
+          <List className="buscador-suggestions">
+            {filteredSuggestions.map((videojuego) => (
+              <ListItem
+                key={videojuego.id}
+                onClick={() => {
+                  setBusqueda(videojuego.nombre);
+                  setShowSuggestions(false);
+                }}
+                className="buscador-suggestion"
+                role="option"
+              >
+                {videojuego.nombre}
+              </ListItem>
+            ))}
+          </List>
+        )}
+      </div>
+      <div className="buscador-filters">
+        
+        <TextField
+          id="startDate"
+          label="Fecha de inicio"
+          type="date"
+          value={startDate}
+          onChange={handleStartDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          className="buscador-input"
+          inputProps={{
+            "aria-label": "Fecha de inicio",
+          }}
+        />
+        <TextField
+          id="endDate"
+          label="Fecha de fin"
+          type="date"
+          value={endDate}
+          onChange={handleEndDateChange}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          className="buscador-input"
+          inputProps={{
+            "aria-label": "Fecha de fin",
+            min: startDate,
+          }}
+        />
       </div>
       <section className="cards-recomendado">
         {isSubmiting ? (
+          <CircularProgress className="loading-spinner" />
+        ) : (
           <div className="container-cards flex">
             {filteredData.map((videojuego) => (
               <CardJuego key={videojuego.id} videojuego={videojuego} />
             ))}
           </div>
-        ) : null}
+        )}
       </section>
-    </div>
+    </Container>
   );
 }
 

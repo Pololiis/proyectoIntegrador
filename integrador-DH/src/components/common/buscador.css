@@ -1,50 +1,72 @@
-
 .buscador {
-    margin-top: 20px;
-  }
-  
-  .buscador-pequeno {
-    max-width: 100%;
-    padding: 5px;
-  }
-  
-  .buscador-input {
-    height: 30px;
-    font-size: 14px;
-  }
-  
-  .input-group .form-control {
-    border-radius: 0.25rem 0 0 0.25rem;
-    border: 1px solid var(--color3);
-  }
-  
-  .input-group .btn-buscador {
-    height: 30px;
-    border-radius: 0 0.25rem 0.25rem 0;
-    background-color: var(--color3);
-    color: white;
-  }
-  
-  .input-group .btn-buscador:hover {
-    background-color: var(--color1);
-    color: var(--color3);
-  }
-  
-  .input-group .form-control:focus {
-    border-color: var(--color3);
-    box-shadow: 0 0 0 0.2rem rgba(55, 181, 182, 0.25);
-  }
-
-
-.list-group{
-  margin-left: 1vw;
-  z-index: 5;
-  border: 1px solid red;
-  max-width: 90%;
+  padding: 20px;
+  margin-top: 20px;
 }
 
-.cards-recomendado{
-  margin: auto;
-  padding: 20px 0px;
+.buscador-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.buscador-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.buscador-input {
+  flex: 1;
+}
+
+.buscador-button {
+  align-self: flex-end;
+}
+
+.buscador-suggestions {
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 10px;
+  z-index: 1000;
+}
+
+.buscador-suggestion {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.buscador-suggestion:hover,
+.buscador-suggestion:focus {
+  background-color: #f0f0f0;
+}
+
+.buscador-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.buscador-filter {
+  flex: 1;
+}
+
+
+
+.cards-recomendado {
+  margin-top: 20px;
+}
+
+.container-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.loading-spinner {
+  display: block;
+  margin: 20px auto;
+}

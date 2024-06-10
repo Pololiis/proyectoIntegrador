@@ -1,127 +1,83 @@
-import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./loginForm.css";
+import "./usuarioPanel.css";
 
-const LoginForm = ({ onLoginSuccess }) => {
-const [mensaje, setMensaje] = useState("");
+const UsuarioPanel = () => {
+const navigate = useNavigate();
+const user = JSON.parse(localStorage.getItem("usuario"));
+const [alquileres, setAlquileres] = useState([]);
 
-const validationSchema = Yup.object().shape({
-email: Yup.string()
-    .required("El email es requerido")
-    .email("*El email es invalido"),
-contrasenia: Yup.string().required("La contraseña es requerida"),
-});
-
-const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-try {
-    const response = await axios.post(
-    "http://localhost:8080/conectarse",
-    {
-        email: values.email,
-        contrasenia: values.contrasenia,
-    }
-    );
-
-    if (response.data.token) {
-    localStorage.setItem("token", response.data.token);
-    localStorage.setItem("user", JSON.stringify(response.data.user));
-
-    onLoginSuccess(response.data.user);
-
-    resetForm();
-    } else {
-    setMensaje("Inicio de sesión fallido");
-    }
-} catch (error) {
-    console.error("Error al iniciar sesión:", error);
-    setMensaje("Error al iniciar sesión");
-} finally {
-    setSubmitting(false);
+useEffect(() => {
+if (!user) {
+    navigate("/"); // Redirigir al usuario a la página principal si no está autenticado
+} else {
+    // Fetch alquileres del usuario
+    axios.get(`http://localhost:8080/alquileres/usuario/${user.id}`)
+    .then(response => {
+        setAlquileres(response.data);
+    })
+    .catch(error => {
+        console.error("Error al obtener alquileres:", error);
+    });
 }
+}, [user, navigate]);
+
+const handleLogout = () => {
+localStorage.removeItem("token");
+localStorage.removeItem("usuario");
+navigate("/");
 };
 
+const handleAlquiler = () => {
+const nuevoAlquiler = {
+    usuario: { id: user.id },
+    videojuego: { id: 1 }, // Cambia esto según el videojuego seleccionado
+    fechaReserva: new Date().toISOString().split('T')[0], // Fecha actual
+    duracionAlquiler: 7 // Duración de ejemplo
+};
+
+axios.post("http://localhost:8080/alquileres", nuevoAlquiler)
+    .then(response => {
+    setAlquileres([...alquileres, response.data]);
+    })
+    .catch(error => {
+    console.error("Error al crear alquiler:", error);
+    });
+};
+
+const initials = user?.nombre
+?.split(" ")
+.map((name) => name[0])
+.join("");
+
+if (!user) {
+return null; // Mostrar un mensaje de carga o redirigir a otra página
+}
+
 return (
-<div className="container my-5 container-form">
-    <div className="row justify-content-center">
-    <div className="col-12 col-md-8">
-        <h2 className="text-center mb-4">Iniciar Sesión</h2>
-        <Formik
-        initialValues={{ email: "", contrasenia: "" }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-        >
-        {({ isSubmitting, errors, touched }) => (
-            <Form>
-            <div className="mb-3">
-                <label className="form-label">E-Mail:</label>
-                <Field
-                className={`form-control ${
-                    errors.email && touched.email
-                    ? "is-invalid"
-                    : touched.email
-                    ? "is-valid"
-                    : ""
-                }`}
-                type="text"
-                name="email"
-                placeholder="Email"
-                />
-                <ErrorMessage
-                name="email"
-                component="div"
-                className="text-danger"
-                />
-            </div>
-
-            <div className="mb-3">
-                <label className="form-label">Contraseña:</label>
-                <Field
-                className={`form-control ${
-                    errors.contrasenia && touched.contrasenia
-                    ? "is-invalid"
-                    : touched.contrasenia
-                    ? "is-valid"
-                    : ""
-                }`}
-                type="password"
-                name="contrasenia"
-                placeholder="Contraseña"
-                />
-                <ErrorMessage
-                name="contrasenia"
-                component="div"
-                className="text-danger"
-                />
-            </div>
-
-            <button
-                className="btn btn-primary w-100"
-                type="submit"
-                disabled={isSubmitting}
-            >
-                Iniciar Sesión
-            </button>
-            </Form>
-        )}
-        </Formik>
-        {mensaje && (
-        <div
-            className={`alert ${
-            mensaje.includes("éxito") ? "alert-success" : "alert-danger"
-            } mt-4`}
-            role="alert"
-        >
-            {mensaje}
-        </div>
-        )}
+<div className="usuario-panel">
+    <div className="avatar-container">
+    <div className="avatar">{initials}</div>
+    <h2>{user?.nombre}</h2>
     </div>
-    </div>
+    <button onClick={handleLogout} className="btn btn-logout">
+    Cerrar Sesión
+    </button>
+    <button onClick={handleAlquiler} className="btn btn-alquiler">
+    Hacer un Alquiler
+    </button>
+    <h3>Mis Alquileres</h3>
+    <ul>
+    {alquileres.map((alquiler) => (
+        <li key={alquiler.idAlquiler}>
+        {alquiler.videojuego.nombre} - {new Date(alquiler.fechaReserva).toLocaleDateString()} - {alquiler.duracionAlquiler} días
+        </li>
+    ))}
+    </ul>
 </div>
 );
 };
 
-export default LoginForm;
-
+export default UsuarioPanel;
 

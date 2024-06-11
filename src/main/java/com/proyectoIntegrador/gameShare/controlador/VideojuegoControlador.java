@@ -133,7 +133,7 @@ public class VideojuegoControlador {
 
         videojuego.setImagenes(urisImagenes);
 
-        Videojuego registroDeVideojuego = videojuegoServicio.registrarVideojuego(videojuego);
+        Videojuego registroDeVideojuego = videojuegoServicio.actualizarVideojuego(id,videojuego);
 
         if(registroDeVideojuego != null) {
             return new ResponseEntity(registroDeVideojuego, HttpStatus.CREATED);

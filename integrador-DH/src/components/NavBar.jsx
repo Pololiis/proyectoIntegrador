@@ -8,7 +8,7 @@ import LoginForm from "./routes/LoginForm";
 import CrearUsuario from "./routes/crearUsuario";
 import Modal from "react-modal";
 
-Modal.setAppElement('#root');
+Modal.setAppElement(document.getElementById('root'));
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

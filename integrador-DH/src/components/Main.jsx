@@ -30,9 +30,9 @@ function Main() {
           <span className="glow text-outline">GameShare</span>
 
           <a href="#body">
-            <button class="btn-father">
-              <span class="circle" aria-hidden="true"></span>
-              <span class="button-text">Comenzar!</span>
+            <button className="btn-father">
+              <span className="circle" aria-hidden="true"></span>
+              <span className="button-text">Comenzar!</span>
             </button>
           </a>
         </div>

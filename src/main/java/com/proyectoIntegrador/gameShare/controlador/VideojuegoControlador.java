@@ -36,7 +36,8 @@ public class VideojuegoControlador {
                                                       @RequestParam("nombre") @NotEmpty @Size(min = 2, max = 450) String nombre,
                                                       @Valid @RequestParam("descripcion") @NotEmpty @Size(min = 30) String descripcion,
                                                       @RequestParam("plataforma") Categoria categoria,
-                                                      @RequestParam() List<Caracteristica> caracteristicas)
+                                                      @RequestParam("caracteristicas") List<Caracteristica> caracteristicas)
+
             throws IOException {
 
         VideojuegoDTO videojuego = new VideojuegoDTO();
@@ -99,7 +100,7 @@ public class VideojuegoControlador {
                                                        @RequestParam("nombre") @NotEmpty @Size(min = 2, max = 450) String nombre,
                                                        @Valid @RequestParam("descripcion") @NotEmpty @Size(min = 30) String descripcion,
                                                        @RequestParam("plataforma") Categoria categoria,
-                                                       @RequestParam() List<Caracteristica> caracteristicas)
+                                                       @RequestParam("caracteristicas") List<Caracteristica> caracteristicas)
             throws IOException {
 
         VideojuegoDTO videojuego = videojuegoServicio.buscarVideojuegoPorId(id);

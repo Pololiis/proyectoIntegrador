@@ -27,7 +27,8 @@ public class VideojuegoServicio {
             Videojuego videojuegoAGuardar = new Videojuego();
             videojuegoAGuardar.setNombre(videojuego.getNombre());
             videojuegoAGuardar.setDescripcion(videojuego.getDescripcion());
-
+            videojuegoAGuardar.setCategoria(videojuego.getCategoria());
+            videojuegoAGuardar.setCaracteristicas(videojuego.getCaracteristicas());
             List<String> imagenes = videojuego.getImagenes();
             videojuegoAGuardar.setImagenes(String.join(",", imagenes));
 

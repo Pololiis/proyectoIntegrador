@@ -23,5 +23,6 @@ public class Categoria {
     private String imagen;
 
     @OneToMany(mappedBy = "categoria")
+    @JsonIgnore
     private List<Videojuego> videojuegos;
 }

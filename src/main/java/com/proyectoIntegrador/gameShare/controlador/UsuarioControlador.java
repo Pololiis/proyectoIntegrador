@@ -45,18 +45,22 @@ public class UsuarioControlador {
         return ResponseEntity.ok(usuarioServicio.listarUsuarios());
     }
 
-    /* TODO: Corregir PUT
-    @PutMapping("/{id}")
-    public ResponseEntity<String> actualizarUsuario(@RequestBody Usuario usuario){
-        Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorID(usuario.getId());
-        if(usuarioBuscado.isPresent()){
-            usuarioServicio.actualizarUsuario(usuario);
-            return ResponseEntity.ok("Usuario actualizado correctamente.");
-        }else{
-            return ResponseEntity.badRequest().body("Usuario no encontrado en la base de datos.")  ;
+
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<Usuario> actualizarUsuario(
+            @PathVariable Long id,
+            @Valid @RequestBody UsuarioRegistroDTO usuarioDTO
+    ) {
+        Optional<Usuario> usuarioExistente = usuarioServicio.buscarUsuarioPorID(id);
+
+        if (!usuarioExistente.isPresent()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            Usuario usuarioActualizado = usuarioServicio.actualizarUsuario(id, usuarioDTO);
+            return ResponseEntity.ok(usuarioActualizado);
         }
     }
-     */
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarUsario(@PathVariable Long id){

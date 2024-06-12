@@ -54,18 +54,19 @@ public class SeguridadConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers(HttpMethod.POST, "/videojuegos/nuevo").hasAnyAuthority("ADMINISTRADOR", "USUARIO")
+                        .requestMatchers(HttpMethod.POST, "/videojuegos/nuevo").authenticated()
+                        .requestMatchers(HttpMethod.DELETE,"/videojuegos/**" ).authenticated()
                         .requestMatchers(HttpMethod.GET, "/videojuegos/**").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/videojuegos/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/videojuegos/**").hasAuthority("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.PUT, "/videojuegos/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/usuarios/nuevo").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/usuarios/**").hasAnyAuthority("ADMINISTRADOR", "USUARIO")
+                        .requestMatchers(HttpMethod.GET, "/usuarios/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/**").hasAuthority("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.PUT, "/usuarios/**").hasAuthority("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.POST, "/conectarse").permitAll()
                         .requestMatchers(HttpMethod.POST, "/registrarAdmin").permitAll()
                         .requestMatchers(HttpMethod.GET, "/caracteristicas/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/categorias/**" ).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/categorias/nuevo").authenticated()
                         .anyRequest().authenticated()
                 );
         peticion.addFilterBefore(jwtFiltroDeAutenticacion(), UsernamePasswordAuthenticationFilter.class);

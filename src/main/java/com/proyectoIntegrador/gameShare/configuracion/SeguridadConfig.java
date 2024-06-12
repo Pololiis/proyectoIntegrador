@@ -57,6 +57,7 @@ public class SeguridadConfig {
                         .requestMatchers(HttpMethod.POST, "/videojuegos/nuevo").hasAnyAuthority("ADMINISTRADOR", "USUARIO")
                         .requestMatchers(HttpMethod.GET, "/videojuegos/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/videojuegos/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/videojuegos/**").hasAuthority("ADMINISTRADOR")
                         .requestMatchers(HttpMethod.POST, "/usuarios/nuevo").permitAll()
                         .requestMatchers(HttpMethod.GET, "/usuarios/**").hasAnyAuthority("ADMINISTRADOR", "USUARIO")
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/**").hasAuthority("ADMINISTRADOR")

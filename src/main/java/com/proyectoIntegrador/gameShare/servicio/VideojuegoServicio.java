@@ -106,10 +106,20 @@ public class VideojuegoServicio {
     public String eliminarVideojuego(Long id) {
         Boolean videojuegoExiste = videojuegoRepositorio.existsById(id);
 
-        if(videojuegoExiste) {
+        if (videojuegoExiste) {
+            Videojuego videojuego = videojuegoRepositorio.findById(id).orElseThrow(() -> new EntityNotFoundException("Videojuego con ID #" + id + " no encontrado."));
+
+            // Limpiar las relaciones
+            videojuego.getCaracteristicas().clear();
+            videojuego.setCategoria(null);
+            videojuegoRepositorio.save(videojuego);
+
+            // Ahora eliminar el videojuego
             videojuegoRepositorio.deleteById(id);
-            return "Videojuego con ID #" + id + " eliminado con éxito.";
+            return "Videojuego con ID #" + "id eliminado con éxito.";
         }
-        throw new EntityNotFoundException("Videojuego con ID #" + id + " no encontrado.");
+        throw new EntityNotFoundException("Videojuego con ID #" + "id no encontrado.");
     }
+
+
 }

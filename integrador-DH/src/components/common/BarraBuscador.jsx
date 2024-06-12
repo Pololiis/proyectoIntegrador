@@ -94,6 +94,35 @@ function BarraBuscador() {
             className="buscador-input"
             aria-label="Buscar videojuegos"
           />
+          <TextField
+            id="startDate"
+            label="Fecha de inicio"
+            type="date"
+            value={startDate}
+            onChange={handleStartDateChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            className="buscador-input"
+            inputProps={{
+              "aria-label": "Fecha de inicio",
+            }}
+          />
+          <TextField
+            id="endDate"
+            label="Fecha de fin"
+            type="date"
+            value={endDate}
+            onChange={handleEndDateChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            className="buscador-input"
+            inputProps={{
+              "aria-label": "Fecha de fin",
+              min: startDate,
+            }}
+          />
           <Button
             type="submit"
             variant="contained"
@@ -122,39 +151,7 @@ function BarraBuscador() {
           </List>
         )}
       </div>
-      <div className="buscador-filters">
-        
-        <TextField
-          id="startDate"
-          label="Fecha de inicio"
-          type="date"
-          value={startDate}
-          onChange={handleStartDateChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          className="buscador-input"
-          inputProps={{
-            "aria-label": "Fecha de inicio",
-          }}
-        />
-        <TextField
-          id="endDate"
-          label="Fecha de fin"
-          type="date"
-          value={endDate}
-          onChange={handleEndDateChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          className="buscador-input"
-          inputProps={{
-            "aria-label": "Fecha de fin",
-            min: startDate,
-          }}
-        />
-      </div>
-      <section className="cards-recomendado">
+      <section className="cards-recomendado m-auto">
         {isSubmiting ? (
           <CircularProgress className="loading-spinner" />
         ) : (

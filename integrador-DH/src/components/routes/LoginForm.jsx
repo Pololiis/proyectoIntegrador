@@ -35,8 +35,8 @@ const handleSubmit = async (values, { setSubmitting, resetForm }) => {
       localStorage.setItem("token", response.data.tokenDeAcceso);
       localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
 
-      // Configurar el token de acceso como el encabezado de autorización predeterminado
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.tokenDeAcceso}`; 
+     
+      
 
       onLoginSuccess(response.data.usuario);
       console.log(localStorage.getItem("usuario"));

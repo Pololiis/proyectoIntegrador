@@ -1,5 +1,6 @@
 package com.proyectoIntegrador.gameShare.entidad;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -27,5 +28,6 @@ public class Caracteristica {
     private String imagen;
 
     @ManyToMany(mappedBy = "caracteristicas")
+    @JsonIgnore
     private List<Videojuego> videojuegos;
 }

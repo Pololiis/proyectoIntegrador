@@ -47,3 +47,22 @@ INSERT INTO videojuegos (nombre, descripcion, imagenes, categoria_id) VALUES
 ("God of War", "God of War es la vuelta de Kratos a los videojuegos tras la trilogía original. Esta nueva entrega para PlayStation 4, si bien mantendrá varios de los ingredientes indivisibles de su jugabilidad, apostará por un nuevo comienzo para el personaje y una ambientación nórdica, ofreciéndonos una perspectiva más madura y realista de la mitología de dioses y monstruos milenarios habitual en la serie de títulos. En God of War, Kratos será un guerrero más curtido y pasivo, pues tendrá que desempeñar el rol de padre en un frío y hostil escenario, al que parece haberse retirado para olvidar su pasado.", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/GoW1.jpg,https://gameshare-bucket.s3.sa-east-1.amazonaws.com/GoW2.jpg", 4),
 ("The Witcher 3: Wild Hunt", "El jugador controlará una vez más a Geralt de Rivia, el afamado cazador de monstruos, (también conocido como el Lobo Blanco) y se enfrentará a un diversificadísimo bestiario y a unos peligros de unas dimensiones nunca vistas hasta el momento en la serie, mientras recorre los reinos del Norte. Durante su aventura, tendrá que hacer uso de un gran arsenal de armas, armaduras y todo tipo de magias para enfrentarse al que hasta ahora ha sido su mayor desafío, la cacería salvaje.", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Witcher1.jpg,https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Witcher2.jpg", 5),
 ("Ori and the Will of the Wisps", "Ori and the Will of the Wisps es la continuación del emblemático videojuego de plataformas y aventuras Ori and the Blind Forest, desarrollado por Moon Studios. Se trata de una secuela que sigue ofreciéndonos un estilo impecable a nivel visual y jugable.", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Ori-1.jpg,https://gameshare-bucket.s3.sa-east-1.amazonaws.com/Ori-2.jpg", 5);
+
+
+INSERT INTO videojuego_caracteristica (caracteristica_id, videojuego_id) VALUES
+("1","2"),("1","8"),("1","7"),("1","8"),("1","12"),("1","14"),
+("3","3"),("3","4"),("3","5"),("3","8"),("3","1"),
+("4","9"),("4","6"),("4","10"),
+("7","11"),("7","15"),
+("9","10"),
+("10","2"),("10","3"),("10","4"),("10","8"),("10","9"),("10","12"),("10","11"),("10","13"),("10","5"),("10","7"),
+("11","1"),("11","6"),("11","7"),
+("12","1"),
+("13","4"),("13","6"),("13","10"),("13","15"),
+("15","2"),("15","3"),("15","8"),("15","9"),("15","11"),("15","12"),("15","13"),("15","14"),("15","1"),("15","5"),
+("17","9"),("17","13"),
+("18","1"),("18","4"),("18","6"),("18","7"),
+("19","8"),("19","9"),("19","10"),("19","11"),("19","12"),
+("20","2"),("20","3"),("20","5"),("20","13"),("20","14"),("20","15"),
+("21","2"),("21","3"),("21","4"),("21","5"),("21","7"),("21","9"),("21","11"),("21","12"),("21","13"),("21","14"),
+("22","1"),("22","6"),("22","8"),("22","10"),("21","15")

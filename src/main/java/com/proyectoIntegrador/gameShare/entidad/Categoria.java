@@ -20,7 +20,6 @@ public class Categoria {
     private String nombre;
 
     @NotNull
-    @Column
     private String imagen;
 
     @OneToMany(mappedBy = "categoria")

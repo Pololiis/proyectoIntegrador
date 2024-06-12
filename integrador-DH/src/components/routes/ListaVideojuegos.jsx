@@ -6,6 +6,7 @@ import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const ListaVideojuegos = () => {
   const url = `http://localhost:8080/videojuegos`;
+  const token = localStorage.getItem("token");
   const [videoJuegos, setVideoJuegos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [caracteristicas, setCaracteristicas] = useState([]);
@@ -14,11 +15,10 @@ const ListaVideojuegos = () => {
   const [formData, setFormData] = useState({
     nombre: "",
     descripcion: "",
-    imagen: [],
-    categoriaId: "",
+    imagen: [],  // Asegurar que siempre es un array
+    plataforma: "",
     caracteristicaIds: [],
   });
-
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [juegoAEliminar, setJuegoAEliminar] = useState(null);
 
@@ -53,15 +53,12 @@ const ListaVideojuegos = () => {
   };
 
   const handleConfirmEliminar = async () => {
-    try{
-      await axios.delete(`${url}/${juegoAEliminar}`);
-      setVideoJuegos(
-        videoJuegos.filter((juego) => juego.id !== juegoAEliminar)
-      );
-
-
+    try {
+      await axios.delete(`${url}/${juegoAEliminar}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setVideoJuegos(videoJuegos.filter((juego) => juego.id !== juegoAEliminar));
       handleCloseConfirmModal();
-      handleUsuario;
     } catch (error) {
       console.error("Error al eliminar el videojuego:", error);
     }
@@ -72,8 +69,8 @@ const ListaVideojuegos = () => {
     setFormData({
       nombre: juego.nombre,
       descripcion: juego.descripcion,
-      imagen: juego.imagen,
-      categoriaId: juego.categoria ? juego.categoria.id : "",
+      imagen: [], // No se pueden previsualizar archivos en input de tipo file
+      plataforma: juego.categoria ? juego.categoria.id : "",
       caracteristicaIds: juego.caracteristicas
         ? juego.caracteristicas.map((caracteristica) => caracteristica.id)
         : [],
@@ -94,7 +91,7 @@ const ListaVideojuegos = () => {
         .map((option) => option.value);
       setFormData({ ...formData, [name]: selectedOptions });
     } else if (name === "imagen") {
-      setFormData({ ...formData, [name]: files });
+      setFormData({ ...formData, [name]: Array.from(files) });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -102,18 +99,32 @@ const ListaVideojuegos = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const updatedJuego = {
-        ...currentJuego,
-        nombre: formData.nombre,
-        descripcion: formData.descripcion,
-        imagen: formData.imagen,
-        categoria: formData.categoriaId ? { id: formData.categoriaId } : null,
-        caracteristicas: formData.caracteristicaIds.map((id) => ({ id })),
-      };
-      const response = await axios.put(
-        `${url}/${currentJuego.id}`,
-        updatedJuego
-      );
+      const formDataToSend = new FormData();
+      formDataToSend.append("id", currentJuego.id);
+      formDataToSend.append("nombre", formData.nombre);
+      formDataToSend.append("descripcion", formData.descripcion);
+      formDataToSend.append("plataforma", formData.plataforma);
+
+      formData.caracteristicaIds.forEach((caracteristicaId) => {
+        formDataToSend.append("caracteristicas", caracteristicaId);
+      });
+
+      // Añadir imágenes sólo si están presentes
+      if (formData.imagen.length > 0) {
+        formData.imagen.forEach((file, index) => {
+          formDataToSend.append("imagen", file);
+        });
+      } else {
+        formDataToSend.append("imagen", new Blob(), "imagen");
+      }
+
+      const response = await axios.put(`${url}/${currentJuego.id}`, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        }
+      });
+
       setVideoJuegos(
         videoJuegos.map((juego) =>
           juego.id === currentJuego.id ? response.data : juego
@@ -125,18 +136,13 @@ const ListaVideojuegos = () => {
     }
   };
 
-  const handleImagenChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    setFormData({ ...formData, imagen: selectedFiles });
-  };
-
   const handleAgregar = () => {
     setCurrentJuego(null);
     setFormData({
       nombre: "",
       descripcion: "",
       imagen: [],
-      categoriaId: "",
+      plataforma: "",
       caracteristicaIds: [],
     });
     setShowModal(true);
@@ -147,21 +153,25 @@ const ListaVideojuegos = () => {
       const formDataToSend = new FormData();
       formDataToSend.append("nombre", formData.nombre);
       formDataToSend.append("descripcion", formData.descripcion);
-      formDataToSend.append("plataforma", formData.categoriaId);
+      formDataToSend.append("plataforma", formData.plataforma);
 
       formData.caracteristicaIds.forEach((caracteristicaId) => {
         formDataToSend.append("caracteristicas", caracteristicaId);
       });
 
-      // Agregar la parte del archivo de imagen al FormData
-      formData.imagen.forEach((file, index) => {
-        formDataToSend.append(`imagen_${index}`, file);
-      });
+      if (formData.imagen.length > 0) {
+        formData.imagen.forEach((file, index) => {
+          formDataToSend.append("imagen", file);
+        });
+      } else {
+        formDataToSend.append("imagen", new Blob(), "imagen");
+      }
 
       const response = await axios.post(`${url}/nuevo`, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
-        },
+          Authorization: `Bearer ${token}`
+        }
       });
 
       setVideoJuegos([...videoJuegos, response.data]);
@@ -170,6 +180,7 @@ const ListaVideojuegos = () => {
       console.error("Error al agregar el videojuego:", error);
     }
   };
+
   return (
     <div>
       <Button variant="primary" onClick={handleAgregar}>
@@ -238,15 +249,15 @@ const ListaVideojuegos = () => {
                 type="file"
                 name="imagen"
                 multiple
-                onChange={handleImagenChange}
+                onChange={handleChange}
               />
             </Form.Group>
-            <Form.Group controlId="categoriaId">
+            <Form.Group controlId="plataforma">  {/* Cambiado de categoriaId a plataforma */}
               <Form.Label>Categoría</Form.Label>
               <Form.Control
                 as="select"
-                name="categoriaId"
-                value={formData.categoriaId}
+                name="plataforma"  // Cambiado de categoriaId a plataforma
+                value={formData.plataforma}
                 onChange={handleChange}
               >
                 <option value="">Selecciona una categoría</option>

@@ -1,37 +1,51 @@
+/* Estilos generales para el contenedor */
 .buscador {
+  border: 1px solid #ddd;
   padding: 20px;
-  margin-top: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 20px auto;
 }
 
+/* Estilos para el encabezado */
 .buscador-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.buscador-form {
-  display: flex;
-  gap: 10px;
+  text-align: center;
   margin-bottom: 20px;
 }
 
+.buscador-header h2 {
+  font-size: 1.5em;
+  color: #333;
+}
+
+/* Estilos para el formulario */
+.buscador-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 .buscador-input {
-  flex: 1;
+  background-color: #fff;
 }
 
 .buscador-button {
-  align-self: flex-end;
+  background-color: #1976d2;
+  color: #fff;
 }
 
+.buscador-button:disabled {
+  background-color: #cccccc;
+}
+
+/* Estilos para la lista de sugerencias */
 .buscador-suggestions {
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
   margin-top: 10px;
-  z-index: 1000;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-height: 150px;
+  overflow-y: auto;
 }
 
 .buscador-suggestion {
@@ -39,23 +53,23 @@
   cursor: pointer;
 }
 
-.buscador-suggestion:hover,
-.buscador-suggestion:focus {
+.buscador-suggestion:hover {
   background-color: #f0f0f0;
 }
 
+/* Estilos para los filtros */
 .buscador-filters {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  justify-content: space-around;
+  margin-top: 20px;
 }
 
-.buscador-filter {
-  flex: 1;
+.buscador-filters .buscador-input {
+  width: 45%;
+  background-color: #fff;
 }
 
-
-
+/* Estilos para la sección de tarjetas */
 .cards-recomendado {
   margin-top: 20px;
 }
@@ -64,9 +78,12 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
 }
 
+/* Estilos para el spinner de carga */
 .loading-spinner {
   display: block;
   margin: 20px auto;
 }
+

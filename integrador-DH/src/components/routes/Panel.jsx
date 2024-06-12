@@ -14,10 +14,6 @@ const Panel = () => {
 
   const renderComponente = () => {
     switch (componenteActivo) {
-      case "usuarios":
-        return <CrearUsuario />;
-      case "videojuegos":
-        return <Agregador />;
       case "plataforma":
         return <AbmPlataforma />;
       case "listaUsuarios":
@@ -43,18 +39,7 @@ const Panel = () => {
         <h2 className="panel-titulo">PANEL DE ADMINISTRACIÓN.</h2>
       </div>
       <div className="button-row">
-        <button
-          className="btn btn-bd-primary"
-          onClick={() => setComponenteActivo("usuarios")}
-        >
-          Registrar Usuarios
-        </button>
-        <button
-          className="btn btn-bd-primary"
-          onClick={() => setComponenteActivo("videojuegos")}
-        >
-          Agregar Videojuegos
-        </button>
+       
         <button
           className="btn btn-bd-primary"
           onClick={() => setComponenteActivo("plataforma")}

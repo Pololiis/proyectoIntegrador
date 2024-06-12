@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 import { useState, useEffect } from "react";
 import "../styles/index.css";
 import "../styles/navbar.css";
@@ -8,18 +7,18 @@ import LoginForm from "./routes/LoginForm";
 import CrearUsuario from "./routes/crearUsuario";
 import Modal from "react-modal";
 
-Modal.setAppElement('#root');
+Modal.setAppElement("#root");
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [usuario, setUsuario] = useState(null);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    const savedUsuario = localStorage.getItem("usuario");
+    if (savedUsuario) {
+      setUsuario(JSON.parse(savedUsuario));
     }
   }, []);
 
@@ -43,19 +42,19 @@ function NavBar() {
     setIsRegisterModalOpen(false);
   };
 
-  const handleLoginSuccess = (user) => {
-    setUser(user);
+  const handleLoginSuccess = (usuario) => {
+    setUsuario(usuario);
     closeLoginModal();
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("usuario");
-    setUser(null);
+    setUsuario(null);
   };
 
-  const renderUserAvatar = (user) => {
-    const initials = user.nombre
+  const renderUserAvatar = (usuario) => {
+    const initials = usuario.nombre
       .split(" ")
       .map((name) => name[0])
       .join("");
@@ -63,7 +62,7 @@ function NavBar() {
       <div className="user-info">
         <Link to="/usuario" className="avatar-link">
           <span className="avatar">{initials}</span>
-          <span className="user-name">{user.nombre}</span>
+          <span className="user-name">{usuario.nombre}</span>
         </Link>
         <button onClick={handleLogout} className="btn btn-logout">
           Cerrar Sesión
@@ -93,10 +92,17 @@ function NavBar() {
                   Inicio
                 </Link>
               </li>
+              {usuario && usuario.rol.idRol === 2 && (
+                <li className="nav-item">
+                  <Link to="/administrador" className="nav-link">
+                    Panel de Administración
+                  </Link>
+                </li>
+              )}
             </ul>
             <div className="d-flex container-buttons">
-              {user ? (
-                renderUserAvatar(user)
+              {usuario ? (
+                renderUserAvatar(usuario)
               ) : (
                 <>
                   <button className="btn btn-bd-primary me-2" onClick={openLoginModal}>
@@ -134,7 +140,6 @@ function NavBar() {
         <CrearUsuario />
       </Modal>
     </>
-
   );
 }
 

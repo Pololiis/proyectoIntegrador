@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./galeriaImagenes.css";
 
-function GaleriaImagenes({ titulo, descripcion, imagenes }) {
+function GaleriaImagenes({ titulo, descripcion, imagenes, plataforma }) {
   const [mostrarMas, setMostrarMas] = useState(false);
 
   const handleVerMasClick = () => {
@@ -16,6 +16,7 @@ function GaleriaImagenes({ titulo, descripcion, imagenes }) {
       <div className="row">
         <div className="titulo-descripcion-detalle">
           <h2 className="mb-3">{titulo}</h2>
+          <h3>{plataforma}</h3>
           <p className="mb-4">{descripcion}</p>
         </div>
         <div className="col-12 d-flex container-galeria">

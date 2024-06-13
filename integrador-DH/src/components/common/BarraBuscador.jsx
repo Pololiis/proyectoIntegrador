@@ -21,6 +21,12 @@ function BarraBuscador() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [placeholder, setPlaceholder] = useState("Buscar...");
+
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
+  };
 
   const handleStartDateChange = (event) => {
     const selectedStartDate = event.target.value;
@@ -45,15 +51,23 @@ function BarraBuscador() {
       );
       setFilteredSuggestions(suggestions);
       setShowSuggestions(true);
+
+      // Actualizar placeholder con la primera sugerencia
+      if (suggestions.length > 0) {
+        setPlaceholder(`¿Quisiste decir: ${suggestions[0].nombre}?`);
+      } else {
+        setPlaceholder("Buscar...");
+      }
     } else {
       setShowSuggestions(false);
+      setPlaceholder("Buscar...");
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmiting(true);
-    
+
     // Filtrado por nombre y fechas
     const filtered = videoJuegos.filter((videojuego) => {
       const isNameMatch = videojuego.nombre.toLowerCase().includes(busqueda.toLowerCase());
@@ -91,6 +105,7 @@ function BarraBuscador() {
             value={busqueda}
             label="Buscar..."
             variant="outlined"
+            placeholder={placeholder}
             className="buscador-input"
             aria-label="Buscar videojuegos"
           />
@@ -106,6 +121,7 @@ function BarraBuscador() {
             className="buscador-input"
             inputProps={{
               "aria-label": "Fecha de inicio",
+              min: getTodayDate(),
             }}
           />
           <TextField
@@ -126,8 +142,7 @@ function BarraBuscador() {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
-            className="buscador-button"
+            className="buscador-button btn-bd-primary"
             disabled={isSubmiting}
           >
             {isSubmiting ? <CircularProgress size={24} /> : "Buscar"}
@@ -167,3 +182,4 @@ function BarraBuscador() {
 }
 
 export default BarraBuscador;
+

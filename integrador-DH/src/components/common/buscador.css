@@ -1,6 +1,7 @@
 
 .buscador {
     margin-top: 20px;
+    text-align: center;
   }
   
   .buscador-pequeno {
@@ -26,7 +27,7 @@
   }
   
   .input-group .btn-buscador:hover {
-    background-color: var(--color1);
+    background-color: rgba(10, 29, 86, 0.7);
     color: var(--color3);
   }
   
@@ -43,8 +44,15 @@
   max-width: 90%;
 }
 
-.cards-recomendado{
-  margin: auto;
-  padding: 20px 0px;
+.cards-src{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: auto;
+  max-width: 850px;
+  
 }
+
 

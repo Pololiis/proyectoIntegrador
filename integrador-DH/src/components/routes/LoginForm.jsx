@@ -27,11 +27,11 @@ const handleSubmit = async (values, { setSubmitting, resetForm }) => {
       
       console.log('Respuesta del servidor:', response.data);
   
-      if (response.data.tokenDeAcceso) {
-        localStorage.setItem("token", response.data.tokenDeAcceso);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+      if (response.data.tokenDeAccesoDeAcceso) {
+        localStorage.setItem("tokenDeAcceso", response.data.tokenDeAccesoDeAcceso);
+        localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
   
-        onLoginSuccess(response.data.user);
+        onLoginSuccess(response.data.usuario);
   
         resetForm();
       } else {

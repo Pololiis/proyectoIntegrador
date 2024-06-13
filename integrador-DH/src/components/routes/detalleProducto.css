@@ -1,13 +1,20 @@
 .container-detalle{
-    padding: 25vh 10vw;
-    margin-bottom: 8vh;
-    background-color: var(--color2);
-    color: white;
-    opacity: 90%;
+  padding: 5vh;
+  margin-bottom: 8vh;
+  color: white;
+  text-align: center;
+  border-radius: 1rem;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
 }
-
+.container-color{
+  background-color: rgba(10, 29, 86, 0.7);
+  border-radius: 1rem;
+  padding: 20px;
+  
+}
 .h3-caracteristicas{
-  margin: 10vh;
+  margin: 5vh;
 }
 
 .container-caracteristicas {

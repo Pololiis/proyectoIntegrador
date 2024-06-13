@@ -14,12 +14,12 @@ function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [usuario, setusuario] = useState(null);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    const savedusuario = localStorage.getItem("usuario");
+    if (savedusuario) {
+      setusuario(JSON.parse(savedusuario));
     }
   }, []);
 
@@ -43,27 +43,27 @@ function NavBar() {
     setIsRegisterModalOpen(false);
   };
 
-  const handleLoginSuccess = (user) => {
-    setUser(user);
+  const handleLoginSuccess = (usuario) => {
+    setusuario(usuario);
     closeLoginModal();
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
+    localStorage.removeItem("tokenDeAcceso");
+    localStorage.removeItem("usuario");
+    setusuario(null);
   };
 
-  const renderUserAvatar = (user) => {
-    const initials = user.nombre
+  const renderusuarioAvatar = (usuario) => {
+    const initials = usuario.nombre
       .split(" ")
       .map((name) => name[0])
       .join("");
     return (
-      <div className="user-info">
+      <div className="usuario-info">
         <Link to="/usuario" className="avatar-link">
           <span className="avatar">{initials}</span>
-          <span className="user-name">{user.nombre}</span>
+          <span className="usuario-name">{usuario.nombre}</span>
         </Link>
         <button onClick={handleLogout} className="btn btn-logout">
           Cerrar Sesión
@@ -95,8 +95,8 @@ function NavBar() {
               </li>
             </ul>
             <div className="d-flex container-buttons">
-              {user ? (
-                renderUserAvatar(user)
+              {usuario ? (
+                renderusuarioAvatar(usuario)
               ) : (
                 <>
                   <button className="btn btn-bd-primary me-2" onClick={openLoginModal}>

@@ -2,9 +2,8 @@
 max-width: 500px;
 margin: auto;
 padding: 20px;
-background-color: #f7f7f7;
 border-radius: 10px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
 }
 
 .form-label {
@@ -37,7 +36,7 @@ right: auto;
 bottom: auto;
 margin-right: -50%;
 transform: translate(-50%, -50%);
-background: white;
+background-color: #0a1d56;
 padding: 20px;
 border-radius: 10px;
 outline: none;

@@ -92,7 +92,7 @@ function BarraBuscador() {
           )}
         </div>
       </div>
-      <section className="cards-recomendado">
+      <section className="cards-src">
         {isSubmiting ? (
           <div className="container-cards flex">
             {filteredData.map((videojuego) => (

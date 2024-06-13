@@ -51,7 +51,7 @@ function DetalleProducto() {
             descripcion={videoJuegoSeleccionado.descripcion}
             imagenes={videoJuegoSeleccionado.imagenes}
           />
-          <div >
+          <div className="container-color">
             <h3 className="h3-caracteristicas">Caracteristicas</h3>
           <div className="container-caracteristicas">
             {caracteristica.slice(0 , cantidad).map((caracteristica, index) => (
@@ -63,6 +63,7 @@ function DetalleProducto() {
                   alt=""
                 />
               </div>
+
               
             ))}
             </div>

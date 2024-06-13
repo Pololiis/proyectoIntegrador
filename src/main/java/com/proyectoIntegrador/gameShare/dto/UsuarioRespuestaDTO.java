@@ -4,7 +4,7 @@ import com.proyectoIntegrador.gameShare.entidad.Rol;
 import com.proyectoIntegrador.gameShare.entidad.Videojuego;
 import lombok.Data;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class UsuarioRespuestaDTO {
@@ -14,5 +14,5 @@ public class UsuarioRespuestaDTO {
     private String email;
     private Integer edad;
     private Rol rol;
-    private ArrayList<Videojuego> listaDeJuegos;
+    private List<Videojuego> listaDeJuegos;
 }

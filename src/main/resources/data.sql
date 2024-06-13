@@ -1,4 +1,4 @@
-INSERT INTO roles (nombre_rol) VALUES ("USUARIO"), ("ADMINISTRADOR");
+INSERT INTO roles (nombre) VALUES ("USUARIO"), ("ADMINISTRADOR");
 
 INSERT INTO categorias (nombre, imagen) VALUES
 ("PlayStation 3", "https://gameshare-bucket.s3.sa-east-1.amazonaws.com/iconos+plataformas/icons8-play-station-48.png"),

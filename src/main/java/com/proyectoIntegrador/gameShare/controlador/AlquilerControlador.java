@@ -24,7 +24,7 @@ public class AlquilerControlador {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AlquilerDTO> buscarAlquilerPorId(@PathVariable int id) {
+    public ResponseEntity<AlquilerDTO> buscarAlquilerPorId(@PathVariable Long id) {
         AlquilerDTO alquilerDTO = alquilerServicio.findById(id);
         if (alquilerDTO == null) {
             return ResponseEntity.notFound().build();
@@ -38,7 +38,7 @@ public class AlquilerControlador {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AlquilerDTO> actualizarAlquiler(@PathVariable int id, @RequestBody AlquilerDTO alquilerDTO) {
+    public ResponseEntity<AlquilerDTO> actualizarAlquiler(@PathVariable Long id, @RequestBody AlquilerDTO alquilerDTO) {
         AlquilerDTO actualizarAlquiler = alquilerServicio.save(alquilerDTO);
         if (actualizarAlquiler == null) {
             return ResponseEntity.notFound().build();
@@ -47,7 +47,7 @@ public class AlquilerControlador {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAlquiler(@PathVariable int id) {
+    public ResponseEntity<Void> deleteAlquiler(@PathVariable Long id) {
         alquilerServicio.deleteById(id);
         return ResponseEntity.noContent().build();
     }

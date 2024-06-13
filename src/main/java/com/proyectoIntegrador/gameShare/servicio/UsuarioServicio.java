@@ -39,7 +39,7 @@ public class UsuarioServicio {
          */
         usuario.setContrasenia(encriptarContrasenia.encode(usuarioDTO.getContrasenia()));
 
-        Rol rol = rolRepositorio.findByNombreRol("USUARIO").orElse(null);
+        Rol rol = rolRepositorio.findByNombre("USUARIO").orElse(null);
         usuario.setRol(rol);
 
         return usuarioRepositorio.save(usuario);
@@ -55,7 +55,7 @@ public class UsuarioServicio {
         */
         usuario.setContrasenia(encriptarContrasenia.encode(usuarioDTO.getContrasenia()));
 
-        Rol rol = rolRepositorio.findByNombreRol("ADMINISTRADOR").orElse(null);
+        Rol rol = rolRepositorio.findByNombre("ADMINISTRADOR").orElse(null);
         usuario.setRol(rol);
 
         return usuarioRepositorio.save(usuario);
@@ -82,7 +82,7 @@ public class UsuarioServicio {
     */
         usuario.setContrasenia(encriptarContrasenia.encode(usuarioDTO.getContrasenia()));
 
-        Rol rol = rolRepositorio.findByNombreRol("USUARIO").orElse(null);
+        Rol rol = rolRepositorio.findByNombre("USUARIO").orElse(null);
         usuario.setRol(rol);
 
         return usuarioRepositorio.save(usuario);

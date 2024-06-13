@@ -18,31 +18,31 @@ public class RolServicio {
         return rolRepositorio.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    public RolDTO buscarRolPorId(int id) {
+    public RolDTO buscarRolPorId(Long id) {
         return rolRepositorio.findById(id).map(this::convertToDTO).orElse(null);
     }
 
     public RolDTO crearRol(RolDTO rolDTO) {
         Rol rol = new Rol();
-        rol.setNombreRol(rolDTO.getNombreRol());
+        rol.setNombre(rolDTO.getNombre());
         return convertToDTO(rolRepositorio.save(rol));
     }
 
-    public RolDTO actualizarRol(int id, RolDTO rolDTO) {
+    public RolDTO actualizarRol(Long id, RolDTO rolDTO) {
         return rolRepositorio.findById(id).map(rol -> {
-            rol.setNombreRol(rolDTO.getNombreRol());
+            rol.setNombre(rolDTO.getNombre());
             return convertToDTO(rolRepositorio.save(rol));
         }).orElse(null);
     }
 
-    public void borrarRol(int id) {
+    public void borrarRol(Long id) {
         rolRepositorio.deleteById(id);
     }
 
     private RolDTO convertToDTO(Rol rol) {
         RolDTO rolDTO = new RolDTO();
-        rolDTO.setIdRol(rol.getIdRol());
-        rolDTO.setNombreRol(rol.getNombreRol());
+        rolDTO.setId(rol.getId());
+        rolDTO.setNombre(rol.getNombre());
         return rolDTO;
     }
 

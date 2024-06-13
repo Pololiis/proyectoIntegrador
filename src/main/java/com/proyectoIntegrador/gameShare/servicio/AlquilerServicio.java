@@ -27,7 +27,7 @@ public class AlquilerServicio {
         return alquileres.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public AlquilerDTO findById(int id) {
+    public AlquilerDTO findById(Long id) {
         Optional<Alquiler> alquiler = alquilerRepositorio.findById(id);
         return alquiler.map(this::convertToDto).orElse(null);
     }
@@ -38,13 +38,13 @@ public class AlquilerServicio {
         return convertToDto(savedAlquiler);
     }
 
-    public void deleteById(int id) {
+    public void deleteById(Long id) {
         alquilerRepositorio.deleteById(id);
     }
 
     private AlquilerDTO convertToDto(Alquiler alquiler) {
         AlquilerDTO alquilerDTO = new AlquilerDTO();
-        alquilerDTO.setIdAlquiler(alquiler.getIdAlquiler());
+        alquilerDTO.setId(alquiler.getId());
         alquilerDTO.setFechaReserva(alquiler.getFechaReserva());
         alquilerDTO.setDuracionAlquiler(alquiler.getDuracionAlquiler());
         alquilerDTO.setUsuariosId(alquiler.getUsuario().getId());
@@ -54,7 +54,7 @@ public class AlquilerServicio {
 
     private Alquiler convertToEntity(AlquilerDTO alquilerDTO) {
         Alquiler alquiler = new Alquiler();
-        alquiler.setIdAlquiler(alquilerDTO.getIdAlquiler());
+        alquiler.setId(alquilerDTO.getId());
         alquiler.setFechaReserva(alquilerDTO.getFechaReserva());
         alquiler.setDuracionAlquiler(alquilerDTO.getDuracionAlquiler());
         

@@ -8,6 +8,7 @@ import com.proyectoIntegrador.gameShare.entidad.Usuario;
 import com.proyectoIntegrador.gameShare.seguridad.JwtGenerador;
 import com.proyectoIntegrador.gameShare.servicio.UsuarioServicio;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,11 +23,16 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/")
 @CrossOrigin("*")
-@AllArgsConstructor
 public class AuthControlador {
     private AuthenticationManager asistenteDeAutenticacion;
     private JwtGenerador jwtGenerador;
     private UsuarioServicio usuarioServicio;
+    @Autowired
+    public AuthControlador(AuthenticationManager asistenteDeAutenticacion, JwtGenerador jwtGenerador, UsuarioServicio usuarioServicio) {
+        this.asistenteDeAutenticacion = asistenteDeAutenticacion;
+        this.jwtGenerador = jwtGenerador;
+        this.usuarioServicio = usuarioServicio;
+    }
 
     @PostMapping(value = "/conectarse")
     public ResponseEntity<AuthRespuestaDTO> conectarse(@RequestBody UsuarioLoginDTO usuarioLogin) {

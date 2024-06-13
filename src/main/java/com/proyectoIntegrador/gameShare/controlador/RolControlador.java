@@ -23,7 +23,7 @@ public class RolControlador {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RolDTO> buscarRolPorId(@PathVariable int id) {
+    public ResponseEntity<RolDTO> buscarRolPorId(@PathVariable Long id) {
         RolDTO rolDTO = rolServicio.buscarRolPorId(id);
         if(rolDTO == null) {
             return ResponseEntity.notFound().build();
@@ -37,7 +37,7 @@ public class RolControlador {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RolDTO> actualizarRol(@PathVariable int id, @RequestBody RolDTO rolDTO) {
+    public ResponseEntity<RolDTO> actualizarRol(@PathVariable Long id, @RequestBody RolDTO rolDTO) {
         RolDTO actualizarRolDTO = rolServicio.actualizarRol(id, rolDTO);
         if (actualizarRolDTO == null) {
             return ResponseEntity.notFound().build();
@@ -46,7 +46,7 @@ public class RolControlador {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> borrarRol(@PathVariable int id) {
+    public ResponseEntity<Void> borrarRol(@PathVariable Long id) {
         rolServicio.borrarRol(id);
         return ResponseEntity.noContent().build();
     }

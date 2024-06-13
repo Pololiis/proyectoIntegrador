@@ -21,7 +21,7 @@ public class AdminIniciador implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try (Connection connection = dataSource.getConnection()) {
             String hashedPassword = encriptarContrasenia.encode("Hola123$");
-            String sql = "INSERT INTO usuarios (nombre, apellido, email, contrasenia, roles_id_rol) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO usuarios (nombre, apellido, email, contrasenia, rol_id) VALUES (?, ?, ?, ?, ?)";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, "admin");
                 statement.setString(2, "admin");

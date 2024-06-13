@@ -6,17 +6,19 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
-@Table(name = "Usuarios")
+@Table(name = "usuarios")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
     private String nombre;
+
     @NotNull
     private String apellido;
 
@@ -27,15 +29,21 @@ public class Usuario {
     private LocalDate fechaNacimiento;
 
     private Integer edad;
+
     @NotNull
     private String contrasenia;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "roles_id_rol")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "rol_id"  )
     private Rol rol;
 
     @Column(name = "lista_de_juegos")
-    private ArrayList<Videojuego> listaDeJuegos;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Videojuego> listaDeJuegos;
+
+    @Column(name = "lista_de_alquileres")
+    @OneToMany(mappedBy = "usuario",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Alquiler> listaDeAlquileres;
 
     public Integer calcularEdad (LocalDate fechaNacimiento){
         LocalDate fechaActual = LocalDate.now();

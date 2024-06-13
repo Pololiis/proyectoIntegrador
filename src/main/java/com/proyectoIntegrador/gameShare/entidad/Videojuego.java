@@ -42,8 +42,8 @@ public class Videojuego {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "videojuego_caracteristica",
-            joinColumns =  @JoinColumn(name = "videojuego_id"),
-            inverseJoinColumns = @JoinColumn(name = "caracteristica_id"))
+            joinColumns =  @JoinColumn(name = "videojuego_id", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name = "caracteristica_id", referencedColumnName="id"))
     private List<Caracteristica> caracteristicas;
 
     private String requisitos;

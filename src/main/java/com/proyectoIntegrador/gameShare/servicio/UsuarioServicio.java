@@ -69,6 +69,24 @@ public class UsuarioServicio {
     public List<Usuario> listarUsuarios() {
         return usuarioRepositorio.findAll();
     }
-    public void actualizarUsuario(Usuario usuario) { usuarioRepositorio.save(usuario);}
+    public Usuario actualizarUsuario(Long id, UsuarioRegistroDTO usuarioDTO) {
+        Usuario usuario = usuarioRepositorio.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        usuario.setNombre(usuarioDTO.getNombre());
+        usuario.setApellido(usuarioDTO.getApellido());
+        usuario.setEmail(usuarioDTO.getEmail());
+    /*
+    usuario.setFechaNacimiento(usuarioDTO.getFechaNacimiento());
+    usuario.setEdad(usuario.calcularEdad(usuarioDTO.getFechaNacimiento()));
+    */
+        usuario.setContrasenia(encriptarContrasenia.encode(usuarioDTO.getContrasenia()));
+
+        Rol rol = rolRepositorio.findByNombreRol("USUARIO").orElse(null);
+        usuario.setRol(rol);
+
+        return usuarioRepositorio.save(usuario);
+    }
+
     public void eliminarUsuario(Long id) { usuarioRepositorio.deleteById(id);}
 }

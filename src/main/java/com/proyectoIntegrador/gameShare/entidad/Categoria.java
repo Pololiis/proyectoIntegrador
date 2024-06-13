@@ -19,8 +19,9 @@ public class Categoria {
     @Column(nullable = false, unique = true)
     private String nombre;
 
+    private String descripcion;
+
     @NotNull
-    @Column
     private String imagen;
 
     @OneToMany(mappedBy = "categoria")

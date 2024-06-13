@@ -7,12 +7,11 @@
   scroll-behavior: smooth;
 }
 
-body{
-  background-color:  #f3f3e4;
+body {
+  background-color: #f3f3e4;
 }
 
-
-footer{ 
+footer {
   color: rgb(190, 189, 189);
   background-color: var(--color1);
   height: 20vh;
@@ -37,11 +36,11 @@ footer{
   justify-content: space-between;
 }
 
-.justify-flex-end{
+.justify-flex-end {
   justify-content: flex-end;
 }
 
-.justify-center{
+.justify-center {
   justify-content: center;
 }
 
@@ -62,12 +61,9 @@ footer{
   display: flex;
 }
 
-.btn-bd-primary:hover{
+.btn-bd-primary:hover {
   border: 1px solid var(--color3);
 }
-
-
-
 
 .btn-bd-secondary {
   --bs-btn-font-weight: 400;
@@ -81,22 +77,15 @@ footer{
   --bs-btn-active-bg: var(--color3);
 }
 
-
-
-
-
-.btn-bd-secondary:hover{
+.btn-bd-secondary:hover {
   border: 1px solid white;
 }
 
-
-hr{
+hr {
   width: 22.1vw;
 }
 
-h2{
+h2 {
   font-size: 3rem;
   color: white;
 }
-
-

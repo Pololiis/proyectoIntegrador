@@ -97,7 +97,7 @@ const CrearUsuario = () => {
 
   return (
 
-    <div className="container my-5 m-auto container-form">
+    <div className="container  m-auto register">
       <div className="row justify-content-center">
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">Registrar Usuario</h2>
@@ -225,7 +225,7 @@ const CrearUsuario = () => {
                 </div>
 
                 <button
-                  className="btn btn-primary w-100"
+                  className="btn btn-bd-primary w-100"
                   type="submit"
                   disabled={isSubmitting}
                 >

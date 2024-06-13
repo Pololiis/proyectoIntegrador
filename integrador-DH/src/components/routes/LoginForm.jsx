@@ -15,38 +15,48 @@ contrasenia: Yup.string().required("La contraseña es requerida"),
 });
 
 const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    try {
-      console.log('Enviando solicitud al servidor...');
-      const response = await axios.post(
-        "http://localhost:8080/conectarse",
-        {
-          email: values.email,
-          contrasenia: values.contrasenia,
-        }
-      );
-      
-      console.log('Respuesta del servidor:', response.data);
-  
-      if (response.data.tokenDeAccesoDeAcceso) {
-        localStorage.setItem("tokenDeAcceso", response.data.tokenDeAccesoDeAcceso);
-        localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
-  
-        onLoginSuccess(response.data.usuario);
-  
-        resetForm();
-      } else {
-        setMensaje("Inicio de sesión fallido");
+
+  try {
+    console.log('Enviando solicitud al servidor...');
+    const response = await axios.post(
+      "http://localhost:8080/conectarse",
+      {
+        email: values.email,
+        contrasenia: values.contrasenia,
+
       }
-    } catch (error) {
-      console.error("Error al iniciar sesión:", error);
-      setMensaje("Error al iniciar sesión");
-    } finally {
-      setSubmitting(false);
+    );
+    
+
+
+    console.log('Respuesta del servidor:', response.data);
+
+
+
+    if (response.data.tokenDeAcceso) {
+      localStorage.setItem("token", response.data.tokenDeAcceso);
+      localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
+
+     
+      
+
+      onLoginSuccess(response.data.usuario);
+      console.log(localStorage.getItem("usuario"));
+      resetForm();
+    } else {
+      setMensaje("Inicio de sesión fallido");
     }
-  };
+  } catch (error) {
+    console.error("Error al iniciar sesión:", error);
+    setMensaje("Error al iniciar sesión");
+  } finally {
+    setSubmitting(false);
+  }
+};
+;
 return (
-<div className="container my-5 container-form">
-    <div className="row justify-content-center">
+<div className="container m-auto login">
+    <div className="row justify-content-center ">
     <div className="col-12 col-md-8">
         <h2 className="text-center mb-4">Iniciar Sesión</h2>
         <Formik
@@ -99,7 +109,7 @@ return (
             </div>
 
             <button
-                className="btn btn-primary w-100"
+                className="btn btn-bd-primary w-100"
                 type="submit"
                 disabled={isSubmitting}
             >

@@ -1,58 +1,99 @@
-
+/* Estilos generales para el contenedor */
 .buscador {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .buscador-pequeno {
-    max-width: 100%;
-    padding: 5px;
-  }
-  
-  .buscador-input {
-    height: 30px;
-    font-size: 14px;
-  }
-  
-  .input-group .form-control {
-    border-radius: 0.25rem 0 0 0.25rem;
-    border: 1px solid var(--color3);
-  }
-  
-  .input-group .btn-buscador {
-    height: 30px;
-    border-radius: 0 0.25rem 0.25rem 0;
-    background-color: var(--color3);
-    color: white;
-  }
-  
-  .input-group .btn-buscador:hover {
-    background-color: rgba(10, 29, 86, 0.7);
-    color: var(--color3);
-  }
-  
-  .input-group .form-control:focus {
-    border-color: var(--color3);
-    box-shadow: 0 0 0 0.2rem rgba(55, 181, 182, 0.25);
-  }
-
-
-.list-group{
-  margin-left: 1vw;
-  z-index: 5;
-  border: 1px solid red;
-  max-width: 90%;
+  border: 1px solid #ddd;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 20px auto;
 }
 
-.cards-src{
-  width: 100%;
+/* Estilos para el encabezado */
+.buscador-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.buscador-header h2 {
+  font-size: 1.5em;
+  color: #333;
+}
+
+/* Estilos para el formulario */
+.buscador-form {
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-direction: column;
-  padding: auto;
-  max-width: 850px;
-  
+  align-items: center;
+  gap: 10px;
+}
+
+.buscador-input {
+  background-color: #fff;
+}
+
+/* buscador.css */
+
+/* Cambiar el color del placeholder a negro */
+.buscador-input ::placeholder {
+  color: black;
+}
+
+
+.buscador-button {
+  background-color: #1976d2;
+  color: #fff;
+}
+
+.buscador-button:disabled {
+  background-color: #cccccc;
+}
+
+/* Estilos para la lista de sugerencias */
+.buscador-suggestions {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.buscador-suggestion {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.buscador-suggestion:hover {
+  background-color: #f0f0f0;
+}
+
+/* Estilos para los filtros */
+.buscador-filters {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.buscador-filters .buscador-input {
+  width: 45%;
+  background-color: #fff;
+}
+
+/* Estilos para la sección de tarjetas */
+.cards-recomendado {
+  margin-top: 20px;
+}
+
+.container-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Estilos para el spinner de carga */
+.loading-spinner {
+  display: block;
+  margin: 20px auto;
+
 }
 
 

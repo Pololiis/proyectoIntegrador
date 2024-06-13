@@ -29,6 +29,7 @@ function Main() {
         <div className="container-h1 flex">
           <h1>Bienvenido a</h1>
           <span className="glow text-outline">GameShare</span>
+
         </div>
       </div>
 

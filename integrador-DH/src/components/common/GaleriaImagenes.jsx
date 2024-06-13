@@ -4,7 +4,9 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 
-function GaleriaImagenes({ titulo, descripcion, imagenes, videojuegoId, usuarioId, token }) {
+
+function GaleriaImagenes({ titulo, descripcion, imagenes, plataforma }) {
+
   const [mostrarMas, setMostrarMas] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const [startDate, setStartDate] = useState(null);
@@ -58,6 +60,7 @@ function GaleriaImagenes({ titulo, descripcion, imagenes, videojuegoId, usuarioI
    
        
       <div className="row">
+
         <div className="col-lg-6 d-flex flex-column align-items-center">
           <div className="img-principal-container mb-3">
             <img
@@ -96,6 +99,7 @@ function GaleriaImagenes({ titulo, descripcion, imagenes, videojuegoId, usuarioI
           )}
 
           </div>
+
         </div>
         
         

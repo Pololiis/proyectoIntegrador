@@ -37,6 +37,7 @@ const AbmPlataforma = () => {
           },
         }
       );
+      console.log(token);
       setMensaje("Categoría agregada con éxito");
       resetForm();
       console.log(response);

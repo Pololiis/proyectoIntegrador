@@ -43,7 +43,7 @@ function DetalleProducto() {
             imagenes={videoJuegoSeleccionado.imagenes}
           />
 
-          <div>
+          <div className="caractGaleria">
             <h3 className="h3-caracteristicas">Caracteristicas</h3>
             <div className="container-caracteristicas">
               {videoJuegoSeleccionado.caracteristicas.map(

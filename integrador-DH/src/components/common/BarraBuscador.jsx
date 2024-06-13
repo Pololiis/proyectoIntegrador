@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 
 function BarraBuscador() {
-  const url = `http://localhost:8080/videojuegos`;
+  const url = "http://localhost:8080/videojuegos";
   const [videoJuegos, setVideoJuegos] = useState([]);
   const [busqueda, setBusqueda] = useState("");
   const [isSubmiting, setIsSubmiting] = useState(false);
@@ -22,6 +22,7 @@ function BarraBuscador() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [placeholder, setPlaceholder] = useState("Buscar...");
+  const [isExpanded, setIsExpanded] = useState(false); // Nuevo estado
 
   const getTodayDate = () => {
     const today = new Date();
@@ -54,18 +55,23 @@ function BarraBuscador() {
 
       // Actualizar placeholder con la primera sugerencia
       if (suggestions.length > 0) {
-        setPlaceholder(`¿Quisiste decir: ${suggestions[0].nombre}?`);
+         setPlaceholder(`¿Quisiste decir: ${suggestions[0].nombre}?`);
       } else {
         setPlaceholder("Buscar...");
       }
+      setIsExpanded(true); // Expande el buscador
     } else {
       setShowSuggestions(false);
       setPlaceholder("Buscar...");
+      setIsExpanded(false); // Contrae el buscador
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!busqueda && (!startDate || !endDate)) {
+      return; // No realizar búsqueda si los campos están vacíos
+    }
     setIsSubmiting(true);
 
     // Filtrado por nombre y fechas
@@ -81,6 +87,7 @@ function BarraBuscador() {
     setFilteredData(filtered);
     setShowSuggestions(false);
     setIsSubmiting(false);
+    setIsExpanded(true); // Expande el buscador para mostrar los resultados
   };
 
   useEffect(() => {
@@ -96,7 +103,7 @@ function BarraBuscador() {
   }, []);
 
   return (
-    <Container className="buscador borde" maxWidth="md">
+    <Container className={`buscador ${isExpanded ? 'expandido' : 'contraido'}`} maxWidth="md">
       <div className="buscador-header">
         <h2>Buscar Videojuegos</h2>
         <form onSubmit={handleSubmit} className="buscador-form">
@@ -156,6 +163,7 @@ function BarraBuscador() {
                 onClick={() => {
                   setBusqueda(videojuego.nombre);
                   setShowSuggestions(false);
+                  setIsExpanded(true); // Expande el buscador si se selecciona una sugerencia
                 }}
                 className="buscador-suggestion"
                 role="option"
@@ -168,11 +176,10 @@ function BarraBuscador() {
       </div>
 
       <section className="cards-src">
-
         {isSubmiting ? (
           <CircularProgress className="loading-spinner" />
         ) : (
-          <div className="container-cards flex">
+          <div className="container-card flex">
             {filteredData.map((videojuego) => (
               <CardJuego key={videojuego.id} videojuego={videojuego} />
             ))}
@@ -183,5 +190,4 @@ function BarraBuscador() {
   );
 }
 
-export default BarraBuscador;
-
+export default BarraBuscador;

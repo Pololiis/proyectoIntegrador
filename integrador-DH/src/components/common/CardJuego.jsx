@@ -14,7 +14,7 @@ const CardJuego = ({ videojuego }) => {
         <div className="card__data">
           <h2 className="card__title">{videojuego.nombre}</h2>
           <span className="card__description">{videojuego.descripcion}</span>
-          <Link to={`/detalleProducto/${videojuego.id}`} className="btn btn-bd-primary">Ver Más</Link>
+          <Link to={`/detalleProducto/${videojuego.id}`} className="btn btn-primary btn-accion">Ver Más</Link>
         </div>
       </article>
     </div>

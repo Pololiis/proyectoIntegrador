@@ -27,7 +27,7 @@ function CardPlataforma() {
     return chunkedArr;
   };
 
-  const chunkedPlataformas = chunkArray(plataformas, 3);
+  const chunkedPlataformas = chunkArray(plataformas, 2);
   
 
   return (

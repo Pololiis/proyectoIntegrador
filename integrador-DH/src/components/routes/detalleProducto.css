@@ -14,7 +14,7 @@
   
 }
 .h3-caracteristicas{
-  margin: 5vh;
+  
 }
 
 .container-caracteristicas {
@@ -33,5 +33,9 @@
   .img-caracteristicas {
     max-width: 2vw;
     height: auto;
+  }
+  .caractGaleria{
+    background-color: rgb(10, 29, 86);
+    border-radius: 0.5rem;
   }
   

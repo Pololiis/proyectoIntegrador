@@ -1,10 +1,24 @@
 /* Estilos generales para el contenedor */
 .buscador {
-  border: 1px solid #ddd;
+  color: black;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: rgba(73, 46, 135, 0.7);
   border-radius: 8px;
   margin: 20px auto;
+  max-width: 800px; /* Limita el ancho máximo del contenedor */
+  transition: max-height 0.3s ease-in-out; /* Añade una transición suave */
+  overflow: hidden;
+  padding: 0;
+  margin-bottom: 40px;
+  
+}
+
+.buscador.expandido {
+  max-height: 1000px; /* Altura suficiente para mostrar el contenido expandido */
+}
+
+.buscador.contraido {
+  max-height: 200px; /* Altura solo para mostrar el encabezado y los inputs */
 }
 
 /* Estilos para el encabezado */
@@ -15,45 +29,53 @@
 
 .buscador-header h2 {
   font-size: 1.5em;
-  color: #333;
+  color: white;
 }
 
 /* Estilos para el formulario */
 .buscador-form {
   display: flex;
+  flex-direction: column; /* Cambia la dirección del flex a columna por defecto */
   justify-content: center;
   align-items: center;
   gap: 10px;
+  
 }
 
 .buscador-input {
   background-color: #fff;
+  width: 100%;
+  max-width: 300px; /* Limita el ancho máximo del input */
+  padding: 10px; /* Añade padding para mejor usabilidad */
+  border-radius: 4px;
+  
 }
-
-/* buscador.css */
 
 /* Cambiar el color del placeholder a negro */
-.buscador-input ::placeholder {
+.buscador-input::placeholder {
   color: black;
+  
 }
-
 
 .buscador-button {
   background-color: #1976d2;
   color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .buscador-button:disabled {
   background-color: #cccccc;
 }
 
-/* Estilos para la lista de sugerencias */
 .buscador-suggestions {
   margin-top: 10px;
-  border: 1px solid #ddd;
+  background-color: white;
   border-radius: 4px;
   max-height: 150px;
   overflow-y: auto;
+  max-width: 100%;
 }
 
 .buscador-suggestion {
@@ -68,12 +90,15 @@
 /* Estilos para los filtros */
 .buscador-filters {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column; /* Cambia la dirección del flex a columna por defecto */
+  gap: 10px;
   margin-top: 20px;
+  width: 100%;
 }
 
 .buscador-filters .buscador-input {
-  width: 45%;
+  width: 100%;
+  max-width: 300px; /* Limita el ancho máximo del input */
   background-color: #fff;
 }
 
@@ -82,18 +107,31 @@
   margin-top: 20px;
 }
 
-.container-cards {
+.container-card {
+  height: 500px;
+  text-align: center;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 100%;
+  height: 500px;
 }
 
 /* Estilos para el spinner de carga */
 .loading-spinner {
   display: block;
   margin: 20px auto;
-
 }
 
+/* Media queries para pantallas más grandes */
+@media (min-width: 600px) {
+  .buscador-form {
+    flex-direction: row; /* Cambia la dirección del flex a fila en pantallas más grandes */
+  }
 
+  .buscador-filters {
+    flex-direction: row; 
+      justify-content: space-around;
+  }
+}

@@ -46,7 +46,7 @@ function GaleriaImagenes({ titulo, descripcion, imagenes, plataforma }) {
     }
   };
 
-  const imagenesRepetidas = new Array(10).fill(imagenes[1]);
+  const imagenesRepetidas = new Array(9).fill(imagenes[1]);
 
   return (
     <div className="container-galeria">

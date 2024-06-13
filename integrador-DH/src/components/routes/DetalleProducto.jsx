@@ -42,6 +42,7 @@ function DetalleProducto() {
             descripcion={videoJuegoSeleccionado.descripcion}
             imagenes={videoJuegoSeleccionado.imagenes}
           />
+
           <div>
             <h3 className="h3-caracteristicas">Caracteristicas</h3>
             <div className="container-caracteristicas">
@@ -57,6 +58,7 @@ function DetalleProducto() {
                   </div>
                 )
               )}
+
             </div>
           </div>
         </div>

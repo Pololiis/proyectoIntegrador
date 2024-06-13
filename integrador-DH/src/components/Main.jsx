@@ -20,34 +20,46 @@ function Main() {
         console.error("Hubo un error al hacer la solicitud:", error);
       }
     };
-    fetchData();
+    fetchData()
   }, []);
+
   return (
     <div>
       <div className="bg-h1 flex">
         <div className="container-h1 flex">
           <h1>Bienvenido a</h1>
           <span className="glow text-outline">GameShare</span>
-    
-          <a href="#body">
-            <button class="btn-father">
-              <span class="circle" aria-hidden="true"></span>
-              <span class="button-text">Comenzar!</span>
-            </button>
-          </a>
+
         </div>
       </div>
 
-      <a name="body"></a>
       <div className="container-cards-section flex">
-        <h2>Plataformas</h2>
-        <CardPlataforma />
-        <BarraBuscador />
+        <section className="cards-categoria">
+          <h2>Plataformas</h2>
+
+          <div id="carouselExample" className="carousel slide">
+            <div className="carousel-inner">
+              <CardPlataforma />
+            </div>
+            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </div>
+
+          <BarraBuscador />
+        </section>
         <section className="cards-recomendado">
           <h2>Recomendados</h2>
-          {videoJuegos.slice(0, cantidad).map((videojuego) => (
-            <CardJuego key={videojuego.id} videojuego={videojuego} />
-          ))}
+          <article className="container-cards">
+            {videoJuegos.slice(0, cantidad).map((videojuego) => (
+              <CardJuego key={videojuego.id} videojuego={videojuego} />
+            ))}
+          </article>
         </section>
       </div>
     </div>
@@ -55,7 +67,6 @@ function Main() {
 }
 
 export default Main;
-
 
 function shuffleArray(array) {
   const shuffledArray = array.slice(); // Crear una copia del array para no mutar el original

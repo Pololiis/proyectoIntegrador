@@ -4,9 +4,11 @@
   padding: 10vh 0px;
 }
 
+
 .register{
   background-color: var(--color1);
 }
+
 
 textarea{
   resize: none;

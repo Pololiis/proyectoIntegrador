@@ -23,6 +23,7 @@ if (!user) {
 }
 }, [user, navigate]);
 
+
 const handleLogout = () => {
 localStorage.removeItem("token");
 localStorage.removeItem("usuario");

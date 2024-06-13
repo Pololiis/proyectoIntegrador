@@ -14,12 +14,12 @@ body {
 footer {
   color: rgb(190, 189, 189);
   background-color: var(--color1);
-  height: 30vh;
+  height: 20vh;
 }
 
 :root {
   --color1: #0a1d56;
-  --color2: #492e87;
+  --color2: #482e85;
   --color3: #37b5b6;
   --color4: #f2f597;
 }
@@ -53,11 +53,12 @@ footer {
   --bs-btn-color: white;
   --bs-btn-bg: var(--color3);
   --bs-btn-border-color: var(--color3);
-  --bs-btn-border-radius: 0.5rem;
   --bs-btn-hover-color: var(--color3);
   --bs-btn-hover-bg: white;
   --bs-btn-active-color: var(--color3);
   --bs-btn-active-bg: white;
+  border-radius: 0.3rem;
+  display: flex;
 }
 
 .btn-bd-primary:hover {

@@ -166,7 +166,9 @@ function BarraBuscador() {
           </List>
         )}
       </div>
-      <section className="cards-recomendado m-auto">
+
+      <section className="cards-src">
+
         {isSubmiting ? (
           <CircularProgress className="loading-spinner" />
         ) : (

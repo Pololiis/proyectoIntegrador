@@ -42,12 +42,12 @@ const CrearUsuario = () => {
   });
 
 
-  const sendEmail = (userEmail, userName) => {
-    console.log('Enviando email a:', userEmail, userName);
+  const sendEmail = (usuarioEmail, usuarioName) => {
+    console.log('Enviando email a:', usuarioEmail, usuarioName);
 
     const templateParams = {
-      to_email: userEmail,
-      to_name: userName,
+      to_email: usuarioEmail,
+      to_name: usuarioName,
     };
 
     emailjs.send('service_edy99o7', 'template_fk62684', templateParams, 'xuAeGJr1E_Q9WvTkO')

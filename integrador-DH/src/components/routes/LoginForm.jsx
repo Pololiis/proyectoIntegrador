@@ -15,6 +15,7 @@ contrasenia: Yup.string().required("La contraseña es requerida"),
 });
 
 const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+
   try {
     console.log('Enviando solicitud al servidor...');
     const response = await axios.post(
@@ -22,6 +23,7 @@ const handleSubmit = async (values, { setSubmitting, resetForm }) => {
       {
         email: values.email,
         contrasenia: values.contrasenia,
+
       }
     );
     

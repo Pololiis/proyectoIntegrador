@@ -1,13 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 import "../styles/index.css";
 import "../styles/navbar.css";
 import logo from "../assets/logo.png";
 import LoginForm from "./routes/LoginForm";
 import CrearUsuario from "./routes/crearUsuario";
-import Modal from "react-modal";
-
-Modal.setAppElement("#root");
 
 function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -88,7 +86,7 @@ function NavBar() {
           <div className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}>
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to="/" className="nav-link" aria-current="page">
+                <Link to="/" className="nav-link inicio" aria-current="page">
                   Inicio
                 </Link>
               </li>
@@ -118,26 +116,32 @@ function NavBar() {
         </div>
       </nav>
 
-      <Modal
-        isOpen={isLoginModalOpen}
-        onRequestClose={closeLoginModal}
-        contentLabel="Formulario de Inicio de Sesión"
-        className="Modal"
-        overlayClassName="Overlay"
-      >
-        <button onClick={closeLoginModal} className="close-modal">X</button>
-        <LoginForm onLoginSuccess={handleLoginSuccess} />
+      <Modal show={isLoginModalOpen} onHide={closeLoginModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Formulario de Inicio de Sesión</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="login">
+          <LoginForm onLoginSuccess={handleLoginSuccess} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeLoginModal}>
+            Cancelar
+          </Button>
+        </Modal.Footer>
       </Modal>
 
-      <Modal
-        isOpen={isRegisterModalOpen}
-        onRequestClose={closeRegisterModal}
-        contentLabel="Formulario de Registro de Usuario"
-        className="Modal"
-        overlayClassName="Overlay"
-      >
-        <button onClick={closeRegisterModal} className="close-modal">X</button>
-        <CrearUsuario />
+      <Modal show={isRegisterModalOpen} onHide={closeRegisterModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Formulario de Registro de Usuario</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="register">
+          <CrearUsuario />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeRegisterModal}>
+            Cancelar
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

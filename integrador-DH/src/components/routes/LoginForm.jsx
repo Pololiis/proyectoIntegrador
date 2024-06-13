@@ -53,8 +53,8 @@ const handleSubmit = async (values, { setSubmitting, resetForm }) => {
 };
 ;
 return (
-<div className="container my-5 container-form">
-    <div className="row justify-content-center">
+<div className="container m-auto login">
+    <div className="row justify-content-center ">
     <div className="col-12 col-md-8">
         <h2 className="text-center mb-4">Iniciar Sesión</h2>
         <Formik
@@ -107,7 +107,7 @@ return (
             </div>
 
             <button
-                className="btn btn-primary w-100"
+                className="btn btn-bd-primary w-100"
                 type="submit"
                 disabled={isSubmitting}
             >

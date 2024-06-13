@@ -1,68 +1,87 @@
-.borde {
-  border: 1px solid red;
-}
-.nav-link{
-  margin-right: 3vw;
-  color: white;
-  font-size: clamp(0.75rem, 0rem + 2.5vw, 1.7rem);
+/* Estilos generales del navbar */
+.navbar {
+  background-color:#0A1D56 ;
+  padding: 1rem;
 }
 
-.nav-link:hover{
-  color: var(--color3);
-}
-
-.nav-link:active{
-  color: var(--color3);
-}
-
-.eslogan {
-  color: white;
-  font-size: clamp(0.75rem, 0rem + 2.5vw, 1.3rem);
-}
-
-.eslogan:hover {
-  color: white;
-}
-
-.navbar-nav{
+.navbar-brand {
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 20%;
-  margin: auto;
+  color: #fff;
+  text-decoration: none;
 }
 
-
-
-.container-logo{
-  border: 1px solid red;
-  margin-left: 3vw;
+.navbar-brand .logo {
+  height: 40px;
+  margin-right: 10px;
 }
 
-.logo {
-
-  width: 7vw;
+.eslogan{
+  font-size: 1.7rem;
 }
 
-
-
-.container-buttons {
-  margin-right: 3vw;
+.nav-link {
+  color: #fff;
+  margin-right: 1rem;
+  font-size: 1.2rem;
 }
 
-.container-buttons {
-  font-size: clamp(0.75rem, 0rem + 2.5vw, 1.2rem);
-
+.nav-link:hover {
+  color:var(--color3);
 }
 
-.navbar-toggler {
+/* Botones del navbar */
 
+
+.nav-toggler{
   background-color: white;
-  margin-right: 20px;
 }
 
-@media screen and (max-width: 992px) {
-  .navbar-nav{
-    margin: 0px;
-  }
+.btn-logout {
+  background-color: #dc3545;
 }
+
+.btn-logout:hover {
+  background-color: #c82333;
+}
+
+/* Estilos del perfil de usuario */
+.user-info {
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+.user-info .avatar-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+}
+
+.user-info .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #343a40;
+  margin-right: 10px;
+}
+
+.user-info .avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-info .user-name {
+  margin-right: 10px;
+  font-weight: bold;
+}
+

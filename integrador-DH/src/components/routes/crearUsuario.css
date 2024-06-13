@@ -4,13 +4,9 @@
   padding: 10vh 0px;
 }
 
-
-
-.imagen-preview{
-  
+.register{
+  background-color: var(--color1);
 }
-
-
 
 textarea{
   resize: none;

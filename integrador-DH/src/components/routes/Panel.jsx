@@ -3,11 +3,9 @@ import "./panel.css"; // Asegúrate de crear y enlazar este archivo de estilos
 
 import ListaUsuarios from "./ListaUsuarios";
 import ListaVideojuegos from "./ListaVideojuegos";
-import CrearUsuario from "./crearUsuario";
-import Agregador from "./Agregador";
 import AbmPlataforma from "./AbmPlataforma";
 import ListaPlataformas from "./ListaPlataformas";
-import Volver from "../common/Volver";
+
 
 const Panel = () => {
   const [componenteActivo, setComponenteActivo] = useState(null);

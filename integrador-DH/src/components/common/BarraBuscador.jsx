@@ -22,7 +22,6 @@ function BarraBuscador() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [placeholder, setPlaceholder] = useState("Buscar...");
-  const [isExpanded, setIsExpanded] = useState(false); // Nuevo estado
 
   const getTodayDate = () => {
     const today = new Date();
@@ -55,15 +54,13 @@ function BarraBuscador() {
 
       // Actualizar placeholder con la primera sugerencia
       if (suggestions.length > 0) {
-         setPlaceholder(`¿Quisiste decir: ${suggestions[0].nombre}?`);
+        setPlaceholder(`¿Quisiste decir: ${suggestions[0].nombre}?`);
       } else {
         setPlaceholder("Buscar...");
       }
-      setIsExpanded(true); // Expande el buscador
     } else {
       setShowSuggestions(false);
       setPlaceholder("Buscar...");
-      setIsExpanded(false); // Contrae el buscador
     }
   };
 
@@ -87,7 +84,6 @@ function BarraBuscador() {
     setFilteredData(filtered);
     setShowSuggestions(false);
     setIsSubmiting(false);
-    setIsExpanded(true); // Expande el buscador para mostrar los resultados
   };
 
   useEffect(() => {
@@ -103,7 +99,7 @@ function BarraBuscador() {
   }, []);
 
   return (
-    <Container className={`buscador ${isExpanded ? 'expandido' : 'contraido'}`} maxWidth="md">
+    <Container className="buscador" maxWidth="md">
       <div className="buscador-header">
         <h2>Buscar Videojuegos</h2>
         <form onSubmit={handleSubmit} className="buscador-form">
@@ -163,7 +159,6 @@ function BarraBuscador() {
                 onClick={() => {
                   setBusqueda(videojuego.nombre);
                   setShowSuggestions(false);
-                  setIsExpanded(true); // Expande el buscador si se selecciona una sugerencia
                 }}
                 className="buscador-suggestion"
                 role="option"
@@ -181,7 +176,7 @@ function BarraBuscador() {
         ) : (
           <div className="container-card flex">
             {filteredData.map((videojuego) => (
-              <CardJuego key={videojuego.id} videojuego={videojuego} />
+              <CardJuego key={videojuego.id} videojuego={videojuego} hideImage={!busqueda} />
             ))}
           </div>
         )}
@@ -190,4 +185,4 @@ function BarraBuscador() {
   );
 }
 
-export default BarraBuscador;
+export default BarraBuscador;

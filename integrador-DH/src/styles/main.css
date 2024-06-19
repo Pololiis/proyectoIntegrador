@@ -122,6 +122,7 @@ body {
   display: flex;
   justify-content: center;
   padding: auto;
+  padding-bottom:5vh ;
   max-width: 850px;
 }
 

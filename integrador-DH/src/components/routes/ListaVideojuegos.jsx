@@ -189,6 +189,7 @@ const ListaVideojuegos = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
+            <th>ID</th>
             <th>Nombre</th>
             <th>Categoría</th>
             <th>Acciones</th>
@@ -197,6 +198,7 @@ const ListaVideojuegos = () => {
         <tbody>
           {videoJuegos.map((juego) => (
             <tr key={juego.id}>
+              <td>{juego.id}</td>
               <td>{juego.nombre}</td>
               <td>
                 {juego.categoria ? juego.categoria.nombre : "Sin Categoría"}

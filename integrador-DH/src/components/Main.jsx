@@ -25,14 +25,6 @@ function Main() {
 
   return (
     <div>
-      <div className="bg-h1 flex">
-        <div className="container-h1 flex">
-          <h1>Bienvenido a</h1>
-          <span className="glow text-outline">GameShare</span>
-
-        </div>
-      </div>
-
       <div className="container-cards-section flex">
         <section className="cards-categoria">
           <h2>Plataformas</h2>

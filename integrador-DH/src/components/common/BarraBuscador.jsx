@@ -1,4 +1,4 @@
-import "./buscador.css";
+import "../";
 import CardJuego from "./CardJuego";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -6,10 +6,10 @@ import {
   Container,
   TextField,
   Button,
-  List,
-  ListItem,
   CircularProgress,
 } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGamepad, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 
 function BarraBuscador() {
   const url = "http://localhost:8080/videojuegos";
@@ -101,54 +101,45 @@ function BarraBuscador() {
   return (
     <Container className="buscador" maxWidth="md">
       <div className="buscador-header">
-        <h2>Buscar Videojuegos</h2>
+        <h2>Busca tus juegos favoritos !!!</h2>
         <form onSubmit={handleSubmit} className="buscador-form">
-          <TextField
-            onChange={handleSearch}
-            value={busqueda}
-            label="Buscar..."
-            variant="outlined"
-            placeholder={placeholder}
-            className="buscador-input"
-            aria-label="Buscar videojuegos"
-          />
-          <TextField
-            id="startDate"
-            label="Fecha de inicio"
-            type="date"
-            value={startDate}
-            onChange={handleStartDateChange}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            className="buscador-input"
-            inputProps={{
-              "aria-label": "Fecha de inicio",
-              min: getTodayDate(),
-            }}
-          />
-          <TextField
-            id="endDate"
-            label="Fecha de fin"
-            type="date"
-            value={endDate}
-            onChange={handleEndDateChange}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            className="buscador-input"
-            inputProps={{
-              "aria-label": "Fecha de fin",
-              min: startDate,
-            }}
-          />
+          <div className="buscador-field">
+            <FontAwesomeIcon icon={faGamepad} className="buscador-icon" />
+            <TextField
+              onChange={handleSearch}
+              value={busqueda}
+              label="Video Juegos"
+              variant="outlined"
+              placeholder={placeholder}
+              className="buscador-input"
+              aria-label="Buscar videojuegos"
+            />
+          </div>
+          <div className="buscador-field">
+            <FontAwesomeIcon icon={faCalendarAlt} className="buscador-icon" />
+            <TextField
+              id="startDate"
+              label="Check in - Check out"
+              type="date"
+              value={startDate}
+              onChange={handleStartDateChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              className="buscador-input"
+              inputProps={{
+                "aria-label": "Fecha de inicio",
+                min: getTodayDate(),
+              }}
+            />
+          </div>
           <Button
             type="submit"
             variant="contained"
             className="buscador-button btn-bd-primary"
             disabled={isSubmiting}
           >
-            {isSubmiting ? <CircularProgress size={24} /> : "Buscar"}
+            {isSubmiting ? <CircularProgress size={24} /> : "Buscador"}
           </Button>
         </form>
         {showSuggestions && (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid, Paper, Typography, Button, Modal } from "@mui/material";
+import { Container, Grid, Paper, Typography, Button, Modal, Box } from "@mui/material";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Calendar from 'react-calendar';
@@ -7,7 +7,20 @@ import 'react-calendar/dist/Calendar.css';
 import Volver from "../common/Volver";
 import { useAuthContext } from "../context/AuthContext";
 import LoginForm from "../routes/LoginForm";
+import CrearUsuario from "../routes/crearUsuario";
 import "./detalleReserva.css";
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: '8px',
+};
 
 function DetalleReserva() {
   const [startDate, setStartDate] = useState(new Date());
@@ -19,7 +32,7 @@ function DetalleReserva() {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { token } = useAuthContext();
+  const { token, updateToken } = useAuthContext();
 
   useEffect(() => {
     const { videoJuegoSeleccionado, startDate: initialStartDate, endDate: initialEndDate } = location.state || {};
@@ -33,7 +46,7 @@ function DetalleReserva() {
     }
 
     if (!token) {
-      setShowRegisterModal(true);
+      setShowLoginModal(true);
     }
 
     fetchReservas();
@@ -63,7 +76,7 @@ function DetalleReserva() {
 
   const handleReserva = async () => {
     if (!token) {
-      setShowRegisterModal(true);
+      setShowLoginModal(true);
       return;
     }
 
@@ -103,6 +116,17 @@ function DetalleReserva() {
 
   const handleCloseLoginModal = () => {
     setShowLoginModal(false);
+  };
+
+  const handleLoginSuccess = () => {
+    setShowLoginModal(false);
+    updateToken(localStorage.getItem('token'));
+    window.location.reload();  // Recargar la página después de iniciar sesión
+  };
+
+  const handleShowRegisterModal = () => {
+    setShowLoginModal(false);
+    setShowRegisterModal(true);
   };
 
   const tileDisabled = ({ date, view }) => {
@@ -205,18 +229,23 @@ function DetalleReserva() {
         aria-labelledby="register-modal-title"
         aria-describedby="register-modal-description"
       >
-        <div className="modal-content">
+        <Box sx={modalStyle}>
           <Typography id="register-modal-title" variant="h6" gutterBottom>
-            ¿Deseas registrarte?
+            Por favor, inicie sesión para reservar
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleShowLoginModal}
-          >
-            Registrarse
-          </Button>
-        </div>
+          <Typography id="register-modal-description" variant="body1" gutterBottom>
+            Necesitas estar registrado para poder realizar una reserva. Si ya tienes una cuenta, inicia sesión. De lo contrario, regístrate para continuar.
+          </Typography>
+          <Box mt={3} display="flex" justifyContent="center">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleShowLoginModal}
+            >
+              Iniciar Sesión
+            </Button>
+          </Box>
+        </Box>
       </Modal>
 
       <Modal
@@ -225,9 +254,58 @@ function DetalleReserva() {
         aria-labelledby="login-modal-title"
         aria-describedby="login-modal-description"
       >
-        <div className="modal-content">
-          <LoginForm onClose={handleCloseLoginModal} />
-        </div>
+        <Box sx={modalStyle}>
+          <Typography id="login-modal-title" variant="h6" gutterBottom>
+            Formulario de Inicio de Sesión
+          </Typography>
+          <LoginForm onLoginSuccess={handleLoginSuccess} />
+          <Box mt={2} display="flex" justifyContent="space-between">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleShowRegisterModal}
+            >
+              Registrarse
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleCloseLoginModal}
+            >
+              Cancelar
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={showRegisterModal && !showLoginModal}
+        onClose={handleCloseRegisterModal}
+        aria-labelledby="register-form-modal-title"
+        aria-describedby="register-form-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="register-form-modal-title" variant="h6" gutterBottom>
+            Formulario de Registro
+          </Typography>
+          <CrearUsuario />
+          <Box mt={2} display="flex" justifyContent="space-between">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleShowLoginModal}
+            >
+              Iniciar Sesión
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleCloseRegisterModal}
+            >
+              Cancelar
+            </Button>
+          </Box>
+        </Box>
       </Modal>
     </Container>
   );

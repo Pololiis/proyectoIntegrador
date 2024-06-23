@@ -1,12 +1,8 @@
 /* Estilos generales para el contenedor */
 .buscador {
-  color: black;
   padding: 20px;
   background-color: #ff6d36;
-  border-radius: 8px;
   margin: 20px auto;
-  max-width: 800px; /* Limita el ancho máximo del contenedor */
-  padding: 20px;
   margin-bottom: 40px;
 }
 
@@ -17,7 +13,7 @@
 }
 
 .buscador-header h2 {
-  font-size: 1.5em;
+  font-size: 3em;
   color: white;
 }
 
@@ -37,7 +33,7 @@
 }
 
 .buscador-icon {
-  font-size: 1.5em;
+  font-size: 2em;
   color: white;
 }
 
@@ -55,7 +51,7 @@
 }
 
 .buscador-button {
-  background-color: #1976d2;
+  background-color: #37B5B6;
   color: #fff;
   padding: 10px 20px;
   border-radius: 4px;
@@ -82,22 +78,6 @@
 
 .buscador-suggestion:hover {
   background-color: #f0f0f0;
-}
-
-/* Estilos para la sección de tarjetas */
-.cards-recomendado {
-  margin-top: 20px;
-}
-
-.container-card {
-  height: 500px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  max-width: 100%;
-  height: 500px;
 }
 
 /* Estilos para el spinner de carga */

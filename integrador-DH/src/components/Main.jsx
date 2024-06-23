@@ -20,34 +20,30 @@ function Main() {
         console.error("Hubo un error al hacer la solicitud:", error);
       }
     };
-    fetchData()
+    fetchData();
   }, []);
+
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
 
   return (
     <div>
-      <div className="container-cards-section flex">
+      <div className="main-container">
         <section className="cards-categoria">
-          <h2>Plataformas</h2>
-
-          <div id="carouselExample" className="carousel slide">
-            <div className="carousel-inner">
-              <CardPlataforma />
-            </div>
-            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Previous</span>
-            </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Next</span>
-            </button>
-          </div>
-
           <BarraBuscador />
         </section>
+        <section className="plataformas-section">
+          <h2 className="plataforma-title">Plataformas</h2>
+          <CardPlataforma />
+        </section>
         <section className="cards-recomendado">
-          <h2>Recomendados</h2>
-          <article className="container-cards">
+          <h2 className="recomendados-title">Recomendados</h2>
+          <article className="card__container">
             {videoJuegos.slice(0, cantidad).map((videojuego) => (
               <CardJuego key={videojuego.id} videojuego={videojuego} />
             ))}
@@ -60,11 +56,4 @@ function Main() {
 
 export default Main;
 
-function shuffleArray(array) {
-  const shuffledArray = array.slice(); // Crear una copia del array para no mutar el original
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-  }
-  return shuffledArray;
-}
+

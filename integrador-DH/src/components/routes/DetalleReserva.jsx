@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid, Paper, Typography, Button, TextField, Modal } from "@mui/material";
+import { Container, Grid, Paper, Typography, Button, Modal } from "@mui/material";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 import Volver from "../common/Volver";
 import { useAuthContext } from "../context/AuthContext";
-import LoginForm from "../routes/LoginForm"; // Importa tu componente de formulario de inicio de sesión
+import LoginForm from "../routes/LoginForm";
 import "./detalleReserva.css";
 
 function DetalleReserva() {
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [showLoginModal, setShowLoginModal] = useState(false); // Estado para controlar la visibilidad del modal
-  const [showRegisterModal, setShowRegisterModal] = useState(false); // Estado para controlar la visibilidad del modal de registro
-  const [message, setMessage] = useState(""); // Estado para mostrar mensaje de reserva completada
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [reservas, setReservas] = useState([]);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [message, setMessage] = useState("");
   const { id } = useParams();
-  const today = new Date().toISOString().split("T")[0];
   const location = useLocation();
   const navigate = useNavigate();
-  
   const { token } = useAuthContext();
 
   useEffect(() => {
@@ -25,101 +26,131 @@ function DetalleReserva() {
 
     if (!videoJuegoSeleccionado) {
       alert("No se encontraron los datos del videojuego.");
-      navigate("/"); // Redirigir a la página principal si no hay datos
+      navigate("/");
     } else {
-      setStartDate(initialStartDate);
-      setEndDate(initialEndDate);
+      setStartDate(new Date(initialStartDate));
+      setEndDate(new Date(initialEndDate));
     }
 
-    // Verificar si hay token al cargar el componente
     if (!token) {
-      setShowRegisterModal(true); // Mostrar el modal de registro si no hay token
+      setShowRegisterModal(true);
     }
+
+    fetchReservas();
   }, [location.state, navigate, token]);
+
+  const fetchReservas = async () => {
+    try {
+      const response = await axios.get(`/alquileres`);
+      setReservas(Array.isArray(response.data) ? response.data : []);
+    } catch (error) {
+      console.error("Error obteniendo las reservas:", error);
+      setReservas([]);
+    }
+  };
 
   const handleDateChange = async () => {
     try {
-      const response = await axios.put(`/api/update-date/${id}`, { startDate, endDate });
+      const response = await axios.put(`/alquileres/${id}`, { 
+        fechaReserva: startDate.toISOString().split("T")[0], 
+        duracionAlquiler: calculateDuration(startDate, endDate) 
+      });
       console.log("Fechas actualizadas:", response.data);
     } catch (error) {
       console.error("Error actualizando fechas:", error);
     }
   };
 
-  const handleReserva = () => {
+  const handleReserva = async () => {
     if (!token) {
-      setShowRegisterModal(true); // Mostrar el modal de registro si no hay token
+      setShowRegisterModal(true);
       return;
     }
 
-    // Lógica de reserva si hay token
-    setMessage("Reserva realizada con éxito.");
+    try {
+      const response = await axios.post('/alquileres', {
+        fechaReserva: startDate.toISOString().split("T")[0],
+        duracionAlquiler: calculateDuration(startDate, endDate),
+        usuario: { id: 1 },
+        videojuego: { id }
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setMessage("Reserva realizada con éxito.");
+      console.log("Reserva realizada:", response.data);
+    } catch (error) {
+      console.error("Error realizando la reserva:", error);
+      setMessage("Error realizando la reserva.");
+    }
+  };
+
+  const calculateDuration = (start, end) => {
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
   };
 
   const handleCloseRegisterModal = () => {
-    setShowRegisterModal(false); // Función para cerrar el modal de registro
+    setShowRegisterModal(false);
   };
 
   const handleShowLoginModal = () => {
-    setShowRegisterModal(false); // Cerrar modal de registro
-    setShowLoginModal(true); // Mostrar modal de inicio de sesión
+    setShowRegisterModal(false);
+    setShowLoginModal(true);
   };
 
   const handleCloseLoginModal = () => {
-    setShowLoginModal(false); // Función para cerrar el modal de inicio de sesión
+    setShowLoginModal(false);
+  };
+
+  const tileDisabled = ({ date, view }) => {
+    if (view === 'month' && Array.isArray(reservas)) {
+      return reservas.some(reserva => {
+        const reservaInicio = new Date(reserva.fechaReserva);
+        const reservaFin = new Date(reservaInicio);
+        reservaFin.setDate(reservaFin.getDate() + reserva.duracionAlquiler);
+        return date >= reservaInicio && date <= reservaFin;
+      });
+    }
+    return false;
   };
 
   if (!location.state || !location.state.videoJuegoSeleccionado) {
-    return null; // O renderiza un estado de carga, o un mensaje indicando que no hay datos
+    return <Typography variant="h6">Cargando...</Typography>;
   }
 
   return (
     <Container>
       <Volver />
       <Grid container justifyContent="center">
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={8}>
           <Paper style={{ padding: "16px", marginTop: "16px" }}>
             <Typography variant="h3" gutterBottom>
               {location.state.videoJuegoSeleccionado.nombre}
             </Typography>
-            <img
-              src={location.state.videoJuegoSeleccionado.imagenes[0]}
-              alt={location.state.videoJuegoSeleccionado.nombre}
-              className="imagen-centrada"
-            />
-            <Typography variant="h5" gutterBottom>
-              Detalles del producto
-            </Typography>
-            <Typography className="mb-2" variant="body1">Fechas</Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Fecha de inicio"
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  inputProps={{
-                    min: today,
-                  }}
-                  fullWidth
+              {/* Sección de imagen y nombre */}
+              <Grid item xs={12} md={6}>
+                <img
+                  src={location.state.videoJuegoSeleccionado.imagenes[0]}
+                  alt={location.state.videoJuegoSeleccionado.nombre}
+                  className="imagen-centrada"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  label="Fecha de fin"
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  InputLabelProps={{
-                    shrink: true,
+
+              {/* Sección de calendario y fechas */}
+              <Grid item xs={12} md={6}>
+                <Typography className="mb-2" variant="body1">Fechas</Typography>
+                <Calendar
+                  onChange={([start, end]) => {
+                    setStartDate(start);
+                    setEndDate(end);
                   }}
-                  inputProps={{
-                    min: startDate || today,
-                  }}
-                  fullWidth
+                  selectRange
+                  value={[startDate, endDate]}
+                  tileDisabled={tileDisabled}
                 />
               </Grid>
             </Grid>

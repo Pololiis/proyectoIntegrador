@@ -1,8 +1,53 @@
+body {
+background-color: #f4f4f9;
+margin: 0;
+padding: 0;
+}
+
+.header-image-container {
+width: 100%;
+height: 300px; /* Ajusta la altura según sea necesario */
+overflow: hidden;
+}
+
+.header-image {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.navbar {
+background-color: #0a1d56;
+padding: 1rem;
+}
+
+.navbar .container-fluid {
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.navbar-brand {
+color: white;
+text-decoration: none;
+font-size: 1.5rem;
+}
+
+.btn-primary {
+background-color: #1976d2;
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+color: white;
+margin-right: 10px;
+}
+
 .usuario-panel {
 display: flex;
 flex-direction: column;
 align-items: center;
-margin-top: 50px;
+margin-top: 20px;
+padding: 20px;
 }
 
 .avatar-container {
@@ -25,14 +70,79 @@ font-size: 36px;
 margin-bottom: 10px;
 }
 
-.btn-logout {
+.user-name {
+font-size: 1.5rem;
+color: #333;
+}
+
+.btn-logout,
+.btn-alquiler {
 background-color: #dc3545;
 color: white;
 border: none;
 padding: 10px 20px;
 cursor: pointer;
+margin: 10px;
+border-radius: 5px;
 }
 
-.btn-logout:hover {
+.btn-logout:hover,
+.btn-alquiler:hover {
 background-color: #c82333;
+}
+
+.section-title {
+font-size: 1.5rem;
+color: #333;
+margin-bottom: 10px;
+}
+
+.table-container {
+width: 80%;
+overflow-x: auto;
+}
+
+.alquileres-table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 20px;
+}
+
+.alquileres-table th,
+.alquileres-table td {
+border: 1px solid #ddd;
+padding: 8px;
+text-align: center;
+}
+
+.alquileres-table th {
+background-color: #0a1d56;
+color: white;
+}
+
+@media screen and (max-width: 768px) {
+.header-image-container {
+    height: 200px; /* Ajusta la altura según sea necesario */
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 24px;
+}
+
+.btn-logout,
+.btn-alquiler {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.table-container {
+    width: 100%;
+}
+
+.alquileres-table th,
+.alquileres-table td {
+    padding: 4px;
+}
 }

@@ -13,16 +13,16 @@ if (!user) {
     navigate("/"); // Redirigir al usuario a la página principal si no está autenticado
 } else {
     // Fetch alquileres del usuario
-    axios.get(`http://localhost:8080/alquileres/usuario/${user.id}`)
-    .then(response => {
+    axios
+    .get(`http://localhost:8080/alquileres/usuario/${user.id}`)
+    .then((response) => {
         setAlquileres(response.data);
     })
-    .catch(error => {
+    .catch((error) => {
         console.error("Error al obtener alquileres:", error);
     });
 }
 }, [user, navigate]);
-
 
 const handleLogout = () => {
 localStorage.removeItem("token");
@@ -34,15 +34,16 @@ const handleAlquiler = () => {
 const nuevoAlquiler = {
     usuario: { id: user.id },
     videojuego: { id: 1 }, // Cambia esto según el videojuego seleccionado
-    fechaReserva: new Date().toISOString().split('T')[0], // Fecha actual
-    duracionAlquiler: 7 // Duración de ejemplo
+    fechaReserva: new Date().toISOString().split("T")[0], // Fecha actual
+    duracionAlquiler: 7, // Duración de ejemplo
 };
 
-axios.post("http://localhost:8080/alquileres", nuevoAlquiler)
-    .then(response => {
+axios
+    .post("http://localhost:8080/alquileres", nuevoAlquiler)
+    .then((response) => {
     setAlquileres([...alquileres, response.data]);
     })
-    .catch(error => {
+    .catch((error) => {
     console.error("Error al crear alquiler:", error);
     });
 };
@@ -60,25 +61,31 @@ return (
 <div className="usuario-panel">
     <div className="avatar-container">
     <div className="avatar">{initials}</div>
-    <h2>{user?.nombre}</h2>
+    <h2 className="user-name">{user?.nombre}</h2>
     </div>
-    <button onClick={handleLogout} className="btn btn-logout">
-    Cerrar Sesión
-    </button>
-    <button onClick={handleAlquiler} className="btn btn-alquiler">
-    Hacer un Alquiler
-    </button>
-    <h3>Mis Alquileres</h3>
-    <ul>
-    {alquileres.map((alquiler) => (
-        <li key={alquiler.idAlquiler}>
-        {alquiler.videojuego.nombre} - {new Date(alquiler.fechaReserva).toLocaleDateString()} - {alquiler.duracionAlquiler} días
-        </li>
-    ))}
-    </ul>
+    <h3 className="section-title">Mis Alquileres</h3>
+    <div className="table-container">
+    <table className="alquileres-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Videojuego</th>
+            <th>Fecha Alquiler</th>
+        </tr>
+        </thead>
+        <tbody>
+        {alquileres.map((alquiler) => (
+            <tr key={alquiler.idAlquiler}>
+            <td>{alquiler.idAlquiler}</td>
+            <td>{alquiler.videojuego.nombre}</td>
+            <td>{new Date(alquiler.fechaReserva).toLocaleDateString()}</td>
+            </tr>
+        ))}
+        </tbody>
+    </table>
+    </div>
 </div>
 );
 };
 
 export default UsuarioPanel;
-

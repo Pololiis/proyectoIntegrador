@@ -67,6 +67,10 @@ public class SeguridadConfig {
                         .requestMatchers(HttpMethod.GET, "/caracteristicas/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/categorias/**" ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/categorias/nuevo").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/alquiler/nuevo").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/alquiler/").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/alquiler/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/alquiler/**").hasAuthority("ADMINISTRADOR")
                         .anyRequest().authenticated()
                 );
         peticion.addFilterBefore(jwtFiltroDeAutenticacion(), UsernamePasswordAuthenticationFilter.class);

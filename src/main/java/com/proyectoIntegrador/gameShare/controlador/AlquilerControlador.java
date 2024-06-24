@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/alquileres")
+@RequestMapping("/alquiler")
 @CrossOrigin("*")
 @AllArgsConstructor
 public class AlquilerControlador {
@@ -24,7 +24,7 @@ public class AlquilerControlador {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AlquilerDTO> buscarAlquilerPorId(@PathVariable int id) {
+    public ResponseEntity<AlquilerDTO> buscarAlquilerPorId(@PathVariable Long id) {
         AlquilerDTO alquilerDTO = alquilerServicio.findById(id);
         if (alquilerDTO == null) {
             return ResponseEntity.notFound().build();
@@ -32,13 +32,13 @@ public class AlquilerControlador {
         return ResponseEntity.ok(alquilerDTO);
     }
 
-    @PostMapping
+    @PostMapping("/nuevo")
     public AlquilerDTO crearAlquiler(@RequestBody AlquilerDTO alquilerDTO) {
         return alquilerServicio.save(alquilerDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AlquilerDTO> actualizarAlquiler(@PathVariable int id, @RequestBody AlquilerDTO alquilerDTO) {
+    public ResponseEntity<AlquilerDTO> actualizarAlquiler(@PathVariable Long id, @RequestBody AlquilerDTO alquilerDTO) {
         AlquilerDTO actualizarAlquiler = alquilerServicio.save(alquilerDTO);
         if (actualizarAlquiler == null) {
             return ResponseEntity.notFound().build();
@@ -47,7 +47,7 @@ public class AlquilerControlador {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAlquiler(@PathVariable int id) {
+    public ResponseEntity<Void> deleteAlquiler(@PathVariable Long id) {
         alquilerServicio.deleteById(id);
         return ResponseEntity.noContent().build();
     }

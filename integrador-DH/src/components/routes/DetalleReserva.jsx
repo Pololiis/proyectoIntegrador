@@ -1,13 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid, Paper, Typography, Button, Modal } from "@mui/material";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { Container, Grid, Paper, Typography, Button, Modal, Box } from "@mui/material";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Volver from "../common/Volver";
 import { useAuthContext } from "../context/AuthContext";
 import LoginForm from "../routes/LoginForm";
+import CrearUsuario from "../routes/crearUsuario";
 import "./detalleReserva.css";
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: '8px',
+};
 
 function DetalleReserva() {
   const [startDate, setStartDate] = useState(new Date());
@@ -16,24 +29,29 @@ function DetalleReserva() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [message, setMessage] = useState("");
-  const { id } = useParams();
+  const [usuario, setUsuario] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const { token } = useAuthContext();
+  const { id } = useParams();
+  const { token, updateToken } = useAuthContext();
+  const url = `http://localhost:8080/alquiler`;
+
+  const { videoJuegoSeleccionado, startDate: initialStartDate, endDate: initialEndDate } = location.state || {};
 
   useEffect(() => {
-    const { videoJuegoSeleccionado, startDate: initialStartDate, endDate: initialEndDate } = location.state || {};
-
     if (!videoJuegoSeleccionado) {
       alert("No se encontraron los datos del videojuego.");
       navigate("/");
-    } else {
-      setStartDate(new Date(initialStartDate));
-      setEndDate(new Date(initialEndDate));
+      return;
     }
 
-    if (!token) {
-      setShowRegisterModal(true);
+    setStartDate(new Date(initialStartDate));
+    setEndDate(new Date(initialEndDate));
+
+    if (token) {
+      fetchUsuario();
+    } else {
+      setShowLoginModal(true);
     }
 
     fetchReservas();
@@ -41,7 +59,7 @@ function DetalleReserva() {
 
   const fetchReservas = async () => {
     try {
-      const response = await axios.get(`/alquileres`);
+      const response = await axios.get(`${url}`);
       setReservas(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error obteniendo las reservas:", error);
@@ -49,77 +67,93 @@ function DetalleReserva() {
     }
   };
 
-  const handleDateChange = async () => {
+  const fetchUsuario = async () => {
     try {
-      const response = await axios.put(`/alquileres/${id}`, { 
-        fechaReserva: startDate.toISOString().split("T")[0], 
-        duracionAlquiler: calculateDuration(startDate, endDate) 
+      const response = await axios.get(`http://localhost:8080/usuarios/me`, {                     
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      console.log("Fechas actualizadas:", response.data);
+      setUsuario(response.data);
+      console.log(usuario);
     } catch (error) {
-      console.error("Error actualizando fechas:", error);
+      console.error("Error obteniendo el usuario:", error);
     }
   };
 
   const handleReserva = async () => {
     if (!token) {
-      setShowRegisterModal(true);
-      return;
+        setShowLoginModal(true);
+        return;
     }
 
     try {
-      const response = await axios.post('/alquileres', {
-        fechaReserva: startDate.toISOString().split("T")[0],
-        duracionAlquiler: calculateDuration(startDate, endDate),
-        usuario: { id: 1 },
-        videojuego: { id }
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setMessage("Reserva realizada con éxito.");
-      console.log("Reserva realizada:", response.data);
+        const response = await axios.post(`${url}/nuevo`, {
+            fechaInicio: startDate.toISOString().split("T")[0],
+            fechaFin: endDate.toISOString().split("T")[0],
+            usuariosId:  usuario.id , // Asegúrate de pasar solo el id del usuario existente
+            videojuegosId: videoJuegoSeleccionado.id
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        setMessage("Reserva realizada con éxito.");
+        console.log("Reserva realizada:", response.data);
     } catch (error) {
-      console.error("Error realizando la reserva:", error);
-      setMessage("Error realizando la reserva.");
+        console.error("Error realizando la reserva:", error);
+        setMessage("Error realizando la reserva.");
     }
-  };
+};
 
-  const calculateDuration = (start, end) => {
-    const diffTime = Math.abs(end - start);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays;
-  };
-
-  const handleCloseRegisterModal = () => {
-    setShowRegisterModal(false);
-  };
-
-  const handleShowLoginModal = () => {
-    setShowRegisterModal(false);
-    setShowLoginModal(true);
-  };
-
-  const handleCloseLoginModal = () => {
-    setShowLoginModal(false);
-  };
+const handleDateChange = async () => {
+    try {
+        const response = await axios.put(`${url}/${id}`, {
+            fechaInicio: startDate.toISOString().split("T")[0],
+            fechaFin: endDate.toISOString().split("T")[0],
+            usuariosId: usuario.id , // Asegúrate de pasar solo el id del usuario existente
+            videojuegosId: videoJuegoSeleccionado.id
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        console.log("Fechas actualizadas:", response.data);
+    } catch (error) {
+        console.error("Error actualizando fechas:", error);
+    }
+};
 
   const tileDisabled = ({ date, view }) => {
     if (view === 'month' && Array.isArray(reservas)) {
       return reservas.some(reserva => {
-        const reservaInicio = new Date(reserva.fechaReserva);
-        const reservaFin = new Date(reservaInicio);
-        reservaFin.setDate(reservaFin.getDate() + reserva.duracionAlquiler);
+        const reservaInicio = new Date(reserva.fechaInicio);
+        const reservaFin = new Date(reserva.fechaFin);
         return date >= reservaInicio && date <= reservaFin;
       });
     }
     return false;
   };
 
-  if (!location.state || !location.state.videoJuegoSeleccionado) {
+  if (!videoJuegoSeleccionado) {
     return <Typography variant="h6">Cargando...</Typography>;
   }
+
+  const handleCloseRegisterModal = () => setShowRegisterModal(false);
+  const handleShowLoginModal = () => {
+    setShowRegisterModal(false);
+    setShowLoginModal(true);
+  };
+  const handleCloseLoginModal = () => setShowLoginModal(false);
+  const handleLoginSuccess = () => {
+    setShowLoginModal(false);
+    updateToken(localStorage.getItem('token'));
+    window.location.reload();
+  };
+  const handleShowRegisterModal = () => {
+    setShowLoginModal(false);
+    setShowRegisterModal(true);
+  };
 
   return (
     <Container>
@@ -128,19 +162,16 @@ function DetalleReserva() {
         <Grid item xs={12} md={8}>
           <Paper style={{ padding: "16px", marginTop: "16px" }}>
             <Typography variant="h3" gutterBottom>
-              {location.state.videoJuegoSeleccionado.nombre}
+              {videoJuegoSeleccionado.nombre}
             </Typography>
             <Grid container spacing={2}>
-              {/* Sección de imagen y nombre */}
               <Grid item xs={12} md={6}>
                 <img
-                  src={location.state.videoJuegoSeleccionado.imagenes[0]}
-                  alt={location.state.videoJuegoSeleccionado.nombre}
+                  src={videoJuegoSeleccionado.imagenes[0]}
+                  alt={videoJuegoSeleccionado.nombre}
                   className="imagen-centrada"
                 />
               </Grid>
-
-              {/* Sección de calendario y fechas */}
               <Grid item xs={12} md={6}>
                 <Typography className="mb-2" variant="body1">Fechas</Typography>
                 <Calendar
@@ -169,14 +200,14 @@ function DetalleReserva() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <img
-                  src={location.state.videoJuegoSeleccionado.categoria?.imagen}
-                  alt={location.state.videoJuegoSeleccionado.categoria?.nombre}
+                  src={videoJuegoSeleccionado.categoria?.imagen}
+                  alt={videoJuegoSeleccionado.categoria?.nombre}
                   style={{ width: "50%", borderRadius: "8px" }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography variant="body1">
-                  {location.state.videoJuegoSeleccionado.categoria?.nombre}
+                  {videoJuegoSeleccionado.categoria?.nombre}
                 </Typography>
               </Grid>
             </Grid>
@@ -205,18 +236,23 @@ function DetalleReserva() {
         aria-labelledby="register-modal-title"
         aria-describedby="register-modal-description"
       >
-        <div className="modal-content">
+        <Box sx={modalStyle}>
           <Typography id="register-modal-title" variant="h6" gutterBottom>
-            ¿Deseas registrarte?
+            Por favor, inicie sesión para reservar
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleShowLoginModal}
-          >
-            Registrarse
-          </Button>
-        </div>
+          <Typography id="register-modal-description" variant="body1" gutterBottom>
+            Necesitas estar registrado para poder realizar una reserva. Si ya tienes una cuenta, inicia sesión. De lo contrario, regístrate para continuar.
+          </Typography>
+          <Box mt={3} display="flex" justifyContent="center">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleShowLoginModal}
+            >
+              Iniciar Sesión
+            </Button>
+          </Box>
+        </Box>
       </Modal>
 
       <Modal
@@ -225,9 +261,58 @@ function DetalleReserva() {
         aria-labelledby="login-modal-title"
         aria-describedby="login-modal-description"
       >
-        <div className="modal-content">
-          <LoginForm onClose={handleCloseLoginModal} />
-        </div>
+        <Box sx={modalStyle}>
+          <Typography id="login-modal-title" variant="h6" gutterBottom>
+            Formulario de Inicio de Sesión
+          </Typography>
+          <LoginForm onLoginSuccess={handleLoginSuccess} />
+          <Box mt={2} display="flex" justifyContent="space-between">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleShowRegisterModal}
+            >
+              Registrarse
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleCloseLoginModal}
+            >
+              Cancelar
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+
+      <Modal
+        open={showRegisterModal && !showLoginModal}
+        onClose={handleCloseRegisterModal}
+        aria-labelledby="register-form-modal-title"
+        aria-describedby="register-form-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="register-form-modal-title" variant="h6" gutterBottom>
+            Formulario de Registro
+          </Typography>
+          <CrearUsuario />
+          <Box mt={2} display="flex" justifyContent="space-between">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleShowLoginModal}
+            >
+              Iniciar Sesión
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleCloseRegisterModal}
+            >
+              Cancelar
+            </Button>
+          </Box>
+        </Box>
       </Modal>
     </Container>
   );

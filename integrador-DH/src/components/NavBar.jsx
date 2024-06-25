@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import "../styles/index.css";
 import "../styles/navbar.css";
 import logo from "../assets/logo.png";
@@ -33,7 +33,8 @@ function NavBar() {
   };
 
   const openRegisterModal = () => {
-    setIsRegisterModalOpen(true);
+    closeLoginModal(); // Cerrar el modal de inicio de sesión
+    setIsRegisterModalOpen(true); // Abrir el modal de registro
   };
 
   const closeRegisterModal = () => {
@@ -124,7 +125,10 @@ function NavBar() {
           <LoginForm onLoginSuccess={handleLoginSuccess} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeLoginModal}>
+          <Button variant="btn btn-bd-primary" onClick={openRegisterModal}>
+            Registrarse
+          </Button>
+          <Button variant="danger" onClick={closeLoginModal}>
             Cancelar
           </Button>
         </Modal.Footer>
@@ -138,7 +142,7 @@ function NavBar() {
           <CrearUsuario />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeRegisterModal}>
+          <Button variant="danger" onClick={closeRegisterModal}>
             Cancelar
           </Button>
         </Modal.Footer>

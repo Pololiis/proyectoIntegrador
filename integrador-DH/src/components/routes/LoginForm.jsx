@@ -23,7 +23,6 @@ const handleSubmit = async (values, { setSubmitting, resetForm }) => {
       {
         email: values.email,
         contrasenia: values.contrasenia,
-
       }
     );
     

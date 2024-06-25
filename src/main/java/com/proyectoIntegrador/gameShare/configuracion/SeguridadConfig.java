@@ -70,7 +70,7 @@ public class SeguridadConfig {
                         .requestMatchers(HttpMethod.POST, "/alquiler/nuevo").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/alquiler/").authenticated()
                         .requestMatchers(HttpMethod.GET, "/alquiler/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/alquiler/**").hasAuthority("ADMINISTRADOR")
+                        .requestMatchers(HttpMethod.DELETE, "/alquiler/**").authenticated()
                         .anyRequest().authenticated()
                 );
         peticion.addFilterBefore(jwtFiltroDeAutenticacion(), UsernamePasswordAuthenticationFilter.class);

@@ -1,11 +1,12 @@
 package com.proyectoIntegrador.gameShare.controlador;
 
-
 import com.proyectoIntegrador.gameShare.dto.UsuarioRegistroDTO;
 import com.proyectoIntegrador.gameShare.entidad.Usuario;
 import com.proyectoIntegrador.gameShare.servicio.UsuarioServicio;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,7 +20,7 @@ public class UsuarioControlador {
     private UsuarioServicio usuarioServicio;
 
     @PostMapping("/nuevo")
-    public  ResponseEntity<Usuario> registrarUsuario(@Valid @RequestBody UsuarioRegistroDTO usuarioDTO){
+    public ResponseEntity<Usuario> registrarUsuario(@Valid @RequestBody UsuarioRegistroDTO usuarioDTO) {
         Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorEmail(usuarioDTO.getEmail());
 
         if (usuarioBuscado.isPresent()) {
@@ -31,13 +32,12 @@ public class UsuarioControlador {
 
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> buscarUsuarioPorID(@PathVariable Long id) {
-           Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorID(id);
-           if(usuarioBuscado.isPresent())
-               return ResponseEntity.ok(usuarioBuscado.get());
-           else{
-               return ResponseEntity.notFound().build();
-           }
-       
+        Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorID(id);
+        if (usuarioBuscado.isPresent())
+            return ResponseEntity.ok(usuarioBuscado.get());
+        else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping
@@ -45,6 +45,15 @@ public class UsuarioControlador {
         return ResponseEntity.ok(usuarioServicio.listarUsuarios());
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<Usuario> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorEmail(userDetails.getUsername());
+        if (usuarioBuscado.isPresent()) {
+            return ResponseEntity.ok(usuarioBuscado.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<Usuario> actualizarUsuario(
@@ -61,15 +70,14 @@ public class UsuarioControlador {
         }
     }
 
-
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarUsario(@PathVariable Long id){
-          Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorID(id);
-          if(usuarioBuscado.isPresent()) {
-              usuarioServicio.eliminarUsuario(id);
-              return ResponseEntity.ok("Usuario eliminado con éxito.");
-          } else {
-              return ResponseEntity.badRequest().body("El usuario no existe en la base de datos.");
-          }
+    public ResponseEntity<String> eliminarUsuario(@PathVariable Long id) {
+        Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorID(id);
+        if (usuarioBuscado.isPresent()) {
+            usuarioServicio.eliminarUsuario(id);
+            return ResponseEntity.ok("Usuario eliminado con éxito.");
+        } else {
+            return ResponseEntity.badRequest().body("El usuario no existe en la base de datos.");
+        }
     }
 }

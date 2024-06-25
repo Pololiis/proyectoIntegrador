@@ -21,6 +21,9 @@ public class Alquiler {
     @Column(name = "fecha_fin")
     private Date fechaFin;
 
+    @Column
+    private String texto;
+
     @ManyToOne
     @JoinColumn(name = "usuarios_id", nullable = false) // Revisar el nombre de la columna en la BD
     private Usuario usuario;

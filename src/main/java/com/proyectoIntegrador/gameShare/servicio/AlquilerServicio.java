@@ -49,6 +49,7 @@ public class AlquilerServicio {
         alquilerDTO.setFechaFin(alquiler.getFechaFin());
         alquilerDTO.setUsuariosId(alquiler.getUsuario().getId());
         alquilerDTO.setVideojuegosId(alquiler.getVideojuego().getId());
+        alquilerDTO.setTexto(alquiler.getTexto());
         return alquilerDTO;
     }
 
@@ -57,6 +58,7 @@ public class AlquilerServicio {
         alquiler.setId(alquilerDTO.getId());
         alquiler.setFechaInicio(alquilerDTO.getFechaInicio());
         alquiler.setFechaFin(alquilerDTO.getFechaFin());
+        alquiler.setTexto(alquilerDTO.getTexto());
         
         // Aquí obtener los objetos Usuario y Videojuego por ID
         Usuario usuario = new Usuario();

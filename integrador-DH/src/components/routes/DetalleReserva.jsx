@@ -119,8 +119,10 @@ const handleDateChange = async () => {
             },
         });
         console.log("Fechas actualizadas:", response.data);
+        setMessage("Fechas actualizadas con éxito.");
     } catch (error) {
         console.error("Error actualizando fechas:", error);
+        setMessage("Error actualizando fechas.");
     }
 };
 

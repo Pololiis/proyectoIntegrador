@@ -6,7 +6,9 @@ import CardJuego from "./common/CardJuego";
 import CardPlataforma from "./common/CardPlataforma";
 
 function Main() {
-  const url = `http://localhost:8080/videojuegos`;
+  //const url = `http://localhost:8080/videojuegos`;
+  const url = `${import.meta.env.VITE_API_URL}videojuegos`;
+
   const [videoJuegos, setVideoJuegos] = useState([]);
   const [cantidad, setCantidad] = useState(10);
 
@@ -20,7 +22,7 @@ function Main() {
         console.error("Hubo un error al hacer la solicitud:", error);
       }
     };
-    fetchData()
+    fetchData();
   }, []);
 
   return (
@@ -29,7 +31,6 @@ function Main() {
         <div className="container-h1 flex">
           <h1>Bienvenido a</h1>
           <span className="glow text-outline">GameShare</span>
-
         </div>
       </div>
 
@@ -41,11 +42,21 @@ function Main() {
             <div className="carousel-inner">
               <CardPlataforma />
             </div>
-            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <button
+              className="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide="prev"
+            >
               <span className="carousel-control-prev-icon" aria-hidden="true"></span>
               <span className="visually-hidden">Previous</span>
             </button>
-            <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <button
+              className="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide="next"
+            >
               <span className="carousel-control-next-icon" aria-hidden="true"></span>
               <span className="visually-hidden">Next</span>
             </button>

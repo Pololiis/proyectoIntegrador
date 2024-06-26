@@ -28,7 +28,9 @@ const AbmPlataforma = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/categorias/nuevo",
+        // "http://localhost:8080/categorias/nuevo",
+        `${import.meta.env.VITE_API_URL}categorias/nuevo`,
+
         formData,
         {
           headers: {
@@ -43,10 +45,7 @@ const AbmPlataforma = () => {
       console.log(response);
     } catch (error) {
       console.error("Error al crear la categoría:", error);
-      setMensaje(
-        "Error al crear la categoría: " +
-          (error.response?.data?.message || error.message)
-      );
+      setMensaje("Error al crear la categoría: " + (error.response?.data?.message || error.message));
     } finally {
       setSubmitting(false);
     }
@@ -57,9 +56,7 @@ const AbmPlataforma = () => {
       <div className="restringido row justify-content-center">
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">No disponible.</h2>
-          <h4 className="text-center mb-6">
-            Esta funcionalidad no está disponible en dispositivos móviles.
-          </h4>
+          <h4 className="text-center mb-6">Esta funcionalidad no está disponible en dispositivos móviles.</h4>
         </div>
       </div>
       <div className="row justify-content-center formulario">
@@ -74,33 +71,19 @@ const AbmPlataforma = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({
-              isSubmitting,
-              setFieldValue,
-              errors,
-              touched,
-              values,
-            }) => (
+            {({ isSubmitting, setFieldValue, errors, touched, values }) => (
               <Form>
                 <div className="mb-3">
                   <label className="form-label">Nombre:</label>
                   <Field
                     className={`form-control ${
-                      errors.nombre && touched.nombre
-                        ? "is-invalid"
-                        : touched.nombre
-                        ? "is-valid"
-                        : ""
+                      errors.nombre && touched.nombre ? "is-invalid" : touched.nombre ? "is-valid" : ""
                     }`}
                     type="text"
                     name="nombre"
                     placeholder="Nombre"
                   />
-                  <ErrorMessage
-                    name="nombre"
-                    component="div"
-                    className="text-danger"
-                  />
+                  <ErrorMessage name="nombre" component="div" className="text-danger" />
                 </div>
 
                 <div className="mb-3">
@@ -117,22 +100,14 @@ const AbmPlataforma = () => {
                     name="descripcion"
                     placeholder="Descripción"
                   />
-                  <ErrorMessage
-                    name="descripcion"
-                    component="div"
-                    className="text-danger"
-                  />
+                  <ErrorMessage name="descripcion" component="div" className="text-danger" />
                 </div>
 
                 <div className="mb-3">
                   <label className="form-label">Imagen:</label>
                   <input
                     className={`form-control ${
-                      errors.imagen && touched.imagen
-                        ? "is-invalid"
-                        : touched.imagen
-                        ? "is-valid"
-                        : ""
+                      errors.imagen && touched.imagen ? "is-invalid" : touched.imagen ? "is-valid" : ""
                     }`}
                     type="file"
                     accept="image/*"
@@ -140,11 +115,7 @@ const AbmPlataforma = () => {
                       setFieldValue("imagen", event.currentTarget.files[0]);
                     }}
                   />
-                  <ErrorMessage
-                    name="imagen"
-                    component="div"
-                    className="text-danger"
-                  />
+                  <ErrorMessage name="imagen" component="div" className="text-danger" />
                 </div>
 
                 {values.imagen && (
@@ -166,11 +137,7 @@ const AbmPlataforma = () => {
                   </div>
                 )}
 
-                <button
-                  className="btn btn-primary w-100"
-                  type="submit"
-                  disabled={isSubmitting}
-                >
+                <button className="btn btn-primary w-100" type="submit" disabled={isSubmitting}>
                   Agregar Plataforma
                 </button>
               </Form>
@@ -178,9 +145,7 @@ const AbmPlataforma = () => {
           </Formik>
           {mensaje && (
             <div
-              className={`alert ${
-                mensaje.includes("éxito") ? "alert-success" : "alert-danger"
-              } mt-4`}
+              className={`alert ${mensaje.includes("éxito") ? "alert-success" : "alert-danger"} mt-4`}
               role="alert"
             >
               {mensaje}

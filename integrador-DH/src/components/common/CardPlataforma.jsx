@@ -3,7 +3,9 @@ import axios from "axios";
 import "./cardPlataforma.css";
 
 function CardPlataforma() {
-  const url1 = "http://localhost:8080/categorias";
+  // const url1 = "http://localhost:8080/categorias";
+  const url1 = `${import.meta.env.VITE_API_URL}categorias`;
+
   const [plataformas, setPlataformas] = useState([]);
 
   useEffect(() => {
@@ -28,7 +30,6 @@ function CardPlataforma() {
   };
 
   const chunkedPlataformas = chunkArray(plataformas, 2);
-  
 
   return (
     <>
@@ -53,4 +54,3 @@ function CardPlataforma() {
 }
 
 export default CardPlataforma;
-

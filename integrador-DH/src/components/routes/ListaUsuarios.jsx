@@ -1,10 +1,12 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
- // Importa el archivo CSS
+import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+// Importa el archivo CSS
 
 const ListaUsuarios = () => {
-  const url = "http://localhost:8080/usuarios";
+  // const url = "http://localhost:8080/usuarios";
+  const url = `${import.meta.env.VITE_API_URL}usuarios`;
+
   const [usuarios, setUsuarios] = useState([]);
   const token = localStorage.getItem("token"); // Reemplaza esto con tu token de autenticación
 
@@ -13,8 +15,8 @@ const ListaUsuarios = () => {
       try {
         const response = await axios.get(url, {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
         setUsuarios(response.data);
       } catch (error) {

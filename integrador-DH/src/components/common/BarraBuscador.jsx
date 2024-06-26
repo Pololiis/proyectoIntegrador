@@ -2,19 +2,14 @@ import "./buscador.css";
 import CardJuego from "./CardJuego";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Container,
-  TextField,
-  Button,
-  List,
-  ListItem,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+import { Container, TextField, Button, List, ListItem, CircularProgress, Typography } from "@mui/material";
 
 function BarraBuscador() {
-  const videojuegosUrl = "http://localhost:8080/videojuegos";
-  const alquileresUrl = "http://localhost:8080/alquiler";
+  // const videojuegosUrl = "http://localhost:8080/videojuegos";
+  // const alquileresUrl = "http://localhost:8080/alquiler";
+  const videojuegosUrl = `${import.meta.env.VITE_API_URL}videojuegos`;
+  const alquileresUrl = `${import.meta.env.VITE_API_URL}alquiler`;
+
   const [videoJuegos, setVideoJuegos] = useState([]);
   const [alquileres, setAlquileres] = useState([]);
   const [busqueda, setBusqueda] = useState("");
@@ -130,10 +125,7 @@ function BarraBuscador() {
         // Debug: Log fetched videojuegos
         console.log("Fetched videojuegos:", response.data);
       } catch (error) {
-        console.error(
-          "Hubo un error al hacer la solicitud de videojuegos:",
-          error
-        );
+        console.error("Hubo un error al hacer la solicitud de videojuegos:", error);
       }
     };
 
@@ -145,10 +137,7 @@ function BarraBuscador() {
         // Debug: Log fetched alquileres
         console.log("Fetched alquileres:", response.data);
       } catch (error) {
-        console.error(
-          "Hubo un error al hacer la solicitud de alquileres:",
-          error
-        );
+        console.error("Hubo un error al hacer la solicitud de alquileres:", error);
       }
     };
 
@@ -236,15 +225,10 @@ function BarraBuscador() {
             {filteredData.length > 0 ? (
               filteredData.map(({ videojuego, isAvailable }) =>
                 isAvailable ? (
-                  <CardJuego
-                    key={videojuego.id}
-                    videojuego={videojuego}
-                    hideImage={!busqueda}
-                  />
+                  <CardJuego key={videojuego.id} videojuego={videojuego} hideImage={!busqueda} />
                 ) : (
                   <Typography key={videojuego.id} variant="h6" color="error">
-                    Las fechas elegidas no están disponibles para{" "}
-                    {videojuego.nombre}.
+                    Las fechas elegidas no están disponibles para {videojuego.nombre}.
                   </Typography>
                 )
               )

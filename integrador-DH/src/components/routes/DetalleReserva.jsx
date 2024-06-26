@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Container, Grid, Paper, Typography, Button, Modal, Box } from "@mui/material";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import axios from 'axios';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import axios from "axios";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import Volver from "../common/Volver";
 import { useAuthContext } from "../context/AuthContext";
 import LoginForm from "../routes/LoginForm";
@@ -11,15 +11,15 @@ import CrearUsuario from "../routes/crearUsuario";
 import "./detalleReserva.css";
 
 const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
+  bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
-  borderRadius: '8px',
+  borderRadius: "8px",
 };
 
 function DetalleReserva() {
@@ -34,9 +34,14 @@ function DetalleReserva() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { token, updateToken } = useAuthContext();
-  const url = `http://localhost:8080/alquiler`;
+  //const url = `http://localhost:8080/alquiler`;
+  const url = `$import.meta.env.VITE_API_URL}alquiler`;
 
-  const { videoJuegoSeleccionado, startDate: initialStartDate, endDate: initialEndDate } = location.state || {};
+  const {
+    videoJuegoSeleccionado,
+    startDate: initialStartDate,
+    endDate: initialEndDate,
+  } = location.state || {};
 
   useEffect(() => {
     if (!videoJuegoSeleccionado) {
@@ -69,7 +74,8 @@ function DetalleReserva() {
 
   const fetchUsuario = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/usuarios/me`, {                     
+      //const response = await axios.get(`http://localhost:8080/usuarios/me`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}usuarios/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -83,52 +89,60 @@ function DetalleReserva() {
 
   const handleReserva = async () => {
     if (!token) {
-        setShowLoginModal(true);
-        return;
+      setShowLoginModal(true);
+      return;
     }
 
     try {
-        const response = await axios.post(`${url}/nuevo`, {
-            fechaInicio: startDate.toISOString().split("T")[0],
-            fechaFin: endDate.toISOString().split("T")[0],
-            usuariosId:  usuario.id , // Asegúrate de pasar solo el id del usuario existente
-            videojuegosId: videoJuegoSeleccionado.id
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        setMessage("Reserva realizada con éxito.");
-        console.log("Reserva realizada:", response.data);
+      const response = await axios.post(
+        `${url}/nuevo`,
+        {
+          fechaInicio: startDate.toISOString().split("T")[0],
+          fechaFin: endDate.toISOString().split("T")[0],
+          usuariosId: usuario.id, // Asegúrate de pasar solo el id del usuario existente
+          videojuegosId: videoJuegoSeleccionado.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setMessage("Reserva realizada con éxito.");
+      console.log("Reserva realizada:", response.data);
     } catch (error) {
-        console.error("Error realizando la reserva:", error);
-        setMessage("Error realizando la reserva.");
+      console.error("Error realizando la reserva:", error);
+      setMessage("Error realizando la reserva.");
     }
-};
+  };
 
-const handleDateChange = async () => {
+  const handleDateChange = async () => {
     try {
-        const response = await axios.put(`${url}/${id}`, {
-            fechaInicio: startDate.toISOString().split("T")[0],
-            fechaFin: endDate.toISOString().split("T")[0],
-            usuariosId: usuario.id , // Asegúrate de pasar solo el id del usuario existente
-            videojuegosId: videoJuegoSeleccionado.id
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        console.log("Fechas actualizadas:", response.data);
-        setMessage("Fechas actualizadas con éxito.");
+      const response = await axios.put(
+        `${url}/${id}`,
+        {
+          fechaInicio: startDate.toISOString().split("T")[0],
+          fechaFin: endDate.toISOString().split("T")[0],
+          usuariosId: usuario.id, // Asegúrate de pasar solo el id del usuario existente
+          videojuegosId: videoJuegoSeleccionado.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Fechas actualizadas:", response.data);
+      setMessage("Fechas actualizadas con éxito.");
     } catch (error) {
-        console.error("Error actualizando fechas:", error);
-        setMessage("Error actualizando fechas.");
+      console.error("Error actualizando fechas:", error);
+      setMessage("Error actualizando fechas.");
     }
-};
+  };
 
   const tileDisabled = ({ date, view }) => {
-    if (view === 'month' && Array.isArray(reservas)) {
-      return reservas.some(reserva => {
+    if (view === "month" && Array.isArray(reservas)) {
+      return reservas.some((reserva) => {
         const reservaInicio = new Date(reserva.fechaInicio);
         const reservaFin = new Date(reserva.fechaFin);
         return date >= reservaInicio && date <= reservaFin;
@@ -149,7 +163,7 @@ const handleDateChange = async () => {
   const handleCloseLoginModal = () => setShowLoginModal(false);
   const handleLoginSuccess = () => {
     setShowLoginModal(false);
-    updateToken(localStorage.getItem('token'));
+    updateToken(localStorage.getItem("token"));
     window.location.reload();
   };
   const handleShowRegisterModal = () => {
@@ -175,7 +189,9 @@ const handleDateChange = async () => {
                 />
               </Grid>
               <Grid item xs={12} md={6}>
-                <Typography className="mb-2" variant="body1">Fechas</Typography>
+                <Typography className="mb-2" variant="body1">
+                  Fechas
+                </Typography>
                 <Calendar
                   onChange={([start, end]) => {
                     setStartDate(start);
@@ -208,9 +224,7 @@ const handleDateChange = async () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="body1">
-                  {videoJuegoSeleccionado.categoria?.nombre}
-                </Typography>
+                <Typography variant="body1">{videoJuegoSeleccionado.categoria?.nombre}</Typography>
               </Grid>
             </Grid>
             <Button
@@ -243,14 +257,11 @@ const handleDateChange = async () => {
             Por favor, inicie sesión para reservar
           </Typography>
           <Typography id="register-modal-description" variant="body1" gutterBottom>
-            Necesitas estar registrado para poder realizar una reserva. Si ya tienes una cuenta, inicia sesión. De lo contrario, regístrate para continuar.
+            Necesitas estar registrado para poder realizar una reserva. Si ya tienes una cuenta, inicia
+            sesión. De lo contrario, regístrate para continuar.
           </Typography>
           <Box mt={3} display="flex" justifyContent="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleShowLoginModal}
-            >
+            <Button variant="contained" color="primary" onClick={handleShowLoginModal}>
               Iniciar Sesión
             </Button>
           </Box>
@@ -269,18 +280,10 @@ const handleDateChange = async () => {
           </Typography>
           <LoginForm onLoginSuccess={handleLoginSuccess} />
           <Box mt={2} display="flex" justifyContent="space-between">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleShowRegisterModal}
-            >
+            <Button variant="contained" color="primary" onClick={handleShowRegisterModal}>
               Registrarse
             </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleCloseLoginModal}
-            >
+            <Button variant="contained" color="secondary" onClick={handleCloseLoginModal}>
               Cancelar
             </Button>
           </Box>
@@ -299,18 +302,10 @@ const handleDateChange = async () => {
           </Typography>
           <CrearUsuario />
           <Box mt={2} display="flex" justifyContent="space-between">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleShowLoginModal}
-            >
+            <Button variant="contained" color="primary" onClick={handleShowLoginModal}>
               Iniciar Sesión
             </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleCloseRegisterModal}
-            >
+            <Button variant="contained" color="secondary" onClick={handleCloseRegisterModal}>
               Cancelar
             </Button>
           </Box>

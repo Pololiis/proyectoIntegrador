@@ -34,7 +34,7 @@
 
 .card__img {
   width: 100%;
-  height: auto;
+  height: 40vh;
   border-radius: 10px 10px 0 0;
 }
 

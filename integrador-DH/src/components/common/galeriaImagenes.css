@@ -1,33 +1,88 @@
-/* galeriaImagenes.css */
-.img-principal {
-  max-width: 100%;
-  height: auto;
-  border-radius: 15px;
-}
-
 .container-galeria {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 1rem;
-  color: white;
+  margin: 20px;
+  
 }
 
-.container-img-secundaria-general {
+.titulo-descripcion-detalle {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.galeria-imagenes {
+  max-height: 50vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+ padding-right: 10vw;
 }
 
-.container-img-secundaria {
-  width: calc(10% - 10px);
-  margin: 3px;
+.columna-izquierda {
+  
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
-.img-secundaria {
+.imagen-principal img {
+margin-left: 7vw;
+  width: 80%;
+  height: 42vh;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding-right: 10px;
+}
+
+.columna-derecha {
+  
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.imagenes-secundarias {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.imagen-secundaria {
+  overflow: hidden;
+  border-radius: 8px;
+ 
+}
+
+.imagen-secundaria img {
+  margin-top: 0.5vh;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen dentro del contenedor */
+}
+
+.ver-mas {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+
+
+/* Estilos para el modal */
+.imagen-modal {
+  width: calc(25% - 10px); /* Ajusta el ancho para mostrar 4 imágenes por fila */
+  margin: 5px;
+}
+
+.imagen-modal img {
   width: 100%;
   height: auto;
-  display: block;
-  border-radius: 10px;
+  border-radius: 8px;
+}
+
+
+p{
+  text-align: left;
 }
 
 .titulo-descripcion-detalle {

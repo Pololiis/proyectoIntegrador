@@ -59,7 +59,6 @@ return (
 <div className="container m-auto login">
     <div className="row justify-content-center ">
     <div className="col-12 col-md-8">
-        <h2 className="text-center mb-4">Iniciar Sesión</h2>
         <Formik
         initialValues={{ email: "", contrasenia: "" }}
         validationSchema={validationSchema}

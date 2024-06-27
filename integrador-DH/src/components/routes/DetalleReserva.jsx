@@ -23,8 +23,6 @@ function DetalleReserva() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [reservas, setReservas] = useState([]);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [message, setMessage] = useState("");
   const [usuario, setUsuario] = useState(null);
   const [comentario, setComentario] = useState("");  // Nuevo estado para el comentario
@@ -50,8 +48,6 @@ function DetalleReserva() {
 
     if (token) {
       fetchUsuario();
-    } else {
-      setShowLoginModal(true);
     }
 
     fetchReservas();
@@ -111,22 +107,6 @@ function DetalleReserva() {
       duracionAlquiler: Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)),
     };
     handleReserva(reservaData);
-  };
-
-  const handleCloseRegisterModal = () => setShowRegisterModal(false);
-  const handleShowLoginModal = () => {
-    setShowRegisterModal(false);
-    setShowLoginModal(true);
-  };
-  const handleCloseLoginModal = () => setShowLoginModal(false);
-  const handleLoginSuccess = () => {
-    setShowLoginModal(false);
-    updateToken(localStorage.getItem('token'));
-    window.location.reload();
-  };
-  const handleShowRegisterModal = () => {
-    setShowLoginModal(false);
-    setShowRegisterModal(true);
   };
 
   return (
@@ -196,54 +176,6 @@ function DetalleReserva() {
           </Paper>
         </Grid>
       </Grid>
-
-      <Modal
-        open={showLoginModal}
-        onClose={handleCloseLoginModal}
-        aria-labelledby="login-modal-title"
-        aria-describedby="login-modal-description"
-      >
-        <Box sx={modalStyle}>
-          <Typography id="login-modal-title" variant="h6" gutterBottom>
-            Formulario de Inicio de Sesión
-          </Typography>
-          <LoginForm onLoginSuccess={handleLoginSuccess} />
-          <Box mt={3} display="flex" justifyContent="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleShowRegisterModal}
-            >
-              Crear una cuenta
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-
-      <Modal
-        open={showRegisterModal}
-        onClose={handleCloseRegisterModal}
-        aria-labelledby="register-modal-title"
-        aria-describedby="register-modal-description"
-      >
-        <Box sx={modalStyle}>
-          <Typography id="register-modal-title" variant="h6" gutterBottom>
-            Por favor, inicie sesión para reservar
-          </Typography>
-          <Typography id="register-modal-description" variant="body1" gutterBottom>
-            Necesitas estar registrado para poder realizar una reserva. Si ya tienes una cuenta, inicia sesión. De lo contrario, regístrate para continuar.
-          </Typography>
-          <Box mt={3} display="flex" justifyContent="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleShowLoginModal}
-            >
-              Iniciar Sesión
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
     </Container>
   );
 }

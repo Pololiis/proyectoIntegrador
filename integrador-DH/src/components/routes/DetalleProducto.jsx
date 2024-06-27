@@ -22,35 +22,41 @@ function DetalleProducto() {
   ]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showCalendar, setShowCalendar] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [videoJuegoSeleccionado, setVideoJuegoSeleccionado] = useState(null);
   const { id } = useParams();
-  const [videoJuegoSeleccionado, setVideoJuegoSeleccionado] = useState({});
   const navigate = useNavigate();
-  const { token, handleShowLoginModal } = useAuthContext();
-
-  const url = `http://localhost:8080/videojuegos/${id}`;
+  const { token, handleShowLoginModal } = useAuthContext(); // Asegúrate de que handleShowLoginModal está definido
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchVideojuego = async () => {
       try {
-        const response = await axios.get(url);
+        const response = await axios.get(`http://localhost:8080/videojuegos/${id}`);
         setVideoJuegoSeleccionado(response.data);
-        setLoading(false);
       } catch (error) {
-        console.error("Hubo un error al hacer la solicitud:", error);
-        setError(error);
+        setError("Error al cargar los detalles del videojuego.");
+      } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchVideojuego();
   }, [id]);
+
+  const handleReserva = () => {
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+      alert("Debe estar logueado para realizar una reserva.");
+      handleShowLoginModal(true);  // Llamada para mostrar el popup de inicio de sesión
+    } else {
+      navigate(`/detalleReserva/${id}`, { state: { videoJuegoSeleccionado, dateRange } });
+    }
+  };
 
   if (loading) {
     return (
-      <Container className="loading-container">
+      <Container>
         <CircularProgress />
-        <Typography variant="h6">Cargando...</Typography>
       </Container>
     );
   }
@@ -58,98 +64,41 @@ function DetalleProducto() {
   if (error) {
     return (
       <Container>
-        <Alert severity="error">Hubo un error al cargar los datos.</Alert>
+        <Alert severity="error">{error}</Alert>
       </Container>
     );
   }
 
-  const handleReserva = () => {
-    const storedToken = localStorage.getItem('token');
-    if (!storedToken) {
-      alert("Debe estar logueado para realizar una reserva.");
-      handleShowLoginModal(true);
-    } else {
-      navigate(`/detalleReserva/${id}`, { state: {videoJuegoSeleccionado, dateRange } });
-    }
-  };
-
-  const toggleCalendar = () => {
-    setShowCalendar(!showCalendar);
-  };
-
   return (
     <Container className="detalle-producto-container">
       <Volver />
-      <Typography variant="h4" gutterBottom>
-        {videoJuegoSeleccionado.nombre}
-      </Typography>
-      <GaleriaImagenes
-        plataforma={videoJuegoSeleccionado.categoria?.nombre}
-        titulo={videoJuegoSeleccionado.nombre}
-        descripcion={videoJuegoSeleccionado.descripcion}
-        imagenes={videoJuegoSeleccionado.imagenes}
-      />
-      <div className="form-group-container">
-        <div className="form-group">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={toggleCalendar}
-            className="btn-reserva"
-          >
-            Reservar
-          </Button>
-          {showCalendar && (
-            <div>
-              <Typography className="mb-2" variant="body1">Fechas</Typography>
-              <DateRange
-                onChange={item => setDateRange([item.selection])}
-                showSelectionPreview={true}
-                moveRangeOnFirstSelection={false}
-                months={2}
-                ranges={dateRange}
-                direction="horizontal"
-                minDate={today}
-                maxDate={addMonths(today, 2)}
-              />
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleReserva}
-                style={{ marginTop: "16px" }}
-              >
-                Generar Reserva
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-      <div className="caracteristicas-seccion">
-        <Typography variant="h5" gutterBottom>
-          Características
-        </Typography>
-        <div className="caracteristicas-container">
-          {videoJuegoSeleccionado.caracteristicas?.map((caracteristica, index) => (
-            <div className="caracteristica" key={index}>
-              <Typography variant="subtitle1">{caracteristica.nombre}</Typography>
-              <img
-                className="img-caracteristicas"
-                src={caracteristica.imagen}
-                alt={caracteristica.nombre}
-              />
-            </div>
-          ))}
-        </div>
-        <div>
-          <Typography variant="h5" gutterBottom>
-            Plataforma
+      {videoJuegoSeleccionado && (
+        <>
+          <Typography variant="h4" gutterBottom>
+            {videoJuegoSeleccionado.nombre}
           </Typography>
-          <div>
-            <img src={videoJuegoSeleccionado.categoria?.imagen} alt={videoJuegoSeleccionado.categoria?.nombre} />
-            <p>{videoJuegoSeleccionado.categoria?.nombre}</p>
-          </div>
-        </div>
-      </div>
+          <GaleriaImagenes imagenes={videoJuegoSeleccionado.imagenes} />
+          <Typography variant="body1" gutterBottom>
+            {videoJuegoSeleccionado.descripcion}
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+            Selecciona la fecha de alquiler:
+          </Typography>
+          <DateRange
+            editableDateInputs={true}
+            onChange={item => setDateRange([item.selection])}
+            moveRangeOnFirstSelection={false}
+            ranges={dateRange}
+            months={2}
+            direction="horizontal"
+            minDate={today}
+            maxDate={addMonths(today, 6)}
+          />
+          <Button variant="contained" color="primary" onClick={handleReserva}>
+            Generar Reserva
+          </Button>
+        </>
+      )}
     </Container>
   );
 }

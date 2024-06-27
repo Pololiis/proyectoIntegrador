@@ -11,6 +11,12 @@ function CardPlataforma() {
   // const url1 = "http://localhost:8080/categorias";
   const url1 = `${import.meta.env.VITE_API_URL}categorias`;
 
+  const plataformas = [
+    { id: 1, nombre: "Xbox", imagen: xboxLogo },
+    { id: 2, nombre: "PlayStation", imagen: playstationLogo },
+    { id: 3, nombre: "Nintendo", imagen: nintendoLogo },
+    { id: 4, nombre: "GameCube", imagen: gamecubeLogo },
+  ];
 
   return (
     <div className="card-plataforma-container">''

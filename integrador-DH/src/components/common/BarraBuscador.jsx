@@ -5,8 +5,6 @@ import axios from "axios";
 import { Container, TextField, Button, List, ListItem, CircularProgress, Typography } from "@mui/material";
 
 function BarraBuscador() {
-  // const videojuegosUrl = "http://localhost:8080/videojuegos";
-  // const alquileresUrl = "http://localhost:8080/alquiler";
   const videojuegosUrl = `${import.meta.env.VITE_API_URL}videojuegos`;
   const alquileresUrl = `${import.meta.env.VITE_API_URL}alquiler`;
 
@@ -59,8 +57,6 @@ function BarraBuscador() {
       setShowSuggestions(false);
       setPlaceholder("Buscar...");
     }
-
-    // Debug: Log filtered suggestions
   };
 
   const handleSubmit = (e) => {
@@ -75,9 +71,6 @@ function BarraBuscador() {
       videojuego.nombre.toLowerCase().includes(busqueda.toLowerCase())
     );
 
-    // Debug: Log filtered videojuegos
-    console.log("Filtered videojuegos:", filteredVideojuegos);
-
     // Filtrar los alquileres según los videojuegos filtrados y fechas
     const filtered = filteredVideojuegos.map((videojuego) => {
       const isAvailable = alquileres.every((alquiler) => {
@@ -88,28 +81,11 @@ function BarraBuscador() {
         const alquilerFin = new Date(alquiler.fechaFin);
         const searchStart = new Date(startDate);
         const searchEnd = new Date(endDate);
-        //------------------------------------------------------------
-
-        if (searchEnd < alquilerInicio || searchStart > alquilerFin) {
-          console.log("videojuego disponible");
-        } else {
-          console.log("videojuego no disponible");
-        }
-
-        // Debug: Log alquiler dates and search dates
-        // console.log(`Checking alquiler for videojuego ${videojuego.id}`);
-        // console.log("Alquiler start:", alquilerInicio);
-        // console.log("Alquiler end:", alquilerFin);
-        // console.log("Search start:", searchStart);
-        // console.log("Search end:", searchEnd);
 
         return searchEnd < alquilerInicio || searchStart > alquilerFin;
       });
       return { videojuego, isAvailable };
     });
-
-    // Debug: Log filtered data
-    console.log("Filtered data:", filtered);
 
     setFilteredData(filtered);
     setShowSuggestions(false);
@@ -121,9 +97,6 @@ function BarraBuscador() {
       try {
         const response = await axios.get(videojuegosUrl);
         setVideoJuegos(response.data);
-
-        // Debug: Log fetched videojuegos
-        console.log("Fetched videojuegos:", response.data);
       } catch (error) {
         console.error("Hubo un error al hacer la solicitud de videojuegos:", error);
       }
@@ -133,9 +106,6 @@ function BarraBuscador() {
       try {
         const response = await axios.get(alquileresUrl);
         setAlquileres(response.data);
-
-        // Debug: Log fetched alquileres
-        console.log("Fetched alquileres:", response.data);
       } catch (error) {
         console.error("Hubo un error al hacer la solicitud de alquileres:", error);
       }
@@ -192,9 +162,7 @@ function BarraBuscador() {
           <Button
             type="submit"
             variant="contained"
-
-            disabled={isSubmiting}
-
+            disabled={isSubmitting}
           >
             {isSubmitting ? <CircularProgress size={24} /> : "Buscar"}
           </Button>

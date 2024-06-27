@@ -7,12 +7,10 @@ import nintendoLogo from "../../assets/nintendo-logo.png";
 import gamecubeLogo from "../../assets/gamecube-logo.png";
 
 function CardPlataforma() {
-  const plataformas = [
-    { id: 1, nombre: "Xbox", imagen: xboxLogo },
-    { id: 2, nombre: "PlayStation", imagen: playstationLogo },
-    { id: 3, nombre: "Nintendo Switch", imagen: nintendoLogo },
-    { id: 4, nombre: "GameCube", imagen: gamecubeLogo },
-  ];
+
+  // const url1 = "http://localhost:8080/categorias";
+  const url1 = `${import.meta.env.VITE_API_URL}categorias`;
+
 
   return (
     <div className="card-plataforma-container">''
@@ -28,6 +26,3 @@ function CardPlataforma() {
 }
 
 export default CardPlataforma;
-
-
-

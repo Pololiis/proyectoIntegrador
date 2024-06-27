@@ -5,47 +5,41 @@ import axios from "axios";
 import "./loginForm.css";
 
 const LoginForm = ({ onLoginSuccess }) => {
-const [mensaje, setMensaje] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
-const validationSchema = Yup.object().shape({
-email: Yup.string()
-    .required("El email es requerido")
-    .email("*El email es invalido"),
-contrasenia: Yup.string().required("La contraseña es requerida"),
-});
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().required("El email es requerido").email("*El email es invalido"),
+    contrasenia: Yup.string().required("La contraseña es requerida"),
+  });
 
-const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      console.log("Enviando solicitud al servidor...");
+      //const response = await axios.post("http://localhost:8080/conectarse", {
 
-  try {
-    console.log('Enviando solicitud al servidor...');
-    const response = await axios.post(
-      "http://localhost:8080/conectarse",
-      {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}conectarse`, {
         email: values.email,
         contrasenia: values.contrasenia,
-        
+      });
 
+
+      console.log("Respuesta del servidor:", response.data);
+
+      if (response.data.tokenDeAcceso) {
+        localStorage.setItem("token", response.data.tokenDeAcceso);
+        localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
+
+        onLoginSuccess(response.data.usuario);
+        console.log(localStorage.getItem("usuario"));
+        resetForm();
+      } else {
+        setMensaje("Inicio de sesión fallido");
       }
-    );
-    
-
-
-    console.log('Respuesta del servidor:', response.data);
-
-
-
-    if (response.data.tokenDeAcceso) {
-      localStorage.setItem("token", response.data.tokenDeAcceso);
-      localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
-
-     
-      
-
-      onLoginSuccess(response.data.usuario);
-      console.log(localStorage.getItem("usuario"));
-      resetForm();
-    } else {
-      setMensaje("Inicio de sesión fallido");
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+      setMensaje("Error al iniciar sesión");
+    } finally {
+      setSubmitting(false);
     }
   } catch (error) {
     console.error("Error al iniciar sesión:", error);
@@ -112,30 +106,15 @@ return (
                 className="btn btn-bd-primary w-100"
                 type="submit"
                 disabled={isSubmitting}
+
             >
-                Iniciar Sesión
-            </button>
-            </Form>
-        )}
-        </Formik>
-        {mensaje && (
-        <div
-            className={`alert ${
-            mensaje.includes("éxito") ? "alert-success" : "alert-danger"
-            } mt-4`}
-            role="alert"
-        >
-            {mensaje}
+              {mensaje}
+            </div>
+          )}
         </div>
-        )}
+      </div>
     </div>
-    </div>
-</div>
-);
+  );
 };
 
 export default LoginForm;
-
-
-
-

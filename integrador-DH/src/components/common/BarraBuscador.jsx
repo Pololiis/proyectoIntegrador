@@ -2,20 +2,18 @@ import "./buscador.css";
 import CardJuego from "./CardJuego";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Container,
-  TextField,
-  Button,
-  List,
-  ListItem,
-  CircularProgress,
-} from "@mui/material";
+import { Container, TextField, Button, List, ListItem, CircularProgress, Typography } from "@mui/material";
 
 function BarraBuscador() {
-  const url = "http://localhost:8080/videojuegos";
+  // const videojuegosUrl = "http://localhost:8080/videojuegos";
+  // const alquileresUrl = "http://localhost:8080/alquiler";
+  const videojuegosUrl = `${import.meta.env.VITE_API_URL}videojuegos`;
+  const alquileresUrl = `${import.meta.env.VITE_API_URL}alquiler`;
+
   const [videoJuegos, setVideoJuegos] = useState([]);
+  const [alquileres, setAlquileres] = useState([]);
   const [busqueda, setBusqueda] = useState("");
-  const [isSubmiting, setIsSubmiting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -52,7 +50,6 @@ function BarraBuscador() {
       setFilteredSuggestions(suggestions);
       setShowSuggestions(true);
 
-      // Actualizar placeholder con la primera sugerencia
       if (suggestions.length > 0) {
         setPlaceholder(`¿Quisiste decir: ${suggestions[0].nombre}?`);
       } else {
@@ -62,6 +59,8 @@ function BarraBuscador() {
       setShowSuggestions(false);
       setPlaceholder("Buscar...");
     }
+
+    // Debug: Log filtered suggestions
   };
 
   const handleSubmit = (e) => {
@@ -69,33 +68,81 @@ function BarraBuscador() {
     if (!busqueda && (!startDate || !endDate)) {
       return; // No realizar búsqueda si los campos están vacíos
     }
-    setIsSubmiting(true);
+    setIsSubmitting(true);
 
-    // Filtrado por nombre y fechas
-    const filtered = videoJuegos.filter((videojuego) => {
-      const isNameMatch = videojuego.nombre.toLowerCase().includes(busqueda.toLowerCase());
-      const isDateMatch = startDate && endDate
-        ? new Date(videojuego.disponibilidadInicio) <= new Date(endDate) &&
-          new Date(videojuego.disponibilidadFin) >= new Date(startDate)
-        : true;
-      return isNameMatch && isDateMatch;
+    // Filtrar los videojuegos por nombre
+    const filteredVideojuegos = videoJuegos.filter((videojuego) =>
+      videojuego.nombre.toLowerCase().includes(busqueda.toLowerCase())
+    );
+
+    // Debug: Log filtered videojuegos
+    console.log("Filtered videojuegos:", filteredVideojuegos);
+
+    // Filtrar los alquileres según los videojuegos filtrados y fechas
+    const filtered = filteredVideojuegos.map((videojuego) => {
+      const isAvailable = alquileres.every((alquiler) => {
+        if (alquiler.videojuegosId !== videojuego.id) {
+          return true;
+        }
+        const alquilerInicio = new Date(alquiler.fechaInicio);
+        const alquilerFin = new Date(alquiler.fechaFin);
+        const searchStart = new Date(startDate);
+        const searchEnd = new Date(endDate);
+        //------------------------------------------------------------
+
+        if (searchEnd < alquilerInicio || searchStart > alquilerFin) {
+          console.log("videojuego disponible");
+        } else {
+          console.log("videojuego no disponible");
+        }
+
+        // Debug: Log alquiler dates and search dates
+        // console.log(`Checking alquiler for videojuego ${videojuego.id}`);
+        // console.log("Alquiler start:", alquilerInicio);
+        // console.log("Alquiler end:", alquilerFin);
+        // console.log("Search start:", searchStart);
+        // console.log("Search end:", searchEnd);
+
+        return searchEnd < alquilerInicio || searchStart > alquilerFin;
+      });
+      return { videojuego, isAvailable };
     });
+
+    // Debug: Log filtered data
+    console.log("Filtered data:", filtered);
 
     setFilteredData(filtered);
     setShowSuggestions(false);
-    setIsSubmiting(false);
+    setIsSubmitting(false);
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchVideojuegos = async () => {
       try {
-        const response = await axios.get(url);
+        const response = await axios.get(videojuegosUrl);
         setVideoJuegos(response.data);
+
+        // Debug: Log fetched videojuegos
+        console.log("Fetched videojuegos:", response.data);
       } catch (error) {
-        console.error("Hubo un error al hacer la solicitud:", error);
+        console.error("Hubo un error al hacer la solicitud de videojuegos:", error);
       }
     };
-    fetchData();
+
+    const fetchAlquileres = async () => {
+      try {
+        const response = await axios.get(alquileresUrl);
+        setAlquileres(response.data);
+
+        // Debug: Log fetched alquileres
+        console.log("Fetched alquileres:", response.data);
+      } catch (error) {
+        console.error("Hubo un error al hacer la solicitud de alquileres:", error);
+      }
+    };
+
+    fetchVideojuegos();
+    fetchAlquileres();
   }, []);
 
   return (
@@ -145,9 +192,11 @@ function BarraBuscador() {
           <Button
             type="submit"
             variant="contained"
+
             disabled={isSubmiting}
+
           >
-            {isSubmiting ? <CircularProgress size={24} /> : "Buscar"}
+            {isSubmitting ? <CircularProgress size={24} /> : "Buscar"}
           </Button>
         </form>
         {showSuggestions && (
@@ -170,13 +219,25 @@ function BarraBuscador() {
       </div>
 
       <section className="cards-src">
-        {isSubmiting ? (
+        {isSubmitting ? (
           <CircularProgress className="loading-spinner" />
         ) : (
           <div className="container-card flex">
-            {filteredData.map((videojuego) => (
-              <CardJuego key={videojuego.id} videojuego={videojuego} hideImage={!busqueda} />
-            ))}
+            {filteredData.length > 0 ? (
+              filteredData.map(({ videojuego, isAvailable }) =>
+                isAvailable ? (
+                  <CardJuego key={videojuego.id} videojuego={videojuego} hideImage={!busqueda} />
+                ) : (
+                  <Typography key={videojuego.id} variant="h6" color="error">
+                    Las fechas elegidas no están disponibles para {videojuego.nombre}.
+                  </Typography>
+                )
+              )
+            ) : (
+              <Typography variant="h6" color="textSecondary">
+                No se encontraron resultados.
+              </Typography>
+            )}
           </div>
         )}
       </section>

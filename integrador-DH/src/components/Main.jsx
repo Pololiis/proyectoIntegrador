@@ -6,7 +6,9 @@ import CardJuego from "./common/CardJuego";
 import CardPlataforma from "./common/CardPlataforma";
 
 function Main() {
-  const url = `http://localhost:8080/videojuegos`;
+  //const url = `http://localhost:8080/videojuegos`;
+  const url = `${import.meta.env.VITE_API_URL}videojuegos`;
+
   const [videoJuegos, setVideoJuegos] = useState([]);
   const [cantidad, setCantidad] = useState(10);
 
@@ -33,8 +35,10 @@ function Main() {
 
   return (
     <div>
+
       <div className="main-container">
         <section className="cards-categoria">
+
           <BarraBuscador />
         </section>
         <section className="plataformas-section">

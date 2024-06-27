@@ -12,16 +12,17 @@ import GaleriaImagenes from "../common/GaleriaImagenes";
 import "./detalleProducto.css";
 
 function DetalleProducto() {
-  const today = new Date().toISOString().split('T')[0];
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const today = new Date().toISOString().split("T")[0];
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { id } = useParams();
   const [videoJuegoSeleccionado, setVideoJuegoSeleccionado] = useState({});
   const navigate = useNavigate();
-  
-  const url = `http://localhost:8080/videojuegos/${id}`;
+
+  // const url = `http://localhost:8080/videojuegos/${id}`;
+  const url = `${import.meta.env.VITE_API_URL}videojuegos/${id}`;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,11 +119,7 @@ function DetalleProducto() {
           {videoJuegoSeleccionado.caracteristicas?.map((caracteristica, index) => (
             <div className="caracteristica" key={index}>
               <Typography variant="subtitle1">{caracteristica.nombre}</Typography>
-              <img
-                className="img-caracteristicas"
-                src={caracteristica.imagen}
-                alt={caracteristica.nombre}
-              />
+              <img className="img-caracteristicas" src={caracteristica.imagen} alt={caracteristica.nombre} />
             </div>
           ))}
         </div>
@@ -131,7 +128,10 @@ function DetalleProducto() {
             Plataforma
           </Typography>
           <div>
-            <img src={videoJuegoSeleccionado.categoria?.imagen} alt={videoJuegoSeleccionado.categoria?.nombre} />
+            <img
+              src={videoJuegoSeleccionado.categoria?.imagen}
+              alt={videoJuegoSeleccionado.categoria?.nombre}
+            />
             <p>{videoJuegoSeleccionado.categoria?.nombre}</p>
           </div>
         </div>

@@ -13,9 +13,11 @@ if (!user) {
     navigate("/"); // Redirigir al usuario a la página principal si no está autenticado
 } else {
     // Fetch alquileres del usuario
-    axios
-    .get(`http://localhost:8080/alquileres/usuario/${user.id}`)
+ // axios.get(`http://localhost:8080/alquileres/usuario/${user.id}`)
+    axios.get(`${import.meta.env.VITE_API_URL}alquileres/usuario/${user.id}`)
     .then((response) => {
+ 
+
         setAlquileres(response.data);
     })
     .catch((error) => {

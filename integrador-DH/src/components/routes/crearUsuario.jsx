@@ -66,7 +66,7 @@ const CrearUsuario = () => {
     try {
       const response = await axios.post(
         // "http://localhost:8080/usuarios/nuevo",
-        import.meta.env.VITE_API_URL + "/usuarios/nuevo",
+        `${import.meta.env.VITE_API_URL}usuarios/nuevo`,
 
         formData,
         {

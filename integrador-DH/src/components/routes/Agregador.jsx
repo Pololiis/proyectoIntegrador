@@ -16,8 +16,9 @@ const Agregador = () => {
         const [categoriasResponse, caracteristicasResponse] = await Promise.all([
           // axios.get("http://localhost:8080/categorias"),
           // axios.get("http://localhost:8080/caracteristicas/listar"),
-          axios.get("$import.meta.env.VITE_API_URL/categorias"),
-          axios.get("$import.meta.env.VITE_API_URL/caracteristicas/listar"),
+          axios.get(`${import.meta.env.VITE_API_URL}categorias`),
+          axios.get(`${import.meta.env.VITE_API_URL}caracteristicas/listar`),
+          
         ]);
         setCategorias(categoriasResponse.data);
         setCaracteristicas(caracteristicasResponse.data);

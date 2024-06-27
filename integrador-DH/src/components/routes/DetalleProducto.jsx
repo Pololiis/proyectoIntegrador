@@ -22,7 +22,7 @@ function DetalleProducto() {
   const navigate = useNavigate();
 
   // const url = `http://localhost:8080/videojuegos/${id}`;
-  const url = `$import.meta.env.VITE_API_URL/videojuegos/${id}`;
+  const url = `${import.meta.env.VITE_API_URL}videojuegos/${id}`;
 
   useEffect(() => {
     const fetchData = async () => {

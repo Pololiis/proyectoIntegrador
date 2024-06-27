@@ -35,7 +35,7 @@ function DetalleReserva() {
   const { id } = useParams();
   const { token, updateToken } = useAuthContext();
   //const url = `http://localhost:8080/alquiler`;
-  const url = `$import.meta.env.VITE_API_URL}alquiler`;
+  const url = `${import.meta.env.VITE_API_URL}alquiler`;
 
   const {
     videoJuegoSeleccionado,

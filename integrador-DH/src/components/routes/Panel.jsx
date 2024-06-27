@@ -6,7 +6,6 @@ import ListaVideojuegos from "./ListaVideojuegos";
 import AbmPlataforma from "./AbmPlataforma";
 import ListaPlataformas from "./ListaPlataformas";
 
-
 const Panel = () => {
   const [componenteActivo, setComponenteActivo] = useState(null);
 
@@ -30,43 +29,42 @@ const Panel = () => {
   };
 
   return (
-    <>
-
-      <div>
-        
-        <h2 className="panel-titulo">PANEL DE ADMINISTRACIÓN.</h2>
+    <div className="panel-container">
+      <div className="sidebar">
+        <h2 className="panel-titulo">PANEL DE ADMINISTRACIÓN</h2>
+        <div className="button-row">
+          <button
+            className="btn btn-bd-primary"
+            onClick={() => setComponenteActivo("plataforma")}
+          >
+            Agregar Plataforma
+          </button>
+          <button
+            className="btn btn-bd-primary"
+            onClick={() => setComponenteActivo("listaUsuarios")}
+          >
+            Lista de Usuarios
+          </button>
+          <button
+            className="btn btn-bd-primary"
+            onClick={() => setComponenteActivo("listaVideojuegos")}
+          >
+            Lista de Videojuegos
+          </button>
+          <button
+            className="btn btn-bd-primary"
+            onClick={() => setComponenteActivo("listaPlataformas")}
+          >
+            Lista de Plataformas
+          </button>
+        </div>
       </div>
-      <div className="button-row">
-       
-        <button
-          className="btn btn-bd-primary"
-          onClick={() => setComponenteActivo("plataforma")}
-        >
-          Agregar Plataforma
-        </button>
-        <button
-          className="btn btn-bd-primary"
-          onClick={() => setComponenteActivo("listaUsuarios")}
-        >
-          Lista de Usuarios
-        </button>
-        <button
-          className="btn btn-bd-primary"
-          onClick={() => setComponenteActivo("listaVideojuegos")}
-        >
-          Lista de Videojuegos
-        </button>
-        <button
-          className="btn btn-bd-primary"
-          onClick={() => setComponenteActivo("listaPlataformas")}
-        >
-          Lista de Plataformas
-        </button>
+      <div className="componente-activo">
+        {renderComponente()}
       </div>
-      <div className="componente-activo">{renderComponente()}</div>
-    
-    </>
+    </div>
   );
 };
 
 export default Panel;
+

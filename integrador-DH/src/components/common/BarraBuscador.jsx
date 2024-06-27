@@ -101,7 +101,7 @@ function BarraBuscador() {
   return (
     <Container className="buscador">
       <div className="buscador-header">
-        <h2>Buscar Videojuegos</h2>
+        <h2>¡Elige tu próxima aventura!</h2>
         <form onSubmit={handleSubmit} className="buscador-form">
           <TextField
             onChange={handleSearch}

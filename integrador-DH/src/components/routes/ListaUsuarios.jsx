@@ -1,7 +1,8 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
-// Importa el archivo CSS
+
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './listarUsuarios.css'; // Asegúrate de importar el archivo CSS
+
 
 const ListaUsuarios = () => {
   // const url = "http://localhost:8080/usuarios";
@@ -24,11 +25,11 @@ const ListaUsuarios = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [url, token]);
 
   return (
-    <div className="container-main m-auto">
-      <h2>Usuarios</h2>
+    <div className="container-main">
+      <h2>Lista de Usuarios</h2>
       <table className="table">
         <thead>
           <tr>

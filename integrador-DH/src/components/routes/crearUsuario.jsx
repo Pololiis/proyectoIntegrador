@@ -95,7 +95,6 @@ const CrearUsuario = () => {
     <div className="container  m-auto register">
       <div className="row justify-content-center">
         <div className="col-12 col-md-8">
-          <h2 className="text-center mb-4">Registrar Usuario</h2>
           <Formik
             initialValues={{
               nombre: "",

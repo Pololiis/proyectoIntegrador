@@ -22,6 +22,7 @@ const LoginForm = ({ onLoginSuccess }) => {
         contrasenia: values.contrasenia,
       });
 
+
       console.log("Respuesta del servidor:", response.data);
 
       if (response.data.tokenDeAcceso) {
@@ -40,59 +41,72 @@ const LoginForm = ({ onLoginSuccess }) => {
     } finally {
       setSubmitting(false);
     }
-  };
-  return (
-    <div className="container m-auto login">
-      <div className="row justify-content-center ">
-        <div className="col-12 col-md-8">
-          <h2 className="text-center mb-4">Iniciar Sesión</h2>
-          <Formik
-            initialValues={{ email: "", contrasenia: "" }}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting, errors, touched }) => (
-              <Form>
-                <div className="mb-3">
-                  <label className="form-label">E-Mail:</label>
-                  <Field
-                    className={`form-control ${
-                      errors.email && touched.email ? "is-invalid" : touched.email ? "is-valid" : ""
-                    }`}
-                    type="text"
-                    name="email"
-                    placeholder="Email"
-                  />
-                  <ErrorMessage name="email" component="div" className="text-danger" />
-                </div>
+  } catch (error) {
+    console.error("Error al iniciar sesión:", error);
+    setMensaje("Error al iniciar sesión");
+  } finally {
+    setSubmitting(false);
+  }
+};
+;
+return (
+<div className="container m-auto login">
+    <div className="row justify-content-center ">
+    <div className="col-12 col-md-8">
+        <Formik
+        initialValues={{ email: "", contrasenia: "" }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        >
+        {({ isSubmitting, errors, touched }) => (
+            <Form>
+            <div className="mb-3">
+                <label className="form-label">E-Mail:</label>
+                <Field
+                className={`form-control ${
+                    errors.email && touched.email
+                    ? "is-invalid"
+                    : touched.email
+                    ? "is-valid"
+                    : ""
+                }`}
+                type="text"
+                name="email"
+                placeholder="Email"
+                />
+                <ErrorMessage
+                name="email"
+                component="div"
+                className="text-danger"
+                />
+            </div>
 
-                <div className="mb-3">
-                  <label className="form-label">Contraseña:</label>
-                  <Field
-                    className={`form-control ${
-                      errors.contrasenia && touched.contrasenia
-                        ? "is-invalid"
-                        : touched.contrasenia
-                        ? "is-valid"
-                        : ""
-                    }`}
-                    type="password"
-                    name="contrasenia"
-                    placeholder="Contraseña"
-                  />
-                  <ErrorMessage name="contrasenia" component="div" className="text-danger" />
-                </div>
+            <div className="mb-3">
+                <label className="form-label">Contraseña:</label>
+                <Field
+                className={`form-control ${
+                    errors.contrasenia && touched.contrasenia
+                    ? "is-invalid"
+                    : touched.contrasenia
+                    ? "is-valid"
+                    : ""
+                }`}
+                type="password"
+                name="contrasenia"
+                placeholder="Contraseña"
+                />
+                <ErrorMessage
+                name="contrasenia"
+                component="div"
+                className="text-danger"
+                />
+            </div>
 
-                <button className="btn btn-bd-primary w-100" type="submit" disabled={isSubmitting}>
-                  Iniciar Sesión
-                </button>
-              </Form>
-            )}
-          </Formik>
-          {mensaje && (
-            <div
-              className={`alert ${mensaje.includes("éxito") ? "alert-success" : "alert-danger"} mt-4`}
-              role="alert"
+            <button
+                className="btn btn-bd-primary w-100"
+                type="submit"
+                disabled={isSubmitting}
+
             >
               {mensaje}
             </div>

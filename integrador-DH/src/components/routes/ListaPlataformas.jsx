@@ -11,7 +11,7 @@ const ListaPlataformas = () => {
       <div className="container-cards-section flex">
         <h2>Plataformas</h2>
         <div className="container-cards flex">
-         <CardPlataforma/>
+        <CardPlataforma/>
         </div>
       </div>
     </div>

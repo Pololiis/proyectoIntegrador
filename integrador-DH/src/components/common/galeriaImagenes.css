@@ -6,7 +6,7 @@
 }
 
 .container-galeria {
-  background-color: #39226c;
+  background-color: #fff;
   padding: 20px;
   border-radius: 1rem;
   color: white;
@@ -41,6 +41,7 @@
 
 .titulo-descripcion-detalle > p {
   font-size: clamp(1rem, 0.75rem + 1vw, 1.5rem);
+  color: black;
 }
 
 .btn-group {
@@ -55,13 +56,12 @@
 .btn-accion {
   font-size: 1rem;
   padding: auto;
-  background-color: var(--color3);
+  background-color: var(--color2);
   border: none;
   color: white;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
- 
   
   
 }
@@ -86,7 +86,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);}
 
 .calendario-container button{
- margin: 10px;
+  margin: 10px;
 }
 
 @media screen and (max-width: 768px) {

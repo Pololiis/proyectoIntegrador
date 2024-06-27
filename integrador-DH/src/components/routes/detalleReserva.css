@@ -1,12 +1,83 @@
 /* detalleReserva.css */
 
+/* Centrar la imagen */
+.imagen-centrada {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%; /* Ajustar el tamaño según sea necesario */
+  border-radius: 8px;
+}
 
-  
-  /* Centrar la imagen */
-  .imagen-centrada {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%; /* Ajustar el tamaño según sea necesario */
-    border-radius: 8px;
-  }
+/* Contenedor principal */
+.detalle-reserva-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.videojuego-card{
+  bottom: 5%;
+}
+
+/* Estilo del contenedor de datos del videojuego */
+.videojuego-info {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.videojuego-imagen {
+  max-width: 30%;
+  margin-right: 20px;
+  border-radius: 8px;
+}
+
+.videojuego-detalles {
+  flex-grow: 1;
+}
+
+/* Botón de reserva */
+.boton-reserva {
+  --bs-btn-font-weight: 400;
+  --bs-btn-color: white;
+  --bs-btn-bg: var(--color3);
+  --bs-btn-border-color: var(--color3);
+  --bs-btn-hover-color: var(--color3);
+  --bs-btn-hover-bg: white;
+  --bs-btn-active-color: var(--color3);
+  --bs-btn-active-bg: white;
+  border-radius: 0.3rem;
+  display: flex;
+  margin-top: 16px;
+}
+
+.boton-reserva:hover {
+  border: 1px solid var(--color3);
+}
+
+/* Estilo de la información del usuario */
+.usuario-info {
+  margin-bottom: 20px;
+}
+
+/* Estilo de las fechas de reserva */
+.fecha-reserva {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+/* detalleReserva.css */
+
+
+
+.form-group-fecha {
+  display: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.form-group-fecha label,
+.form-group-fecha input {
+  width: 45%; /* Cada elemento ocupa el 48% del ancho disponible */
+}
+

@@ -1,26 +1,33 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import CircularProgress from "@mui/material/CircularProgress";
-import Alert from "@mui/material/Alert";
+import { Container, Typography, CircularProgress, Alert, Button } from "@mui/material";
+import { DateRange } from 'react-date-range';
+import { addMonths } from 'date-fns';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 import Volver from "../common/Volver";
 import GaleriaImagenes from "../common/GaleriaImagenes";
+import { useAuthContext } from "../context/AuthContext";
 import "./detalleProducto.css";
 
 function DetalleProducto() {
-  const today = new Date().toISOString().split('T')[0];
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const today = new Date();
+  const [dateRange, setDateRange] = useState([
+    {
+      startDate: today,
+      endDate: null,
+      key: 'selection'
+    }
+  ]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showCalendar, setShowCalendar] = useState(false);
   const { id } = useParams();
   const [videoJuegoSeleccionado, setVideoJuegoSeleccionado] = useState({});
   const navigate = useNavigate();
-  
+  const { token, handleShowLoginModal } = useAuthContext();
+
   const url = `http://localhost:8080/videojuegos/${id}`;
 
   useEffect(() => {
@@ -57,7 +64,17 @@ function DetalleProducto() {
   }
 
   const handleReserva = () => {
-    navigate(`/detalleReserva/${id}`, { state: { videoJuegoSeleccionado, startDate, endDate } });
+    const storedToken = localStorage.getItem('token');
+    if (!storedToken) {
+      alert("Debe estar logueado para realizar una reserva.");
+      handleShowLoginModal(true);
+    } else {
+      navigate(`/detalleReserva/${id}`, { state: {videoJuegoSeleccionado, dateRange } });
+    }
+  };
+
+  const toggleCalendar = () => {
+    setShowCalendar(!showCalendar);
   };
 
   return (
@@ -74,42 +91,39 @@ function DetalleProducto() {
       />
       <div className="form-group-container">
         <div className="form-group">
-          <TextField
-            label="Fecha de inicio"
-            type="date"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              min: today,
-            }}
-            fullWidth
-            margin="normal"
-            className="input-field"
-          />
-          <TextField
-            label="Fecha de fin"
-            type="date"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            inputProps={{
-              min: startDate || today,
-            }}
-            fullWidth
-            margin="normal"
-            className="input-field"
-          />
-          <Button variant="contained" color="primary" onClick={handleReserva}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={toggleCalendar}
+            className="btn-reserva"
+          >
             Reservar
           </Button>
+          {showCalendar && (
+            <div>
+              <Typography className="mb-2" variant="body1">Fechas</Typography>
+              <DateRange
+                onChange={item => setDateRange([item.selection])}
+                showSelectionPreview={true}
+                moveRangeOnFirstSelection={false}
+                months={2}
+                ranges={dateRange}
+                direction="horizontal"
+                minDate={today}
+                maxDate={addMonths(today, 2)}
+              />
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleReserva}
+                style={{ marginTop: "16px" }}
+              >
+                Generar Reserva
+              </Button>
+            </div>
+          )}
         </div>
       </div>
-
       <div className="caracteristicas-seccion">
         <Typography variant="h5" gutterBottom>
           Características

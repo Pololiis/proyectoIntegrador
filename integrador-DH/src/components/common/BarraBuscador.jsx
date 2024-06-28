@@ -3,6 +3,9 @@ import CardJuego from "./CardJuego";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Container, TextField, Button, List, ListItem, CircularProgress, Typography } from "@mui/material";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function BarraBuscador() {
   const videojuegosUrl = `${import.meta.env.VITE_API_URL}videojuegos`;
@@ -115,6 +118,14 @@ function BarraBuscador() {
     fetchAlquileres();
   }, []);
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+  };
+
   return (
     <Container className="buscador">
       <div className="buscador-header">
@@ -191,7 +202,19 @@ function BarraBuscador() {
           <CircularProgress className="loading-spinner" />
         ) : (
           <div className="container-card flex">
-            {filteredData.length > 0 ? (
+            {filteredData.length > 1 ? (
+              <Slider {...settings} className="slider-card">
+                {filteredData.map(({ videojuego, isAvailable }) =>
+                  isAvailable ? (
+                    <CardJuego key={videojuego.id} videojuego={videojuego} hideImage={!busqueda} />
+                  ) : (
+                    <Typography key={videojuego.id} variant="h6" color="error">
+                      Las fechas elegidas no están disponibles para {videojuego.nombre}.
+                    </Typography>
+                  )
+                )}
+              </Slider>
+            ) : (
               filteredData.map(({ videojuego, isAvailable }) =>
                 isAvailable ? (
                   <CardJuego key={videojuego.id} videojuego={videojuego} hideImage={!busqueda} />
@@ -201,8 +224,9 @@ function BarraBuscador() {
                   </Typography>
                 )
               )
-            ) : (
-              <Typography variant="h6" color="textSecondary">
+            )}
+            {filteredData.length === 0 && (
+              <Typography variant="h6" color="error">
                 No se encontraron resultados.
               </Typography>
             )}
@@ -214,3 +238,4 @@ function BarraBuscador() {
 }
 
 export default BarraBuscador;
+

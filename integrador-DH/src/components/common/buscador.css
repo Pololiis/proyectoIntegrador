@@ -11,24 +11,22 @@
 /* Estilos para el encabezado */
 .buscador-header {
   margin-bottom: 20px;
-  width: 50%; 
+  width: 50%;
 }
 
 .buscador-header h2 {
   font-size: 3em;
   color: white;
-  text-align: center; 
-
+  text-align: center;
 }
 
 /* Estilos para el formulario */
 .buscador-form {
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
+  flex-direction: column;
+  align-items: center;
   gap: 10px;
   width: 100%;
-  
 }
 
 .buscador-field {
@@ -76,7 +74,7 @@
   max-height: 150px;
   overflow-y: auto;
   max-width: 100%;
-  width: 100%; 
+  width: 100%;
 }
 
 .buscador-suggestion {
@@ -92,11 +90,10 @@
 .loading-spinner {
   display: block;
   margin: 20px auto;
-  
 }
 
 .cards-src {
-  width: 100%; 
+  width: 100%;
   margin-top: 20px;
 }
 
@@ -107,10 +104,22 @@
   justify-content: center; /* Revisar Codigo Card*/
 }
 
+/* Estilos para el slider */
+.slider-card {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.slick-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Media queries para pantallas más grandes */
 @media (min-width: 600px) {
   .buscador-form {
-    flex-direction: column; 
+    flex-direction: column;
   }
 }
 

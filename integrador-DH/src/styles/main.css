@@ -79,7 +79,7 @@ body {
 }
 
 .buscador-input::placeholder {
-  color: white;
+  color: black;
 }
 
 .buscador-button {

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "./panel.css";
-
 import ListaUsuarios from "./ListaUsuarios";
 import ListaVideojuegos from "./ListaVideojuegos";
-import AbmPlataforma from "./AbmPlataforma";
 import ListaPlataformas from "./ListaPlataformas";
 
 const Panel = () => {
@@ -11,8 +9,6 @@ const Panel = () => {
 
   const renderComponente = () => {
     switch (componenteActivo) {
-      case "plataforma":
-        return <AbmPlataforma />;
       case "listaUsuarios":
         return <ListaUsuarios />;
       case "listaVideojuegos":
@@ -33,12 +29,7 @@ const Panel = () => {
       <div className="sidebar">
         <h2 className="panel-titulo">PANEL DE ADMINISTRACIÓN</h2>
         <div className="button-row">
-          <button
-            className="btn btn-bd-primary"
-            onClick={() => setComponenteActivo("plataforma")}
-          >
-            Agregar Plataforma
-          </button>
+          
           <button
             className="btn btn-bd-primary"
             onClick={() => setComponenteActivo("listaUsuarios")}

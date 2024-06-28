@@ -5,7 +5,7 @@
   margin: 20px auto;
   margin-bottom: 40px;
   display: flex;
-  flex-direction: column;
+  flex-direction:row ;
 }
 
 /* Estilos para el encabezado */
@@ -23,7 +23,7 @@
 /* Estilos para el formulario */
 .buscador-form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   gap: 10px;
   width: 100%;
@@ -70,8 +70,8 @@
 .buscador-suggestions {
   margin-top: 10px;
   background-color: white;
-  border-radius: 15px;
-  max-height: 150px;
+  border-radius: 10px;
+  max-height: 100px;
   overflow-y: auto;
   max-width: 100%;
   width: 100%;

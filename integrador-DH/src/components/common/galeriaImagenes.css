@@ -13,7 +13,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
- padding-right: 10vw;
 }
 
 .columna-izquierda {
@@ -64,20 +63,6 @@ margin-left: 7vw;
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
-}
-
-
-
-/* Estilos para el modal */
-.imagen-modal {
-  width: calc(25% - 10px); /* Ajusta el ancho para mostrar 4 imágenes por fila */
-  margin: 5px;
-}
-
-.imagen-modal img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
 }
 
 

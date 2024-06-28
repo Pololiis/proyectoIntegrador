@@ -19,7 +19,7 @@ const modalStyle = {
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
-  borderRadius: "8px",
+  borderRadius: "8px", 
 };
 
 function DetalleReserva() {

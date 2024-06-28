@@ -27,8 +27,14 @@ const Agregador = () => {
       }
     };
 
+
+
+    
     fetchData();
   }, []);
+
+
+
 
   const validationSchema = Yup.object().shape({
     nombre: Yup.string()

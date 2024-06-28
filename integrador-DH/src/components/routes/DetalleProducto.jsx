@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Container, Typography, CircularProgress, Alert, Button } from "@mui/material";
+import { Container, Typography, CircularProgress, Alert, Button, Modal, Box } from "@mui/material";
 import { DateRange } from 'react-date-range';
 import { addMonths } from 'date-fns';
 import 'react-date-range/dist/styles.css'; // main style file
@@ -10,6 +10,11 @@ import Volver from "../common/Volver";
 import GaleriaImagenes from "../common/GaleriaImagenes";
 import { useAuthContext } from "../context/AuthContext";
 import "./detalleProducto.css";
+import LoginForm from "./LoginForm"
+import CrearUsuario from "./crearUsuario"
+
+
+
 
 function DetalleProducto() {
   const today = new Date();
@@ -22,11 +27,13 @@ function DetalleProducto() {
   ]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showWarningModal, setShowWarningModal] = useState(false);
   const [videoJuegoSeleccionado, setVideoJuegoSeleccionado] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
-  const { token, handleShowLoginModal } = useAuthContext(); // Asegúrate de que handleShowLoginModal está definido
+  const { token } = useAuthContext();
 
   useEffect(() => {
     const fetchVideojuego = async () => {
@@ -46,11 +53,32 @@ function DetalleProducto() {
   const handleReserva = () => {
     const storedToken = localStorage.getItem('token');
     if (!storedToken) {
-      alert("Debe estar logueado para realizar una reserva.");
-      handleShowLoginModal(true);  // Llamada para mostrar el popup de inicio de sesión
+      setShowWarningModal(true);
     } else {
       navigate(`/detalleReserva/${id}`, { state: { videoJuegoSeleccionado, dateRange } });
     }
+  };
+
+  const handleCloseWarningModal = () => {
+    setShowWarningModal(false);
+  };
+
+  const handleOpenLoginModal = () => {
+    setShowWarningModal(false);
+    setShowLoginModal(true);
+  };
+
+  const handleCloseLoginModal = () => {
+    setShowLoginModal(false);
+  };
+
+  const handleOpenRegisterModal = () => {
+    setShowWarningModal(false);
+    setShowRegisterModal(true);
+  };
+
+  const handleCloseRegisterModal = () => {
+    setShowRegisterModal(false);
   };
 
   if (loading) {
@@ -77,10 +105,10 @@ function DetalleProducto() {
           <Typography variant="h4" gutterBottom>
             {videoJuegoSeleccionado.nombre}
           </Typography>
-          <GaleriaImagenes imagenes={videoJuegoSeleccionado.imagenes} />
           <Typography variant="body1" gutterBottom>
             {videoJuegoSeleccionado.descripcion}
           </Typography>
+          <GaleriaImagenes imagenes={videoJuegoSeleccionado.imagenes} />
           <Typography variant="h5" gutterBottom>
             Selecciona la fecha de alquiler:
           </Typography>
@@ -99,6 +127,55 @@ function DetalleProducto() {
           </Button>
         </>
       )}
+      <Modal
+        open={showWarningModal}
+        onClose={handleCloseWarningModal}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <Box className="modal-box">
+          <Typography id="modal-title" variant="h6" component="h2">
+            Atención
+          </Typography>
+          <Typography id="modal-description" sx={{ mt: 2 }}>
+            Debe estar logueado para realizar una reserva.
+          </Typography>
+          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
+            <Button variant="contained" color="primary" onClick={handleOpenLoginModal}>
+              Iniciar Sesión
+            </Button>
+            <Button variant="outlined" color="secondary" onClick={handleOpenRegisterModal}>
+              Registrarse
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
+      <Modal
+        open={showLoginModal}
+        onClose={handleCloseLoginModal}
+        aria-labelledby="login-modal-title"
+        aria-describedby="login-modal-description"
+      >
+        <Box className="modal-box">
+          <Typography id="login-modal-title" variant="h6" component="h2">
+            Iniciar Sesión
+          </Typography>
+          <LoginForm />
+        </Box>
+      </Modal>
+      <Modal
+        open={showRegisterModal}
+        onClose={handleCloseRegisterModal}
+        aria-labelledby="register-modal-title"
+        aria-describedby="register-modal-description"
+      >
+        <Box className="modal-box">
+          <Typography id="register-modal-title" variant="h6" component="h2">
+            Registrarse
+          </Typography>
+          <CrearUsuario/>
+        </Box>
+      </Modal>
     </Container>
   );
 }

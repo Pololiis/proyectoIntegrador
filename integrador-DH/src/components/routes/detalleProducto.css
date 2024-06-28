@@ -89,6 +89,39 @@
   border: 1px solid var(--color3);
 }
 
+
+.modal-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: white;
+  border: 2px solid #000;
+  box-shadow: 24px;
+  padding: 16px;
+  border-radius: 8px;
+  outline: none;
+}
+
+.modal-box .MuiTypography-root {
+  text-align: center;
+}
+
+.modal-box .MuiBox-root {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-box .MuiButton-root {
+  width: 48%;
+}
+
+
+
+
+
 /* Estilos Responsivos */
 
 @media (max-width: 768px) {

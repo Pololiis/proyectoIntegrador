@@ -5,7 +5,6 @@ import axios from "axios";
 import emailjs from 'emailjs-com';
 import "./crearUsuario.css"; // Estilos personalizados
 
-
 const CrearUsuario = () => {
   const [mensaje, setMensaje] = useState("");
 
@@ -17,17 +16,14 @@ const CrearUsuario = () => {
       .matches(/^[A-Z]+$/i, "*Nombre invalido"),
     apellido: Yup.string()
       .required("El apellido es requerido")
-
       .min(2, "El apellido es muy corto")
       .max(50, "El apellido es muy largo"),
-
     email: Yup.string()
       .required("El email es requerido")
       .matches(
         /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
         "*El email es invalido"
       ),
-
     fechaNacimiento: Yup.date()
       .required("La fecha de nacimiento es requerida")
       .nullable(),
@@ -39,8 +35,10 @@ const CrearUsuario = () => {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
         "*La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial"
       ),
+    confirmarContrasenia: Yup.string()
+      .oneOf([Yup.ref('contrasenia'), null], 'Las contraseñas deben coincidir')
+      .required("La confirmación de la contraseña es requerida"),
   });
-
 
   const sendEmail = (usuarioEmail, usuarioName) => {
     console.log('Enviando email a:', usuarioEmail, usuarioName);
@@ -61,12 +59,13 @@ const CrearUsuario = () => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     console.log('Valores del formulario:', values);
 
-    const formData = new FormData();
-    formData.append("nombre", values.nombre);
-    formData.append("apellido", values.apellido);
-    formData.append("email", values.email);
-    formData.append("contrasenia", values.contrasenia);
-    formData.append("rol", "usuario");
+    const formData = {
+      nombre: values.nombre,
+      apellido: values.apellido,
+      email: values.email,
+      contrasenia: values.contrasenia,
+      rol: "usuario"
+    };
 
     try {
       const response = await axios.post(
@@ -96,7 +95,6 @@ const CrearUsuario = () => {
   };
 
   return (
-
     <div className="container  m-auto register">
       <div className="row justify-content-center">
         <div className="col-12 col-md-8">
@@ -108,6 +106,7 @@ const CrearUsuario = () => {
               email: "",
               fechaNacimiento: "",
               contrasenia: "",
+              confirmarContrasenia: "",
             }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
@@ -144,9 +143,7 @@ const CrearUsuario = () => {
                         ? "is-valid"
                         : ""
                     }`}
-
                     type="text"
-
                     name="apellido"
                     placeholder="Apellido"
                   />
@@ -156,7 +153,6 @@ const CrearUsuario = () => {
                     className="text-danger"
                   />
                 </div>
-
                 <div className="mb-3">
                   <label className="form-label">E-Mail:</label>
                   <Field
@@ -168,7 +164,6 @@ const CrearUsuario = () => {
                         : ""
                     }`}
                     type="email"
-
                     name="email"
                     placeholder="Email"
                   />
@@ -178,9 +173,7 @@ const CrearUsuario = () => {
                     className="text-danger"
                   />
                 </div>
-
                 <div className="mb-3">
-
                   <label className="form-label">Fecha de Nacimiento:</label>
                   <Field
                     className={`form-control ${
@@ -199,9 +192,7 @@ const CrearUsuario = () => {
                     className="text-danger"
                   />
                 </div>
-
                 <div className="mb-3">
-
                   <label className="form-label">Contraseña:</label>
                   <Field
                     className={`form-control ${
@@ -211,11 +202,9 @@ const CrearUsuario = () => {
                         ? "is-valid"
                         : ""
                     }`}
-
                     type="password"
                     name="contrasenia"
                     placeholder="Contraseña"
-
                   />
                   <ErrorMessage
                     name="contrasenia"
@@ -223,7 +212,26 @@ const CrearUsuario = () => {
                     className="text-danger"
                   />
                 </div>
-
+                <div className="mb-3">
+                  <label className="form-label">Confirmar Contraseña:</label>
+                  <Field
+                    className={`form-control ${
+                      errors.confirmarContrasenia && touched.confirmarContrasenia
+                        ? "is-invalid"
+                        : touched.confirmarContrasenia
+                        ? "is-valid"
+                        : ""
+                    }`}
+                    type="password"
+                    name="confirmarContrasenia"
+                    placeholder="Confirmar Contraseña"
+                  />
+                  <ErrorMessage
+                    name="confirmarContrasenia"
+                    component="div"
+                    className="text-danger"
+                  />
+                </div>
                 <button
                   className="btn btn-bd-primary w-100"
                   type="submit"
@@ -251,4 +259,3 @@ const CrearUsuario = () => {
 };
 
 export default CrearUsuario;
-

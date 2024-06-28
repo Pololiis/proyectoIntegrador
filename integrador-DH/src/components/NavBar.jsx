@@ -50,6 +50,7 @@ function NavBar() {
     localStorage.removeItem("token");
     localStorage.removeItem("usuario");
     setUsuario(null);
+    window.location.reload();
   };
 
   const renderUserAvatar = (usuario) => {

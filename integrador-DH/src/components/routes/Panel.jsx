@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./panel.css"; // Asegúrate de crear y enlazar este archivo de estilos
+import "./panel.css";
 
 import ListaUsuarios from "./ListaUsuarios";
 import ListaVideojuegos from "./ListaVideojuegos";

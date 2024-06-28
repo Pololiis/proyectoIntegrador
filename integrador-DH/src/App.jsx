@@ -9,15 +9,18 @@ import CrearUsuario from "./components/routes/crearUsuario";
 import AbmPlataforma from "./components/routes/AbmPlataforma";
 import Panel from "./components/routes/Panel";
 import DetalleReserva from "./components/routes/DetalleReserva";
-import  {AuthProvider} from "./components/context/AuthContext";
+import { AuthProvider } from "./components/context/AuthContext";
+import WhatsAppButton from "./components/common/WhatsAppButton"; // Importar el botón de WhatsApp
+import "./components/common/whatsAppButton.css"
 
 function App() {
+  const phoneNumber = "+56965720864"; // Reemplaza esto con el número de WhatsApp del proveedor
+
   return (
     <>
       <BrowserRouter>
-       <AuthProvider>
+        <AuthProvider>
           <Routes>
-
             <Route element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route path="/usuario" element={<UsuarioPanel />} />
@@ -26,18 +29,17 @@ function App() {
               <Route path="/administrador" element={<Panel />} />
               <Route path="/plataforma" element={<AbmPlataforma />} />
               <Route path="/crearUsuario" element={<CrearUsuario />} />
-              <Route
-                path="/detalleProducto/:id"
-                element={<DetalleProducto />}
-              />
+              <Route path="/detalleProducto/:id" element={<DetalleProducto />} />
               <Route path="/detalleReserva/:id" element={<DetalleReserva />} />
               <Route path="*" element={<h1>404</h1>} />
             </Route>
           </Routes>
-          </AuthProvider>
+        </AuthProvider>
       </BrowserRouter>
+      <WhatsAppButton phoneNumber={phoneNumber} /> {/* Añadir el botón de WhatsApp */}
     </>
   );
 }
 
 export default App;
+

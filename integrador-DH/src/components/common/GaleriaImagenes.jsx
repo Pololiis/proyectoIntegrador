@@ -16,7 +16,7 @@ const style = {
   flexWrap: 'wrap',
   justifyContent: 'center',
   gap: '10px',
-  position: 'relative'
+  
 };
 
 function GaleriaImagenes({ titulo, descripcion, imagenes }) {

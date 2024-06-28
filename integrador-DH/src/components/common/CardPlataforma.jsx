@@ -19,7 +19,7 @@ function CardPlataforma() {
   ];
 
   return (
-    <div className="card-plataforma-container">''
+    <div className="card-plataforma-container">
       <div className="plataformas">
         {plataformas.map((plataforma) => (
           <div key={plataforma.id} className="plataforma">

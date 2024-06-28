@@ -1,0 +1,38 @@
+
+.formulario-registro {
+background-color: #032f63; /* Fondo azul oscuro */
+padding: 20px;
+border-radius: 10px;
+color: white;
+}
+
+.formulario-registro label {
+color: white;
+}
+
+.formulario-registro .form-control {
+background-color: #fff; /* Fondo blanco para inputs */
+border-radius: 5px;
+margin-bottom: 10px;
+}
+
+.formulario-registro .form-control::placeholder {
+color: #032f63; /* Placeholder color azul oscuro */
+}
+
+.formulario-registro .form-control:focus {
+border-color: #37B5B6;
+box-shadow: none;
+}
+
+.formulario-registro .btn-primary {
+background-color: #37B5B6; /* Botón color turquesa */
+border: none;
+border-radius: 5px;
+}
+
+.formulario-registro .btn-secondary {
+background-color: red; /* Botón de cancelar rojo */
+border: none;
+border-radius: 5px; 
+}

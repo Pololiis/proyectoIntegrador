@@ -1,68 +1,66 @@
 /* Estilos generales para el contenedor */
 .buscador {
-  color: black;
   padding: 20px;
-  background-color: rgba(73, 46, 135, 0.7);
-  border-radius: 8px;
+  background-color: #0A1D56;
   margin: 20px auto;
-  max-width: 800px; /* Limita el ancho máximo del contenedor */
-  transition: max-height 0.3s ease-in-out; /* Añade una transición suave */
-  overflow: hidden;
-  padding: 0;
   margin-bottom: 40px;
-  
-}
-
-.buscador.expandido {
-  max-height: 1000px; /* Altura suficiente para mostrar el contenido expandido */
-}
-
-.buscador.contraido {
-  max-height: 200px; /* Altura solo para mostrar el encabezado y los inputs */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Estilos para el encabezado */
 .buscador-header {
-  text-align: center;
   margin-bottom: 20px;
+  width: 50%;
 }
 
 .buscador-header h2 {
-  font-size: 1.5em;
+  font-size: 3em;
   color: white;
+  text-align: center;
 }
 
 /* Estilos para el formulario */
 .buscador-form {
   display: flex;
-  flex-direction: column; /* Cambia la dirección del flex a columna por defecto */
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   gap: 10px;
-  
+  width: 100%;
+}
+
+.buscador-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.buscador-icon {
+  font-size: 2em;
+  color: white;
 }
 
 .buscador-input {
   background-color: #fff;
   width: 100%;
-  max-width: 300px; /* Limita el ancho máximo del input */
-  padding: 10px; /* Añade padding para mejor usabilidad */
-  border-radius: 4px;
-  
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 15px;
 }
 
 /* Cambiar el color del placeholder a negro */
 .buscador-input::placeholder {
-  color: black;
-  
+  color: white;
 }
 
 .buscador-button {
-  background-color: #1976d2;
+  background-color: #37B5B6;
   color: #fff;
   padding: 10px 20px;
-  border-radius: 4px;
+  border-radius: 15px;
   cursor: pointer;
+  align-self: flex-start;
 }
 
 .buscador-button:disabled {
@@ -72,10 +70,11 @@
 .buscador-suggestions {
   margin-top: 10px;
   background-color: white;
-  border-radius: 4px;
+  border-radius: 15px;
   max-height: 150px;
   overflow-y: auto;
   max-width: 100%;
+  width: 100%;
 }
 
 .buscador-suggestion {
@@ -87,51 +86,40 @@
   background-color: #f0f0f0;
 }
 
-/* Estilos para los filtros */
-.buscador-filters {
-  display: flex;
-  flex-direction: column; /* Cambia la dirección del flex a columna por defecto */
-  gap: 10px;
-  margin-top: 20px;
-  width: 100%;
-}
-
-.buscador-filters .buscador-input {
-  width: 100%;
-  max-width: 300px; /* Limita el ancho máximo del input */
-  background-color: #fff;
-}
-
-/* Estilos para la sección de tarjetas */
-.cards-recomendado {
-  margin-top: 20px;
-}
-
-.container-card {
-  height: 500px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  max-width: 100%;
-  height: 500px;
-}
-
 /* Estilos para el spinner de carga */
 .loading-spinner {
   display: block;
   margin: 20px auto;
 }
 
+.cards-src {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.container-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center; /* Revisar Codigo Card*/
+}
+
+/* Estilos para el slider */
+.slider-card {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.slick-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Media queries para pantallas más grandes */
 @media (min-width: 600px) {
   .buscador-form {
-    flex-direction: row; /* Cambia la dirección del flex a fila en pantallas más grandes */
-  }
-
-  .buscador-filters {
-    flex-direction: row; 
-      justify-content: space-around;
+    flex-direction: column;
   }
 }
+

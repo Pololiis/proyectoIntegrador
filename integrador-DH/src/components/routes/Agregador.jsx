@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -14,12 +13,13 @@ const Agregador = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [categoriasResponse, caracteristicasResponse] = await Promise.all(
-          [
-            axios.get("http://localhost:8080/categorias"),
-            axios.get("http://localhost:8080/caracteristicas/listar"),
-          ]
-        );
+        const [categoriasResponse, caracteristicasResponse] = await Promise.all([
+          // axios.get("http://localhost:8080/categorias"),
+          // axios.get("http://localhost:8080/caracteristicas/listar"),
+          axios.get(`${import.meta.env.VITE_API_URL}categorias`),
+          axios.get(`${import.meta.env.VITE_API_URL}caracteristicas/listar`),
+          
+        ]);
         setCategorias(categoriasResponse.data);
         setCaracteristicas(caracteristicasResponse.data);
       } catch (error) {
@@ -46,21 +46,9 @@ const Agregador = () => {
       .min(5, "La descripción es muy corta")
       .max(200, "La descripción es muy larga"),
     categoria: Yup.string().required("La plataforma es requerida"),
-    imagenes: Yup.array()
-      .min(1, "Al menos una imagen es requerida")
-      .max(5, "Máximo 5 imágenes permitidas"),
-    caracteristicas: Yup.array().required(
-      "Seleccione al menos una característica"
-    ),
+    imagenes: Yup.array().min(1, "Al menos una imagen es requerida").max(5, "Máximo 5 imágenes permitidas"),
+    caracteristicas: Yup.array().required("Seleccione al menos una característica"),
   });
-
-
-
-
-
-
-
-
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const formData = new FormData();
@@ -76,7 +64,9 @@ const Agregador = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/videojuegos/nuevo",
+        // "http://localhost:8080/videojuegos/nuevo",
+        `${import.meta.env.VITE_API_URL}/videojuegos/nuevo`,
+
         formData,
         {
           headers: {
@@ -98,31 +88,13 @@ const Agregador = () => {
     }
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const handleImagenChange = (event) => {
     const files = Array.from(event.currentTarget.files);
     setImagenesSeleccionadas([...imagenesSeleccionadas, ...files]);
   };
 
   const handleBorrarImagen = (index) => {
-    setImagenesSeleccionadas(
-      imagenesSeleccionadas.filter((_, i) => i !== index)
-    );
+    setImagenesSeleccionadas(imagenesSeleccionadas.filter((_, i) => i !== index));
   };
 
   return (
@@ -130,9 +102,7 @@ const Agregador = () => {
       <div className="restringido row justify-content-center">
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">No disponible.</h2>
-          <h4 className="text-center mb-6">
-            Esta funcionalidad no está disponible en dispositivos móviles.
-          </h4>
+          <h4 className="text-center mb-6">Esta funcionalidad no está disponible en dispositivos móviles.</h4>
         </div>
       </div>
       <div className="row justify-content-center formulario">
@@ -154,21 +124,13 @@ const Agregador = () => {
                   <label className="form-label">Nombre:</label>
                   <Field
                     className={`form-control ${
-                      errors.nombre && touched.nombre
-                        ? "is-invalid"
-                        : touched.nombre
-                        ? "is-valid"
-                        : ""
+                      errors.nombre && touched.nombre ? "is-invalid" : touched.nombre ? "is-valid" : ""
                     }`}
                     type="text"
                     name="nombre"
                     placeholder="Nombre"
                   />
-                  <ErrorMessage
-                    name="nombre"
-                    component="div"
-                    className="text-danger"
-                  />
+                  <ErrorMessage name="nombre" component="div" className="text-danger" />
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Descripción:</label>
@@ -185,11 +147,7 @@ const Agregador = () => {
                     placeholder="Descripción"
                     style={{ resize: "none" }}
                   />
-                  <ErrorMessage
-                    name="descripcion"
-                    component="div"
-                    className="text-danger"
-                  />
+                  <ErrorMessage name="descripcion" component="div" className="text-danger" />
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Plataforma:</label>
@@ -211,11 +169,7 @@ const Agregador = () => {
                       </option>
                     ))}
                   </Field>
-                  <ErrorMessage
-                    name="categoria"
-                    component="div"
-                    className="text-danger"
-                  />
+                  <ErrorMessage name="categoria" component="div" className="text-danger" />
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Características:</label>
@@ -237,11 +191,7 @@ const Agregador = () => {
                       </option>
                     ))}
                   </Field>
-                  <ErrorMessage
-                    name="caracteristicas"
-                    component="div"
-                    className="text-danger"
-                  />
+                  <ErrorMessage name="caracteristicas" component="div" className="text-danger" />
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Imágenes:</label>
@@ -272,11 +222,7 @@ const Agregador = () => {
                   ))}
                 </div>
 
-                <button
-                  className="btn btn-primary w-100"
-                  type="submit"
-                  disabled={isSubmitting}
-                >
+                <button className="btn btn-primary w-100" type="submit" disabled={isSubmitting}>
                   Agregar Producto
                 </button>
               </Form>
@@ -284,9 +230,7 @@ const Agregador = () => {
           </Formik>
           {mensaje && (
             <div
-              className={`alert ${
-                mensaje.includes("éxito") ? "alert-success" : "alert-danger"
-              } mt-4`}
+              className={`alert ${mensaje.includes("éxito") ? "alert-success" : "alert-danger"} mt-4`}
               role="alert"
             >
               {mensaje}
@@ -296,7 +240,6 @@ const Agregador = () => {
       </div>
     </div>
   );
-
 };
 
 export default Agregador;

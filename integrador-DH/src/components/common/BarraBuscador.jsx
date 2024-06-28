@@ -2,19 +2,15 @@ import "./buscador.css";
 import CardJuego from "./CardJuego";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Container,
-  TextField,
-  Button,
-  List,
-  ListItem,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+import { Container, TextField, Button, List, ListItem, CircularProgress, Typography } from "@mui/material";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function BarraBuscador() {
-  const videojuegosUrl = "http://localhost:8080/videojuegos";
-  const alquileresUrl = "http://localhost:8080/alquiler";
+  const videojuegosUrl = `${import.meta.env.VITE_API_URL}videojuegos`;
+  const alquileresUrl = `${import.meta.env.VITE_API_URL}alquiler`;
+
   const [videoJuegos, setVideoJuegos] = useState([]);
   const [alquileres, setAlquileres] = useState([]);
   const [busqueda, setBusqueda] = useState("");
@@ -64,8 +60,6 @@ function BarraBuscador() {
       setShowSuggestions(false);
       setPlaceholder("Buscar...");
     }
-
-    // Debug: Log filtered suggestions
   };
 
   const handleSubmit = (e) => {
@@ -80,9 +74,6 @@ function BarraBuscador() {
       videojuego.nombre.toLowerCase().includes(busqueda.toLowerCase())
     );
 
-    // Debug: Log filtered videojuegos
-    console.log("Filtered videojuegos:", filteredVideojuegos);
-
     // Filtrar los alquileres según los videojuegos filtrados y fechas
     const filtered = filteredVideojuegos.map((videojuego) => {
       const isAvailable = alquileres.every((alquiler) => {
@@ -93,28 +84,11 @@ function BarraBuscador() {
         const alquilerFin = new Date(alquiler.fechaFin);
         const searchStart = new Date(startDate);
         const searchEnd = new Date(endDate);
-        //------------------------------------------------------------
-
-        if (searchEnd < alquilerInicio || searchStart > alquilerFin) {
-          console.log("videojuego disponible");
-        } else {
-          console.log("videojuego no disponible");
-        }
-
-        // Debug: Log alquiler dates and search dates
-        // console.log(`Checking alquiler for videojuego ${videojuego.id}`);
-        // console.log("Alquiler start:", alquilerInicio);
-        // console.log("Alquiler end:", alquilerFin);
-        // console.log("Search start:", searchStart);
-        // console.log("Search end:", searchEnd);
 
         return searchEnd < alquilerInicio || searchStart > alquilerFin;
       });
       return { videojuego, isAvailable };
     });
-
-    // Debug: Log filtered data
-    console.log("Filtered data:", filtered);
 
     setFilteredData(filtered);
     setShowSuggestions(false);
@@ -126,14 +100,8 @@ function BarraBuscador() {
       try {
         const response = await axios.get(videojuegosUrl);
         setVideoJuegos(response.data);
-
-        // Debug: Log fetched videojuegos
-        console.log("Fetched videojuegos:", response.data);
       } catch (error) {
-        console.error(
-          "Hubo un error al hacer la solicitud de videojuegos:",
-          error
-        );
+        console.error("Hubo un error al hacer la solicitud de videojuegos:", error);
       }
     };
 
@@ -141,14 +109,8 @@ function BarraBuscador() {
       try {
         const response = await axios.get(alquileresUrl);
         setAlquileres(response.data);
-
-        // Debug: Log fetched alquileres
-        console.log("Fetched alquileres:", response.data);
       } catch (error) {
-        console.error(
-          "Hubo un error al hacer la solicitud de alquileres:",
-          error
-        );
+        console.error("Hubo un error al hacer la solicitud de alquileres:", error);
       }
     };
 
@@ -156,10 +118,18 @@ function BarraBuscador() {
     fetchAlquileres();
   }, []);
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+  };
+
   return (
-    <Container className="buscador" maxWidth="md">
+    <Container className="buscador">
       <div className="buscador-header">
-        <h2>Buscar Videojuegos</h2>
+        <h2>¡Elige tu próxima aventura!</h2>
         <form onSubmit={handleSubmit} className="buscador-form">
           <TextField
             onChange={handleSearch}
@@ -203,7 +173,6 @@ function BarraBuscador() {
           <Button
             type="submit"
             variant="contained"
-            className="buscador-button btn-bd-primary"
             disabled={isSubmitting}
           >
             {isSubmitting ? <CircularProgress size={24} /> : "Buscar"}
@@ -233,23 +202,31 @@ function BarraBuscador() {
           <CircularProgress className="loading-spinner" />
         ) : (
           <div className="container-card flex">
-            {filteredData.length > 0 ? (
+            {filteredData.length > 1 ? (
+              <Slider {...settings} className="slider-card">
+                {filteredData.map(({ videojuego, isAvailable }) =>
+                  isAvailable ? (
+                    <CardJuego key={videojuego.id} videojuego={videojuego} hideImage={!busqueda} />
+                  ) : (
+                    <Typography key={videojuego.id} variant="h6" color="error">
+                      Las fechas elegidas no están disponibles para {videojuego.nombre}.
+                    </Typography>
+                  )
+                )}
+              </Slider>
+            ) : (
               filteredData.map(({ videojuego, isAvailable }) =>
                 isAvailable ? (
-                  <CardJuego
-                    key={videojuego.id}
-                    videojuego={videojuego}
-                    hideImage={!busqueda}
-                  />
+                  <CardJuego key={videojuego.id} videojuego={videojuego} hideImage={!busqueda} />
                 ) : (
                   <Typography key={videojuego.id} variant="h6" color="error">
-                    Las fechas elegidas no están disponibles para{" "}
-                    {videojuego.nombre}.
+                    Las fechas elegidas no están disponibles para {videojuego.nombre}.
                   </Typography>
                 )
               )
-            ) : (
-              <Typography variant="h6" color="textSecondary">
+            )}
+            {filteredData.length === 0 && (
+              <Typography variant="h6" color="error">
                 No se encontraron resultados.
               </Typography>
             )}
@@ -261,3 +238,4 @@ function BarraBuscador() {
 }
 
 export default BarraBuscador;
+

@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Container, Grid, Paper, Typography, Button, Modal, Box } from "@mui/material";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import Volver from "../common/Volver";
 import { useAuthContext } from "../context/AuthContext";
 import "./detalleReserva.css";
 
 const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: 'background.paper',
+  bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
-  borderRadius: '8px',
+  borderRadius: "8px",
 };
 
 function DetalleReserva() {
@@ -30,11 +32,12 @@ function DetalleReserva() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { token } = useAuthContext();
-  const url = `http://localhost:8080/alquiler`;
 
   const { videoJuegoSeleccionado, dateRange } = location.state || {};
   const initialStartDate = dateRange ? new Date(dateRange[0]?.startDate) : new Date();
   const initialEndDate = dateRange ? new Date(dateRange[0]?.endDate) : new Date();
+
+  const url = `${import.meta.env.VITE_API_URL}alquiler`;
 
   useEffect(() => {
     if (!videoJuegoSeleccionado) {
@@ -65,10 +68,10 @@ function DetalleReserva() {
 
   const fetchUsuario = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/usuarios/me`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}usuarios/me`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       setUsuario(response.data);
     } catch (error) {
@@ -76,24 +79,66 @@ function DetalleReserva() {
     }
   };
 
-  const handleReserva = async (reservaData) => {
+  const handleReserva = async () => {
+    if (!token) {
+      setShowLoginModal(true);
+      return;
+    }
+
     try {
-      await axios.post(`${url}/nuevo`, {
-        fechaInicio: startDate.toISOString().split("T")[0],
-        fechaFin: endDate.toISOString().split("T")[0],
-        usuariosId: usuario.id,
-        videojuegosId: videoJuegoSeleccionado.id,
-        comentario: comentario,
-        ...reservaData,
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await axios.post(
+        `${url}/nuevo`,
+        {
+          fechaInicio: startDate.toISOString().split("T")[0],
+          fechaFin: endDate.toISOString().split("T")[0],
+          usuariosId: usuario.id, // Asegúrate de pasar solo el id del usuario existente
+          videojuegosId: videoJuegoSeleccionado.id,
         },
-      });
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setMessage("Reserva realizada con éxito.");
+      console.log("Reserva realizada:", response.data);
     } catch (error) {
       console.error("Error realizando la reserva:", error);
       setMessage("Error realizando la reserva.");
+    }
+  };
+
+  const handleDateChange = async () => {
+    try {
+      const response = await axios.put(
+        `${url}/${id}`,
+        {
+          fechaInicio: startDate.toISOString().split("T")[0],
+          fechaFin: endDate.toISOString().split("T")[0],
+          usuariosId: usuario.id, // Asegúrate de pasar solo el id del usuario existente
+          videojuegosId: videoJuegoSeleccionado.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Fechas actualizadas:", response.data);
+      setMessage("Fechas actualizadas con éxito.");
+    } catch (error) {
+      console.error("Error actualizando fechas:", error);
+      setMessage("Error actualizando fechas.");
+    }
+  };
+
+  const tileDisabled = ({ date, view }) => {
+    if (view === "month" && Array.isArray(reservas)) {
+      return reservas.some((reserva) => {
+        const reservaInicio = new Date(reserva.fechaInicio);
+        const reservaFin = new Date(reserva.fechaFin);
+        return date >= reservaInicio && date <= reservaFin;
+      });
     }
   };
 
@@ -103,14 +148,7 @@ function DetalleReserva() {
   };
 
   const handleConfirm = () => {
-    const reservaData = {
-      nombre: usuario.nombre,
-      apellido: usuario.apellido,
-      email: usuario.email,
-      juego: videoJuegoSeleccionado.nombre,
-      duracionAlquiler: Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)),
-    };
-    handleReserva(reservaData);
+    handleReserva();
     setShowConfirmModal(false);
   };
 
@@ -124,15 +162,15 @@ function DetalleReserva() {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Nombre:</label>
-                <input type="text" className="form-control" value={usuario?.nombre || ''} disabled />
+                <input type="text" className="form-control" value={usuario?.nombre || ""} disabled />
               </div>
               <div className="form-group">
                 <label>Apellido:</label>
-                <input type="text" className="form-control" value={usuario?.apellido || ''} disabled />
+                <input type="text" className="form-control" value={usuario?.apellido || ""} disabled />
               </div>
               <div className="form-group">
                 <label>Email:</label>
-                <input type="email" className="form-control" value={usuario?.email || ''} disabled />
+                <input type="email" className="form-control" value={usuario?.email || ""} disabled />
               </div>
               <div className="form-group-fecha">
                 <label>Fecha de Inicio:</label>
@@ -171,7 +209,7 @@ function DetalleReserva() {
                 <Typography sx={{ mt: 2 }}>
                   <strong>Plataforma:</strong> {videoJuegoSeleccionado.categoria?.nombre}
                 </Typography>
-                <img src={videoJuegoSeleccionado.categoria?.imagen} alt={videoJuegoSeleccionado.categoria?.nombre} style={{ width: '50px', height: '50px' }} />
+                <img src={videoJuegoSeleccionado.categoria?.imagen} alt={videoJuegoSeleccionado.categoria?.nombre} style={{ width: "50px", height: "50px" }} />
               </div>
             </div>
           </Paper>
@@ -197,7 +235,7 @@ function DetalleReserva() {
           <Typography sx={{ mt: 2 }}>
             <strong>Fecha de Finalización:</strong> {endDate.toLocaleDateString()}
           </Typography>
-          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
+          <Box sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}>
             <Button variant="contained" color="primary" onClick={handleConfirm}>
               Confirmar
             </Button>
@@ -212,3 +250,4 @@ function DetalleReserva() {
 }
 
 export default DetalleReserva;
+

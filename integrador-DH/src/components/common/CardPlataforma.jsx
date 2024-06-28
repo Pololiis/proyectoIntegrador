@@ -1,56 +1,34 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./cardPlataforma.css";
+import xboxLogo from "../../assets/xbox-logo.png";
+import playstationLogo from "../../assets/playstation-logo.png";
+import nintendoLogo from "../../assets/nintendo-logo.png";
+import gamecubeLogo from "../../assets/gamecube-logo.png";
 
 function CardPlataforma() {
-  const url1 = "http://localhost:8080/categorias";
-  const [plataformas, setPlataformas] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(url1);
-        setPlataformas(response.data);
-      } catch (error) {
-        console.error("Hubo un error al hacer la solicitud:", error);
-      }
-    };
+  // const url1 = "http://localhost:8080/categorias";
+  const url1 = `${import.meta.env.VITE_API_URL}categorias`;
 
-    fetchData();
-  }, []);
-
-  const chunkArray = (array, size) => {
-    const chunkedArr = [];
-    for (let i = 0; i < array.length; i += size) {
-      chunkedArr.push(array.slice(i, i + size));
-    }
-    return chunkedArr;
-  };
-
-  const chunkedPlataformas = chunkArray(plataformas, 2);
-  
+  const plataformas = [
+    { id: 1, nombre: "Xbox", imagen: xboxLogo },
+    { id: 2, nombre: "PlayStation", imagen: playstationLogo },
+    { id: 3, nombre: "Nintendo", imagen: nintendoLogo },
+    { id: 4, nombre: "GameCube", imagen: gamecubeLogo },
+  ];
 
   return (
-    <>
-      {chunkedPlataformas.map((chunk, index) => (
-        <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
-          <div className="d-flex justify-content-center">
-            {chunk.map((plataforma) => (
-              <div key={plataforma.id} className="col-md-4">
-                <div className="card plataforma-card">
-                  <img src={plataforma.imagen} alt={plataforma.nombre} />
-                  <div className="card-body">
-                    <h4 className="card-title">{plataforma.nombre}</h4>
-                  </div>
-                </div>
-              </div>
-            ))}
+    <div className="card-plataforma-container">
+      <div className="plataformas">
+        {plataformas.map((plataforma) => (
+          <div key={plataforma.id} className="plataforma">
+            <img src={plataforma.imagen} alt={plataforma.nombre} className="plataforma-logo" />
           </div>
-        </div>
-      ))}
-    </>
+        ))}
+      </div>
+    </div>
   );
 }
 
 export default CardPlataforma;
-

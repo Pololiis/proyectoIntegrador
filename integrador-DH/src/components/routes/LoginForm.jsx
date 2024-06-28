@@ -8,24 +8,25 @@ const LoginForm = ({ onLoginSuccess }) => {
   const [mensaje, setMensaje] = useState("");
 
   const validationSchema = Yup.object().shape({
+
     email: Yup.string()
       .required("El email es requerido")
       .email("*El email es invalido"),
+
     contrasenia: Yup.string().required("La contraseña es requerida"),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      console.log('Enviando solicitud al servidor...');
-      const response = await axios.post(
-        "http://localhost:8080/conectarse",
-        {
-          email: values.email,
-          contrasenia: values.contrasenia,
-        }
-      );
 
-      console.log('Respuesta del servidor:', response.data);
+      console.log("Enviando solicitud al servidor...");
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}conectarse`, {
+        email: values.email,
+        contrasenia: values.contrasenia,
+      });
+
+      console.log("Respuesta del servidor:", response.data);
+
 
       if (response.data.tokenDeAcceso) {
         localStorage.setItem("token", response.data.tokenDeAcceso);
@@ -35,8 +36,10 @@ const LoginForm = ({ onLoginSuccess }) => {
         console.log(localStorage.getItem("usuario"));
         resetForm();
 
+
         // Refrescar la página después de un inicio de sesión exitoso
         window.location.reload();
+
       } else {
         setMensaje("Inicio de sesión fallido");
       }
@@ -50,9 +53,11 @@ const LoginForm = ({ onLoginSuccess }) => {
 
   return (
     <div className="container m-auto login">
+
       <div className="row justify-content-center ">
         <div className="col-12 col-md-8">
           <h2 className="text-center mb-4">Iniciar Sesión</h2>
+
           <Formik
             initialValues={{ email: "", contrasenia: "" }}
             validationSchema={validationSchema}
@@ -122,6 +127,7 @@ const LoginForm = ({ onLoginSuccess }) => {
               {mensaje}
             </div>
           )}
+
         </div>
       </div>
     </div>
@@ -129,7 +135,3 @@ const LoginForm = ({ onLoginSuccess }) => {
 };
 
 export default LoginForm;
-
-
-
-

@@ -17,14 +17,11 @@ import CrearUsuario from "./crearUsuario"
 
 
 function DetalleProducto() {
-  const today = new Date();
-  const [dateRange, setDateRange] = useState([
-    {
-      startDate: today,
-      endDate: null,
-      key: 'selection'
-    }
-  ]);
+
+  const today = new Date().toISOString().split("T")[0];
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -33,7 +30,13 @@ function DetalleProducto() {
   const [videoJuegoSeleccionado, setVideoJuegoSeleccionado] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
+
   const { token } = useAuthContext();
+
+
+  // const url = `http://localhost:8080/videojuegos/${id}`;
+  const url = `${import.meta.env.VITE_API_URL}videojuegos/${id}`;
+
 
   useEffect(() => {
     const fetchVideojuego = async () => {
@@ -125,57 +128,35 @@ function DetalleProducto() {
           <Button variant="contained" color="primary" onClick={handleReserva}>
             Generar Reserva
           </Button>
-        </>
-      )}
-      <Modal
-        open={showWarningModal}
-        onClose={handleCloseWarningModal}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
-        <Box className="modal-box">
-          <Typography id="modal-title" variant="h6" component="h2">
-            Atención
+        </div>
+      </div>
+
+      <div className="caracteristicas-seccion">
+        <Typography variant="h5" gutterBottom>
+          Características
+        </Typography>
+        <div className="caracteristicas-container">
+          {videoJuegoSeleccionado.caracteristicas?.map((caracteristica, index) => (
+            <div className="caracteristica" key={index}>
+              <Typography variant="subtitle1">{caracteristica.nombre}</Typography>
+              <img className="img-caracteristicas" src={caracteristica.imagen} alt={caracteristica.nombre} />
+            </div>
+          ))}
+        </div>
+        <div>
+          <Typography variant="h5" gutterBottom>
+            Plataforma
           </Typography>
-          <Typography id="modal-description" sx={{ mt: 2 }}>
-            Debe estar logueado para realizar una reserva.
-          </Typography>
-          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
-            <Button variant="contained" color="primary" onClick={handleOpenLoginModal}>
-              Iniciar Sesión
-            </Button>
-            <Button variant="outlined" color="secondary" onClick={handleOpenRegisterModal}>
-              Registrarse
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-      <Modal
-        open={showLoginModal}
-        onClose={handleCloseLoginModal}
-        aria-labelledby="login-modal-title"
-        aria-describedby="login-modal-description"
-      >
-        <Box className="modal-box">
-          <Typography id="login-modal-title" variant="h6" component="h2">
-            Iniciar Sesión
-          </Typography>
-          <LoginForm />
-        </Box>
-      </Modal>
-      <Modal
-        open={showRegisterModal}
-        onClose={handleCloseRegisterModal}
-        aria-labelledby="register-modal-title"
-        aria-describedby="register-modal-description"
-      >
-        <Box className="modal-box">
-          <Typography id="register-modal-title" variant="h6" component="h2">
-            Registrarse
-          </Typography>
-          <CrearUsuario/>
-        </Box>
-      </Modal>
+          <div>
+            <img
+              src={videoJuegoSeleccionado.categoria?.imagen}
+              alt={videoJuegoSeleccionado.categoria?.nombre}
+            />
+            <p>{videoJuegoSeleccionado.categoria?.nombre}</p>
+          </div>
+        </div>
+      </div>
+
     </Container>
   );
 }

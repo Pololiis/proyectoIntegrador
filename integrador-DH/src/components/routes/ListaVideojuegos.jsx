@@ -3,9 +3,11 @@ import axios from "axios";
 import { Modal, Button, Form, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTimes } from "@fortawesome/free-solid-svg-icons";
+import './listaVideojuegos.css';
+
 
 const ListaVideojuegos = () => {
-  const url = `http://localhost:8080/videojuegos`;
+  const url = `${import.meta.env.VITE_API_URL}videojuegos`;
   const token = localStorage.getItem("token");
   const [videoJuegos, setVideoJuegos] = useState([]);
   const [categorias, setCategorias] = useState([]);
@@ -15,7 +17,7 @@ const ListaVideojuegos = () => {
   const [formData, setFormData] = useState({
     nombre: "",
     descripcion: "",
-    imagen: [],  // Asegurar que siempre es un array
+    imagen: [], // Asegurar que siempre es un array
     plataforma: "",
     caracteristicaIds: [],
   });
@@ -25,12 +27,11 @@ const ListaVideojuegos = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [juegosResponse, categoriasResponse, caracteristicasResponse] =
-          await Promise.all([
-            axios.get(url),
-            axios.get(`http://localhost:8080/categorias`),
-            axios.get(`http://localhost:8080/caracteristicas/listar`),
-          ]);
+        const [juegosResponse, categoriasResponse, caracteristicasResponse] = await Promise.all([
+          axios.get(url),
+          axios.get(`${import.meta.env.VITE_API_URL}categorias`),
+          axios.get(`${import.meta.env.VITE_API_URL}caracteristicas/listar`),
+        ]);
         setVideoJuegos(juegosResponse.data);
         setCategorias(categoriasResponse.data);
         setCaracteristicas(caracteristicasResponse.data);
@@ -38,7 +39,6 @@ const ListaVideojuegos = () => {
         console.error("Hubo un error al hacer la solicitud:", error);
       }
     };
-
     fetchData();
   }, []);
 
@@ -55,7 +55,7 @@ const ListaVideojuegos = () => {
   const handleConfirmEliminar = async () => {
     try {
       await axios.delete(`${url}/${juegoAEliminar}`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
       setVideoJuegos(videoJuegos.filter((juego) => juego.id !== juegoAEliminar));
       handleCloseConfirmModal();
@@ -109,9 +109,8 @@ const ListaVideojuegos = () => {
         formDataToSend.append("caracteristicas", caracteristicaId);
       });
 
-      // Añadir imágenes sólo si están presentes
       if (formData.imagen.length > 0) {
-        formData.imagen.forEach((file, index) => {
+        formData.imagen.forEach((file) => {
           formDataToSend.append("imagen", file);
         });
       } else {
@@ -121,15 +120,11 @@ const ListaVideojuegos = () => {
       const response = await axios.put(`${url}/${currentJuego.id}`, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
-      setVideoJuegos(
-        videoJuegos.map((juego) =>
-          juego.id === currentJuego.id ? response.data : juego
-        )
-      );
+      setVideoJuegos(videoJuegos.map((juego) => (juego.id === currentJuego.id ? response.data : juego)));
       handleCloseModal();
     } catch (error) {
       console.error("Error al editar el videojuego:", error);
@@ -160,7 +155,7 @@ const ListaVideojuegos = () => {
       });
 
       if (formData.imagen.length > 0) {
-        formData.imagen.forEach((file, index) => {
+        formData.imagen.forEach((file) => {
           formDataToSend.append("imagen", file);
         });
       } else {
@@ -170,8 +165,8 @@ const ListaVideojuegos = () => {
       const response = await axios.post(`${url}/nuevo`, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       setVideoJuegos([...videoJuegos, response.data]);
@@ -200,17 +195,12 @@ const ListaVideojuegos = () => {
             <tr key={juego.id}>
               <td>{juego.id}</td>
               <td>{juego.nombre}</td>
-              <td>
-                {juego.categoria ? juego.categoria.nombre : "Sin Categoría"}
-              </td>
+              <td>{juego.categoria ? juego.categoria.nombre : "Sin Categoría"}</td>
               <td>
                 <Button variant="warning" onClick={() => handleEditar(juego)}>
                   <FontAwesomeIcon icon={faEdit} />
                 </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => handleShowConfirmModal(juego.id)}
-                >
+                <Button variant="danger" onClick={() => handleShowConfirmModal(juego.id)}>
                   <FontAwesomeIcon icon={faTimes} />
                 </Button>
               </td>
@@ -221,48 +211,53 @@ const ListaVideojuegos = () => {
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            {currentJuego ? "Editar Videojuego" : "Agregar Videojuego"}
-          </Modal.Title>
+          <Modal.Title>{currentJuego ? "Editar Videojuego" : "Agregar Videojuego"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Group controlId="nombre">
+          <Form className="formulario-registro">
+            <Form.Group controlId="formNombre">
               <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleChange}
+                className="form-control"
               />
             </Form.Group>
-            <Form.Group controlId="descripcion">
+
+            <Form.Group controlId="formDescripcion">
               <Form.Label>Descripción</Form.Label>
               <Form.Control
                 as="textarea"
                 name="descripcion"
                 value={formData.descripcion}
                 onChange={handleChange}
+                className="form-control"
               />
             </Form.Group>
-            <Form.Group controlId="imagen">
-              <Form.Label>Imágenes</Form.Label>
+
+            <Form.Group controlId="formImagen">
+              <Form.Label>Imagen</Form.Label>
               <Form.Control
                 type="file"
                 name="imagen"
-                multiple
                 onChange={handleChange}
+                className="form-control"
+                multiple
               />
             </Form.Group>
-            <Form.Group controlId="plataforma">  {/* Cambiado de categoriaId a plataforma */}
-              <Form.Label>Categoría</Form.Label>
+
+            <Form.Group controlId="formPlataforma">
+              <Form.Label>Plataforma</Form.Label>
               <Form.Control
                 as="select"
-                name="plataforma"  // Cambiado de categoriaId a plataforma
+                name="plataforma"
                 value={formData.plataforma}
                 onChange={handleChange}
+                className="form-control"
               >
-                <option value="">Selecciona una categoría</option>
+                <option value="">Selecciona una plataforma</option>
                 {categorias.map((categoria) => (
                   <option key={categoria.id} value={categoria.id}>
                     {categoria.nombre}
@@ -270,14 +265,16 @@ const ListaVideojuegos = () => {
                 ))}
               </Form.Control>
             </Form.Group>
-            <Form.Group controlId="caracteristicaIds">
+
+            <Form.Group controlId="formCaracteristicas">
               <Form.Label>Características</Form.Label>
               <Form.Control
                 as="select"
-                name="caracteristicaIds"
                 multiple
+                name="caracteristicaIds"
                 value={formData.caracteristicaIds}
                 onChange={handleChange}
+                className="form-control"
               >
                 {caracteristicas.map((caracteristica) => (
                   <option key={caracteristica.id} value={caracteristica.id}>
@@ -292,21 +289,18 @@ const ListaVideojuegos = () => {
           <Button variant="secondary" onClick={handleCloseModal}>
             Cancelar
           </Button>
-          <Button
-            variant="primary"
-            onClick={currentJuego ? handleSaveChanges : handleAgregarNuevo}
-          >
-            {currentJuego ? "Guardar Cambios" : "Agregar Videojuego"}
+          <Button variant="primary" onClick={currentJuego ? handleSaveChanges : handleAgregarNuevo}>
+            Guardar
           </Button>
         </Modal.Footer>
       </Modal>
 
       <Modal show={showConfirmModal} onHide={handleCloseConfirmModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirmar Eliminación</Modal.Title>
+          <Modal.Title>Confirmar eliminación</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          ¿Estás seguro de que deseas eliminar este videojuego?
+          ¿Estás seguro de que quieres eliminar este videojuego?
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseConfirmModal}>
@@ -322,3 +316,4 @@ const ListaVideojuegos = () => {
 };
 
 export default ListaVideojuegos;
+

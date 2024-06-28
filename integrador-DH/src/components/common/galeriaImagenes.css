@@ -1,33 +1,73 @@
-/* galeriaImagenes.css */
-.img-principal {
-  max-width: 100%;
-  height: auto;
-  border-radius: 15px;
-}
-
 .container-galeria {
-  background-color: #39226c;
-  padding: 20px;
-  border-radius: 1rem;
-  color: white;
+  margin: 20px;
+  
 }
 
-.container-img-secundaria-general {
+.titulo-descripcion-detalle {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.galeria-imagenes {
+  max-height: 50vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.container-img-secundaria {
-  width: calc(10% - 10px);
-  margin: 3px;
+.columna-izquierda {
+  
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
-.img-secundaria {
+.imagen-principal img {
+margin-left: 7vw;
+  width: 80%;
+  height: 42vh;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding-right: 10px;
+}
+
+.columna-derecha {
+  
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.imagenes-secundarias {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.imagen-secundaria {
+  overflow: hidden;
+  border-radius: 8px;
+ 
+}
+
+.imagen-secundaria img {
+  margin-top: 0.5vh;
   width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 10px;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen dentro del contenedor */
+}
+
+.ver-mas {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+
+p{
+  text-align: left;
 }
 
 .titulo-descripcion-detalle {
@@ -41,6 +81,7 @@
 
 .titulo-descripcion-detalle > p {
   font-size: clamp(1rem, 0.75rem + 1vw, 1.5rem);
+  color: black;
 }
 
 .btn-group {
@@ -55,13 +96,12 @@
 .btn-accion {
   font-size: 1rem;
   padding: auto;
-  background-color: var(--color3);
+  background-color: var(--color2);
   border: none;
   color: white;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
- 
   
   
 }
@@ -86,7 +126,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);}
 
 .calendario-container button{
- margin: 10px;
+  margin: 10px;
 }
 
 @media screen and (max-width: 768px) {

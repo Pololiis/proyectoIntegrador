@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grid, Paper, Typography, Button, Modal, Box } from "@mui/material";
+import { Container, Grid, Paper, Typography, Button, Modal, Box, TextField, Snackbar, Alert } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Volver from "../common/Volver";
@@ -25,6 +25,11 @@ function DetalleReserva() {
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [message, setMessage] = useState("");
   const [usuario, setUsuario] = useState(null);
+  const [comentarios, setComentarios] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
   const location = useLocation();
   const navigate = useNavigate();
   const { token, updateToken } = useAuthContext();
@@ -73,6 +78,7 @@ function DetalleReserva() {
           videojuegosId: videoJuegoSeleccionado.id,
           fechaInicio: startDate,
           fechaFin: endDate,
+          texto: comentarios
         },
         {
           headers: {
@@ -81,10 +87,15 @@ function DetalleReserva() {
         }
       );
       setMessage("Reserva realizada con éxito.");
-      console.log("Reserva realizada:", response.data);
+      setSnackbarMessage("Reserva realizada con éxito.");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
     } catch (error) {
       console.error("Error realizando la reserva:", error);
       setMessage("Error realizando la reserva.");
+      setSnackbarMessage("Error realizando la reserva.");
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
   };
 
@@ -108,55 +119,96 @@ function DetalleReserva() {
     setShowRegisterModal(true);
   };
 
+  const handleCloseSnackbar = () => setSnackbarOpen(false);
+
   return (
     <Container>
       <Volver />
       <Grid container justifyContent="center" spacing={2}>
         <Grid item xs={12} md={6}>
           {usuario ? (
-            <Paper style={{ padding: "16px", marginTop: "16px", height: '60%' }}>
+            <Paper style={{ padding: "24px", marginTop: "16px", height: 'auto', borderRadius: '8px' }}>
               <Typography variant="h5" gutterBottom>Datos del Usuario</Typography>
-              <Typography variant="body1" style={{ fontSize: '1.2rem' }}><strong>Nombre:</strong> {usuario.nombre}</Typography>
-              <Typography variant="body1" style={{ fontSize: '1.2rem' }}><strong>Apellido:</strong> {usuario.apellido}</Typography>
-              <Typography variant="body1" style={{ fontSize: '1.2rem' }}><strong>Email:</strong> {usuario.email}</Typography>
-              <Typography variant="h6" gutterBottom>Fechas de Reserva</Typography>
-              <Typography variant="body1" style={{ fontSize: '1.2rem' }}><strong>Fecha de inicio:</strong> {startDate}</Typography>
-              <Typography variant="body1" style={{ fontSize: '1.2rem' }}><strong>Fecha de fin:</strong> {endDate}</Typography>
-              <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                style={{ marginTop: "16px" }}
-                onClick={handleReserva}
-              >
-                Reservar
-              </Button>
+              <form noValidate autoComplete="off">
+                <TextField
+                  label="Nombre"
+                  value={usuario.nombre}
+                  fullWidth
+                  margin="normal"
+                  InputProps={{ readOnly: true }}
+                />
+                <TextField
+                  label="Apellido"
+                  value={usuario.apellido}
+                  fullWidth
+                  margin="normal"
+                  InputProps={{ readOnly: true }}
+                />
+                <TextField
+                  label="Email"
+                  value={usuario.email}
+                  fullWidth
+                  margin="normal"
+                  InputProps={{ readOnly: true }}
+                />
+                <Typography variant="h6" gutterBottom>Fechas de Reserva</Typography>
+                <TextField
+                  label="Fecha de inicio"
+                  value={startDate?.toLocaleDateString()}
+                  fullWidth
+                  margin="normal"
+                  InputProps={{ readOnly: true }}
+                />
+                <TextField
+                  label="Fecha de fin"
+                  value={endDate?.toLocaleDateString()}
+                  fullWidth
+                  margin="normal"
+                  InputProps={{ readOnly: true }}
+                />
+                <TextField
+                  label="Comentarios"
+                  value={comentarios}
+                  onChange={(e) => setComentarios(e.target.value)}
+                  fullWidth
+                  margin="normal"
+                  multiline
+                  rows={4}
+                  variant="outlined"
+                />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  style={{ marginTop: "16px" }}
+                  onClick={handleReserva}
+                >
+                  Confirmar Reserva
+                </Button>
+              </form>
             </Paper>
           ) : (
             <Typography variant="h6">Cargando datos del usuario...</Typography>
           )}
         </Grid>
         <Grid item xs={12} md={6}>
-          <Paper style={{ padding: "16px", marginTop: "16px" }}>
-            <Typography variant="h3" gutterBottom>
+          <Paper style={{ padding: "24px", marginTop: "16px", borderRadius: '8px' }}>
+            <Typography variant="h3" gutterBottom className="titulojuego-card">
               {videoJuegoSeleccionado.nombre}
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} className="imagenjuego-card">
               <Grid item xs={12}>
                 <img
                   src={videoJuegoSeleccionado.imagenes[0]}
                   alt={videoJuegoSeleccionado.nombre}
                   className="imagen-centrada"
-                  style={{ width: "50%", borderRadius: "8px", display: 'block', margin: '0 auto' }}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <Typography variant="body1" gutterBottom>
-                  <strong>Género:</strong> {videoJuegoSeleccionado.genero}
-                </Typography>
+              <Grid item xs={12} className="plataforma-card">
                 <Typography variant="body1" gutterBottom>
                   <strong>Plataforma:</strong> {videoJuegoSeleccionado.categoria?.nombre}
                 </Typography>
+                <img src={videoJuegoSeleccionado.categoria?.imagen} alt={videoJuegoSeleccionado.categoria?.nombre} className="plataforma-imagen"/>
               </Grid>
             </Grid>
           </Paper>
@@ -228,6 +280,16 @@ function DetalleReserva() {
           </Box>
         </Box>
       </Modal>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

@@ -44,12 +44,14 @@ function NavBar() {
   const handleLoginSuccess = (usuario) => {
     setUsuario(usuario);
     closeLoginModal();
+    window.location.reload(); // Recarga la página después de iniciar sesión
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("usuario");
     setUsuario(null);
+    window.location.reload(); // Recarga la página después de cerrar sesión
   };
 
   const renderUserAvatar = (usuario) => {

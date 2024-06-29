@@ -1,12 +1,38 @@
 /* detalleReserva.css */
+.imagen-centrada {
+  display: block;
+  max-width: 60%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
 
+.plataforma-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  
-  /* Centrar la imagen */
-  .imagen-centrada {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%; /* Ajustar el tamaño según sea necesario */
-    border-radius: 8px;
-  }
+.plataforma-imagen {
+  width: 40px;
+  height: 40px;
+  margin-left: 8px;
+}
+
+.titulojuego-card {
+  font-weight: bold;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form .MuiTextField-root {
+  margin-bottom: 16px;
+}
+
+form .MuiButton-root {
+  margin-top: 16px;
+}

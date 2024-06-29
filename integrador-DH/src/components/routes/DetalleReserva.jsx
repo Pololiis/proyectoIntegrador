@@ -4,7 +4,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 import Volver from "../common/Volver";
 import { useAuthContext } from "../context/AuthContext";
-import LoginForm from "../routes/LoginForm";
 import "./detalleReserva.css";
 
 const modalStyle = {
@@ -23,8 +22,6 @@ function DetalleReserva() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [reservas, setReservas] = useState([]);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [message, setMessage] = useState("");
   const [usuario, setUsuario] = useState(null);
   const [comentario, setComentario] = useState("");  // Nuevo estado para el comentario
@@ -50,8 +47,6 @@ function DetalleReserva() {
 
     if (token) {
       fetchUsuario();
-    } else {
-      setShowLoginModal(true);
     }
 
     fetchReservas();
@@ -69,7 +64,7 @@ function DetalleReserva() {
 
   const fetchUsuario = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/alquileres/usuario`, {
+      const response = await axios.get(`http://localhost:8080/usuarios/me`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -113,22 +108,6 @@ function DetalleReserva() {
     handleReserva(reservaData);
   };
 
-  const handleCloseRegisterModal = () => setShowRegisterModal(false);
-  const handleShowLoginModal = () => {
-    setShowRegisterModal(false);
-    setShowLoginModal(true);
-  };
-  const handleCloseLoginModal = () => setShowLoginModal(false);
-  const handleLoginSuccess = () => {
-    setShowLoginModal(false);
-    updateToken(localStorage.getItem('token'));
-    window.location.reload();
-  };
-  const handleShowRegisterModal = () => {
-    setShowLoginModal(false);
-    setShowRegisterModal(true);
-  };
-
   return (
     <Container className="detalle-reserva-container">
       <Volver />
@@ -139,15 +118,15 @@ function DetalleReserva() {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Nombre:</label>
-                <input type="text" className="form-control" value={usuario?.nombre || ''} disabled />
+                <input type="text" className="form-control" value={usuario.nombre || ''} disabled />
               </div>
               <div className="form-group">
                 <label>Apellido:</label>
-                <input type="text" className="form-control" value={usuario?.apellido || ''} disabled />
+                <input type="text" className="form-control" value={usuario.apellido || ''} disabled />
               </div>
               <div className="form-group">
                 <label>Email:</label>
-                <input type="email" className="form-control" value={usuario?.email || ''} disabled />
+                <input type="email" className="form-control" value={usuario.email || ''} disabled />
               </div>
               <div className="form-group-fecha">
                 <label>Fecha de Inicio:</label>
@@ -157,6 +136,7 @@ function DetalleReserva() {
                 <label>Fecha de Finalización:</label>
                 <input type="text" className="form-control" value={endDate.toLocaleDateString()} disabled />
               </div>
+              
               <div className="form-group">
                 <label>Comentario:</label>
                 <textarea
@@ -182,7 +162,7 @@ function DetalleReserva() {
                 <Typography variant="h5" gutterBottom>
                   {videoJuegoSeleccionado.nombre}
                 </Typography>
-                <div>
+                <div className="plataforma-content">
                   <Typography variant="h5" gutterBottom>
                     Plataforma
                   </Typography>
@@ -196,56 +176,10 @@ function DetalleReserva() {
           </Paper>
         </Grid>
       </Grid>
-
-      <Modal
-        open={showLoginModal}
-        onClose={handleCloseLoginModal}
-        aria-labelledby="login-modal-title"
-        aria-describedby="login-modal-description"
-      >
-        <Box sx={modalStyle}>
-          <Typography id="login-modal-title" variant="h6" gutterBottom>
-            Formulario de Inicio de Sesión
-          </Typography>
-          <LoginForm onLoginSuccess={handleLoginSuccess} />
-          <Box mt={3} display="flex" justifyContent="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleShowRegisterModal}
-            >
-              Crear una cuenta
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
-
-      <Modal
-        open={showRegisterModal}
-        onClose={handleCloseRegisterModal}
-        aria-labelledby="register-modal-title"
-        aria-describedby="register-modal-description"
-      >
-        <Box sx={modalStyle}>
-          <Typography id="register-modal-title" variant="h6" gutterBottom>
-            Por favor, inicie sesión para reservar
-          </Typography>
-          <Typography id="register-modal-description" variant="body1" gutterBottom>
-            Necesitas estar registrado para poder realizar una reserva. Si ya tienes una cuenta, inicia sesión. De lo contrario, regístrate para continuar.
-          </Typography>
-          <Box mt={3} display="flex" justifyContent="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleShowLoginModal}
-            >
-              Iniciar Sesión
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
     </Container>
   );
 }
 
 export default DetalleReserva;
+
+

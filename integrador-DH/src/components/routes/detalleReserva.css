@@ -23,7 +23,7 @@
 .videojuego-info {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .videojuego-imagen {
@@ -80,4 +80,12 @@
 .form-group-fecha input {
   width: 45%; /* Cada elemento ocupa el 48% del ancho disponible */
 }
+.form-control{
+  margin-bottom: 10px;
+}
+.plataforma-content{
+  margin-top: 5vh;
+}
+
+
 

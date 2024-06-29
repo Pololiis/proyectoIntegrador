@@ -10,10 +10,10 @@ import AbmPlataforma from "./components/routes/AbmPlataforma";
 import Panel from "./components/routes/Panel";
 import DetalleReserva from "./components/routes/DetalleReserva";
 import { AuthProvider } from "./components/context/AuthContext";
-import WhatsAppButton from "./components/common/WhatsAppButton"; // Importar el botón de WhatsApp
+import WhatsAppButton from "./components/common/WhatsAppButton"; 
 
 function App() {
-  const phoneNumber = "1234567890"; // Reemplaza esto con el número de WhatsApp del proveedor
+  const phoneNumber = "1234567890"; // Reemplazar esto con el número de WhatsApp para activar
 
   return (
     <>

@@ -1,93 +1,118 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Container, Grid, Paper, Typography, TextField, Button } from "@mui/material";
+import { useAuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./usuarioPanel.css";
+import ListarReservas from "./ListarReservas";
 
-const UsuarioPanel = () => {
+function UsuarioPanel() {
+const { token, updateToken } = useAuthContext();
 const navigate = useNavigate();
-const user = JSON.parse(localStorage.getItem("usuario"));
-const [alquileres, setAlquileres] = useState([]);
+const [usuario, setUsuario] = useState(null);
 
 useEffect(() => {
-if (!user) {
-    navigate("/"); // Redirigir al usuario a la página principal si no está autenticado
+if (token) {
+    fetchUsuario();
 } else {
-    // Fetch alquileres del usuario
- // axios.get(`http://localhost:8080/alquileres/usuario/${user.id}`)
-    axios.get(`${import.meta.env.VITE_API_URL}alquileres/usuario/${user.id}`)
-    .then((response) => {
- 
-
-        setAlquileres(response.data);
-    })
-    .catch((error) => {
-        console.error("Error al obtener alquileres:", error);
-    });
+    navigate("/");
 }
-}, [user, navigate]);
+}, [token, navigate]);
+
+const fetchUsuario = async () => {
+try {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}usuarios/me`, {
+    headers: {
+        Authorization: `Bearer ${token}`,
+    },
+    });
+    setUsuario(response.data);
+} catch (error) {
+    console.error("Error obteniendo el usuario:", error);
+}
+};
+
+const handleUpdateUsuario = async () => {
+try {
+    const response = await axios.put(`${import.meta.env.VITE_API_URL}usuarios/${usuario.id}`, usuario, {
+    headers: {
+        Authorization: `Bearer ${token}`,
+    },
+    });
+    console.log("Usuario actualizado:", response.data);
+} catch (error) {
+    console.error("Error actualizando el usuario:", error);
+}
+};
+
+const handleInputChange = (e) => {
+const { name, value } = e.target;
+setUsuario((prevUsuario) => ({
+    ...prevUsuario,
+    [name]: value,
+}));
+};
 
 const handleLogout = () => {
 localStorage.removeItem("token");
 localStorage.removeItem("usuario");
+updateToken(null);
 navigate("/");
 };
 
-const handleAlquiler = () => {
-const nuevoAlquiler = {
-    usuario: { id: user.id },
-    videojuego: { id: 1 }, // Cambia esto según el videojuego seleccionado
-    fechaReserva: new Date().toISOString().split("T")[0], // Fecha actual
-    duracionAlquiler: 7, // Duración de ejemplo
-};
-
-axios
-    .post("http://localhost:8080/alquileres", nuevoAlquiler)
-    .then((response) => {
-    setAlquileres([...alquileres, response.data]);
-    })
-    .catch((error) => {
-    console.error("Error al crear alquiler:", error);
-    });
-};
-
-const initials = user?.nombre
-?.split(" ")
-.map((name) => name[0])
-.join("");
-
-if (!user) {
-return null; // Mostrar un mensaje de carga o redirigir a otra página
+if (!usuario) {
+return <Typography variant="h6">Cargando...</Typography>;
 }
 
 return (
-<div className="usuario-panel">
-    <div className="avatar-container">
-    <div className="avatar">{initials}</div>
-    <h2 className="user-name">{user?.nombre}</h2>
-    </div>
-    <h3 className="section-title">Mis Alquileres</h3>
-    <div className="table-container">
-    <table className="alquileres-table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Videojuego</th>
-            <th>Fecha Alquiler</th>
-        </tr>
-        </thead>
-        <tbody>
-        {alquileres.map((alquiler) => (
-            <tr key={alquiler.idAlquiler}>
-            <td>{alquiler.idAlquiler}</td>
-            <td>{alquiler.videojuego.nombre}</td>
-            <td>{new Date(alquiler.fechaReserva).toLocaleDateString()}</td>
-            </tr>
-        ))}
-        </tbody>
-    </table>
-    </div>
-</div>
+<Container>
+    <Grid container spacing={2} justifyContent="center" className="usuario-panel-container">
+    <Grid item xs={12} md={6}>
+        <Paper style={{ padding: "24px", marginTop: "16px", borderRadius: '8px' }}>
+        <Typography variant="h5" gutterBottom>Datos del Usuario</Typography>
+        <form noValidate autoComplete="off">
+            <TextField
+            label="Nombre"
+            name="nombre"
+            value={usuario.nombre}
+            fullWidth
+            margin="normal"
+            onChange={handleInputChange}
+            />
+            <TextField
+            label="Apellido"
+            name="apellido"
+            value={usuario.apellido}
+            fullWidth
+            margin="normal"
+            onChange={handleInputChange}
+            />
+            <TextField
+            label="Email"
+            name="email"
+            value={usuario.email}
+            fullWidth
+            margin="normal"
+            onChange={handleInputChange}
+            />
+            <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{ marginTop: "16px" }}
+            onClick={handleUpdateUsuario}
+            >
+            Actualizar Datos
+            </Button>
+        </form>
+        </Paper>
+    </Grid>
+    <Grid item xs={12}>
+        <ListarReservas usuarioId={usuario.id} />
+    </Grid>
+    </Grid>
+</Container>
 );
-};
+}
 
 export default UsuarioPanel;

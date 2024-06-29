@@ -147,12 +147,19 @@ function DetalleProducto() {
               />
               <Button
                 variant="contained"
-                color="secondary"
+                style={{ 
+                  backgroundColor: '#F97316', 
+                  color: 'white',
+                  marginTop: "16px",
+                  ':hover': {
+                    backgroundColor: '#f97316',
+                  }
+                }}
                 onClick={handleReserva}
-                style={{ marginTop: "16px" }}
               >
                 Generar Reserva
               </Button>
+
             </div>
           )}
         </div>

@@ -90,6 +90,7 @@ function DetalleReserva() {
       setSnackbarMessage("Reserva realizada con éxito.");
       setSnackbarSeverity("success");
       setSnackbarOpen(true);
+      navigate("/usuario"); // Redireccionar al panel de usuario
     } catch (error) {
       console.error("Error realizando la reserva:", error);
       setMessage("Error realizando la reserva.");
@@ -295,3 +296,4 @@ function DetalleReserva() {
 }
 
 export default DetalleReserva;
+

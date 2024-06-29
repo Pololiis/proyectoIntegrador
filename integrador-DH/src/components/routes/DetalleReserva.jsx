@@ -37,12 +37,17 @@ function DetalleReserva() {
   //const url = `http://localhost:8080/alquiler`;
   const url = `${import.meta.env.VITE_API_URL}alquiler`;
 
+
+
   const {
+    
     videoJuegoSeleccionado,
     startDate: initialStartDate,
     endDate: initialEndDate,
   } = location.state || {};
 
+
+  
   useEffect(() => {
     if (!videoJuegoSeleccionado) {
       alert("No se encontraron los datos del videojuego.");

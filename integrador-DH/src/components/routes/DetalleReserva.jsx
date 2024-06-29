@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Grid, Paper, Typography, Button, Modal, Box } from "@mui/material";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
 import Volver from "../common/Volver";
 import { useAuthContext } from "../context/AuthContext";
 import LoginForm from "../routes/LoginForm";
@@ -23,31 +21,17 @@ const modalStyle = {
 };
 
 function DetalleReserva() {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [reservas, setReservas] = useState([]);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [message, setMessage] = useState("");
   const [usuario, setUsuario] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const { id } = useParams();
   const { token, updateToken } = useAuthContext();
-  //const url = `http://localhost:8080/alquiler`;
   const url = `${import.meta.env.VITE_API_URL}alquiler`;
 
+  const { videoJuegoSeleccionado, startDate, endDate } = location.state || {};
 
-
-  const {
-    
-    videoJuegoSeleccionado,
-    startDate: initialStartDate,
-    endDate: initialEndDate,
-  } = location.state || {};
-
-
-  
   useEffect(() => {
     if (!videoJuegoSeleccionado) {
       alert("No se encontraron los datos del videojuego.");
@@ -55,38 +39,21 @@ function DetalleReserva() {
       return;
     }
 
-    setStartDate(new Date(initialStartDate));
-    setEndDate(new Date(initialEndDate));
-
     if (token) {
       fetchUsuario();
     } else {
       setShowLoginModal(true);
     }
-
-    fetchReservas();
   }, [location.state, navigate, token]);
-
-  const fetchReservas = async () => {
-    try {
-      const response = await axios.get(`${url}`);
-      setReservas(Array.isArray(response.data) ? response.data : []);
-    } catch (error) {
-      console.error("Error obteniendo las reservas:", error);
-      setReservas([]);
-    }
-  };
 
   const fetchUsuario = async () => {
     try {
-      //const response = await axios.get(`http://localhost:8080/usuarios/me`, {
       const response = await axios.get(`${import.meta.env.VITE_API_URL}usuarios/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       setUsuario(response.data);
-      console.log(usuario);
     } catch (error) {
       console.error("Error obteniendo el usuario:", error);
     }
@@ -102,10 +69,10 @@ function DetalleReserva() {
       const response = await axios.post(
         `${url}/nuevo`,
         {
-          fechaInicio: startDate.toISOString().split("T")[0],
-          fechaFin: endDate.toISOString().split("T")[0],
-          usuariosId: usuario.id, // Asegúrate de pasar solo el id del usuario existente
+          usuariosId: usuario.id,
           videojuegosId: videoJuegoSeleccionado.id,
+          fechaInicio: startDate,
+          fechaFin: endDate,
         },
         {
           headers: {
@@ -119,41 +86,6 @@ function DetalleReserva() {
       console.error("Error realizando la reserva:", error);
       setMessage("Error realizando la reserva.");
     }
-  };
-
-  const handleDateChange = async () => {
-    try {
-      const response = await axios.put(
-        `${url}/${id}`,
-        {
-          fechaInicio: startDate.toISOString().split("T")[0],
-          fechaFin: endDate.toISOString().split("T")[0],
-          usuariosId: usuario.id, // Asegúrate de pasar solo el id del usuario existente
-          videojuegosId: videoJuegoSeleccionado.id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("Fechas actualizadas:", response.data);
-      setMessage("Fechas actualizadas con éxito.");
-    } catch (error) {
-      console.error("Error actualizando fechas:", error);
-      setMessage("Error actualizando fechas.");
-    }
-  };
-
-  const tileDisabled = ({ date, view }) => {
-    if (view === "month" && Array.isArray(reservas)) {
-      return reservas.some((reserva) => {
-        const reservaInicio = new Date(reserva.fechaInicio);
-        const reservaFin = new Date(reserva.fechaFin);
-        return date >= reservaInicio && date <= reservaFin;
-      });
-    }
-    return false;
   };
 
   if (!videoJuegoSeleccionado) {
@@ -179,74 +111,54 @@ function DetalleReserva() {
   return (
     <Container>
       <Volver />
-      <Grid container justifyContent="center">
-        <Grid item xs={12} md={8}>
+      <Grid container justifyContent="center" spacing={2}>
+        <Grid item xs={12} md={6}>
+          {usuario ? (
+            <Paper style={{ padding: "16px", marginTop: "16px", height: '60%' }}>
+              <Typography variant="h5" gutterBottom>Datos del Usuario</Typography>
+              <Typography variant="body1" style={{ fontSize: '1.2rem' }}><strong>Nombre:</strong> {usuario.nombre}</Typography>
+              <Typography variant="body1" style={{ fontSize: '1.2rem' }}><strong>Apellido:</strong> {usuario.apellido}</Typography>
+              <Typography variant="body1" style={{ fontSize: '1.2rem' }}><strong>Email:</strong> {usuario.email}</Typography>
+              <Typography variant="h6" gutterBottom>Fechas de Reserva</Typography>
+              <Typography variant="body1" style={{ fontSize: '1.2rem' }}><strong>Fecha de inicio:</strong> {startDate}</Typography>
+              <Typography variant="body1" style={{ fontSize: '1.2rem' }}><strong>Fecha de fin:</strong> {endDate}</Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                style={{ marginTop: "16px" }}
+                onClick={handleReserva}
+              >
+                Reservar
+              </Button>
+            </Paper>
+          ) : (
+            <Typography variant="h6">Cargando datos del usuario...</Typography>
+          )}
+        </Grid>
+        <Grid item xs={12} md={6}>
           <Paper style={{ padding: "16px", marginTop: "16px" }}>
             <Typography variant="h3" gutterBottom>
               {videoJuegoSeleccionado.nombre}
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12}>
                 <img
                   src={videoJuegoSeleccionado.imagenes[0]}
                   alt={videoJuegoSeleccionado.nombre}
                   className="imagen-centrada"
+                  style={{ width: "50%", borderRadius: "8px", display: 'block', margin: '0 auto' }}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
-                <Typography className="mb-2" variant="body1">
-                  Fechas
+              <Grid item xs={12}>
+                <Typography variant="body1" gutterBottom>
+                  <strong>Género:</strong> {videoJuegoSeleccionado.genero}
                 </Typography>
-                <Calendar
-                  onChange={([start, end]) => {
-                    setStartDate(start);
-                    setEndDate(end);
-                  }}
-                  selectRange
-                  value={[startDate, endDate]}
-                  tileDisabled={tileDisabled}
-                />
+                <Typography variant="body1" gutterBottom>
+                  <strong>Plataforma:</strong> {videoJuegoSeleccionado.categoria?.nombre}
+                </Typography>
               </Grid>
             </Grid>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              style={{ marginTop: "16px" }}
-              onClick={handleDateChange}
-            >
-              Actualizar Fechas
-            </Button>
-            <Typography variant="h6" gutterBottom style={{ marginTop: "16px" }}>
-              Plataforma
-            </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <img
-                  src={videoJuegoSeleccionado.categoria?.imagen}
-                  alt={videoJuegoSeleccionado.categoria?.nombre}
-                  style={{ width: "50%", borderRadius: "8px" }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="body1">{videoJuegoSeleccionado.categoria?.nombre}</Typography>
-              </Grid>
-            </Grid>
-            <Button
-              className="boton-reserva"
-              variant="contained"
-              color="primary"
-              fullWidth
-              style={{ marginTop: "16px" }}
-              onClick={handleReserva}
-            >
-              Continuar
-            </Button>
-            {message && (
-              <Typography variant="h6" color="success" gutterBottom style={{ marginTop: "16px" }}>
-                {message}
-              </Typography>
-            )}
           </Paper>
         </Grid>
       </Grid>

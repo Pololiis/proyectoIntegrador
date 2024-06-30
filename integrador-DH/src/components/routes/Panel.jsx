@@ -1,11 +1,22 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./panel.css";
 import ListaUsuarios from "./ListaUsuarios";
 import ListaVideojuegos from "./ListaVideojuegos";
 import ListaPlataformas from "./ListaPlataformas";
+import { useAuthContext } from "../context/AuthContext"; 
 
 const Panel = () => {
   const [componenteActivo, setComponenteActivo] = useState(null);
+  const { updateToken } = useAuthContext(); // función para actualizar el token
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
+    updateToken(null);
+    navigate("/");
+  };
 
   const renderComponente = () => {
     switch (componenteActivo) {
@@ -29,7 +40,6 @@ const Panel = () => {
       <div className="sidebar">
         <h2 className="panel-titulo">PANEL DE ADMINISTRACIÓN</h2>
         <div className="button-row">
-          
           <button
             className="btn btn-bd-primary"
             onClick={() => setComponenteActivo("listaUsuarios")}
@@ -58,4 +68,5 @@ const Panel = () => {
 };
 
 export default Panel;
+
 

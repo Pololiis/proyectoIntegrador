@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/alquiler")
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 @AllArgsConstructor
 public class AlquilerControlador {
 
@@ -30,6 +30,15 @@ public class AlquilerControlador {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(alquilerDTO);
+    }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<AlquilerDTO>> listarReservas(@PathVariable Long usuarioId) {
+        List<AlquilerDTO> alquileres = alquilerServicio.findByUsuarioId(usuarioId);
+        if (alquileres == null || alquileres.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(alquileres);
     }
 
     @PostMapping("/nuevo")

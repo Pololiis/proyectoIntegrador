@@ -7,17 +7,9 @@ import com.proyectoIntegrador.gameShare.repositorio.RolRepositorio;
 import com.proyectoIntegrador.gameShare.repositorio.UsuarioRepositorio;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,18 +17,15 @@ import java.util.Optional;
 @Transactional
 @AllArgsConstructor
 public class UsuarioServicio {
-    private UsuarioRepositorio usuarioRepositorio;
-    private PasswordEncoder encriptarContrasenia;
-    private RolRepositorio rolRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
+    private final PasswordEncoder encriptarContrasenia;
+    private final RolRepositorio rolRepositorio;
+
     public Usuario registrarUsuario(UsuarioRegistroDTO usuarioDTO) {
         Usuario usuario = new Usuario();
         usuario.setNombre(usuarioDTO.getNombre());
         usuario.setApellido(usuarioDTO.getApellido());
         usuario.setEmail(usuarioDTO.getEmail());
-        /*
-        usuario.setFechaNacimiento(usuarioDTO.getFechaNacimiento());
-        usuario.setEdad(usuario.calcularEdad(usuarioDTO.getFechaNacimiento()));
-         */
         usuario.setContrasenia(encriptarContrasenia.encode(usuarioDTO.getContrasenia()));
 
         Rol rol = rolRepositorio.findByNombreRol("USUARIO").orElse(null);
@@ -44,15 +33,12 @@ public class UsuarioServicio {
 
         return usuarioRepositorio.save(usuario);
     }
+
     public Usuario registrarUsuarioAdmin(UsuarioRegistroDTO usuarioDTO) {
         Usuario usuario = new Usuario();
         usuario.setNombre(usuarioDTO.getNombre());
         usuario.setApellido(usuarioDTO.getApellido());
         usuario.setEmail(usuarioDTO.getEmail());
-        /*
-        usuario.setFechaNacimiento(usuarioDTO.getFechaNacimiento());
-        usuario.setEdad(usuario.calcularEdad(usuarioDTO.getFechaNacimiento()));
-        */
         usuario.setContrasenia(encriptarContrasenia.encode(usuarioDTO.getContrasenia()));
 
         Rol rol = rolRepositorio.findByNombreRol("ADMINISTRADOR").orElse(null);
@@ -60,15 +46,19 @@ public class UsuarioServicio {
 
         return usuarioRepositorio.save(usuario);
     }
-    public Optional<Usuario> buscarUsuarioPorID(Long id){
+
+    public Optional<Usuario> buscarUsuarioPorID(Long id) {
         return usuarioRepositorio.findById(id);
     }
-    public Optional<Usuario> buscarUsuarioPorEmail(String email){
+
+    public Optional<Usuario> buscarUsuarioPorEmail(String email) {
         return usuarioRepositorio.findByEmail(email);
     }
+
     public List<Usuario> listarUsuarios() {
         return usuarioRepositorio.findAll();
     }
+
     public Usuario actualizarUsuario(Long id, UsuarioRegistroDTO usuarioDTO) {
         Usuario usuario = usuarioRepositorio.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -76,10 +66,6 @@ public class UsuarioServicio {
         usuario.setNombre(usuarioDTO.getNombre());
         usuario.setApellido(usuarioDTO.getApellido());
         usuario.setEmail(usuarioDTO.getEmail());
-    /*
-    usuario.setFechaNacimiento(usuarioDTO.getFechaNacimiento());
-    usuario.setEdad(usuario.calcularEdad(usuarioDTO.getFechaNacimiento()));
-    */
         usuario.setContrasenia(encriptarContrasenia.encode(usuarioDTO.getContrasenia()));
 
         Rol rol = rolRepositorio.findByNombreRol("USUARIO").orElse(null);
@@ -88,5 +74,19 @@ public class UsuarioServicio {
         return usuarioRepositorio.save(usuario);
     }
 
-    public void eliminarUsuario(Long id) { usuarioRepositorio.deleteById(id);}
+    public Usuario cambiarRolUsuario(Long id, String nuevoRol) {
+        Usuario usuario = usuarioRepositorio.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Rol rol = rolRepositorio.findByNombreRol(nuevoRol)
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+        usuario.setRol(rol);
+
+        return usuarioRepositorio.save(usuario);
+    }
+
+    public void eliminarUsuario(Long id) {
+        usuarioRepositorio.deleteById(id);
+    }
 }
+

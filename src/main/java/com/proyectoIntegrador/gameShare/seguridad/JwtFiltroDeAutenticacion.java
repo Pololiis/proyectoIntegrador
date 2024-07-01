@@ -1,5 +1,6 @@
 package com.proyectoIntegrador.gameShare.seguridad;
 
+import com.proyectoIntegrador.gameShare.seguridad.DetallesDeUsuarioServicio;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

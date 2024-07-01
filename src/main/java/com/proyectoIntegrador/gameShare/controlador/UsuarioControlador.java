@@ -10,14 +10,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
 @AllArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UsuarioControlador {
-    private UsuarioServicio usuarioServicio;
+    private final UsuarioServicio usuarioServicio;
 
     @PostMapping("/nuevo")
     public ResponseEntity<Usuario> registrarUsuario(@Valid @RequestBody UsuarioRegistroDTO usuarioDTO) {
@@ -70,6 +71,18 @@ public class UsuarioControlador {
         }
     }
 
+    @PutMapping("/{id}/cambiarRol")
+    public ResponseEntity<Usuario> cambiarRol(@PathVariable Long id, @RequestBody Map<String, String> rol) {
+        Optional<Usuario> usuarioExistente = usuarioServicio.buscarUsuarioPorID(id);
+
+        if (!usuarioExistente.isPresent()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            Usuario usuarioActualizado = usuarioServicio.cambiarRolUsuario(id, rol.get("rol"));
+            return ResponseEntity.ok(usuarioActualizado);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarUsuario(@PathVariable Long id) {
         Optional<Usuario> usuarioBuscado = usuarioServicio.buscarUsuarioPorID(id);
@@ -81,3 +94,4 @@ public class UsuarioControlador {
         }
     }
 }
+

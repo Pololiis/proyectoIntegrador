@@ -32,6 +32,11 @@ public class AlquilerServicio {
         return alquiler.map(this::convertToDto).orElse(null);
     }
 
+    public List<AlquilerDTO> findByUsuarioId(Long usuarioId) {
+        List<Alquiler> alquileres = alquilerRepositorio.findByUsuarioId(usuarioId);
+        return alquileres.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
     public AlquilerDTO save(AlquilerDTO alquilerDTO) {
         Alquiler alquiler = convertToEntity(alquilerDTO);
         Alquiler savedAlquiler = alquilerRepositorio.save(alquiler);
@@ -59,14 +64,15 @@ public class AlquilerServicio {
         alquiler.setFechaInicio(alquilerDTO.getFechaInicio());
         alquiler.setFechaFin(alquilerDTO.getFechaFin());
         alquiler.setTexto(alquilerDTO.getTexto());
-        
-        // Aquí obtener los objetos Usuario y Videojuego por ID
+
         Usuario usuario = new Usuario();
         usuario.setId(alquilerDTO.getUsuariosId());
         alquiler.setUsuario(usuario);
+
         Videojuego videojuego = new Videojuego();
         videojuego.setId(alquilerDTO.getVideojuegosId());
         alquiler.setVideojuego(videojuego);
+
         return alquiler;
     }
 }

@@ -1,7 +1,7 @@
 import { describe,test,expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import Main from "../components/Main";
-import App from "../App";
+import Footer from "./Footer";
 
 
 function shuffleArray(array) {
@@ -37,38 +37,38 @@ describe("Test shuffleArray", () => {
 
 describe("Main component", () => {
   test("should render the welcome message", () => {
-    render(<App />);
+    render(<Main />);
     const welcomeMessage = screen.getByText("¡Elige tu próxima aventura!");
     expect(welcomeMessage).toBeInTheDocument();
   });
 
   test("should render Recomendados title", () => {
-    render(<App />);
+    render(<Main />);
     const gameShareTitle = screen.getByText("Recomendados");
     expect(gameShareTitle).toBeInTheDocument();
   });
 
-  test("should render Foter Text", () => {
-    render(<App />);
-    const startButton = screen.getByText("© 2024 gameShare. Todos los derechos reservados.");
-    expect(startButton).toBeInTheDocument();
-  });
-
   test("should render the platforms section", () => {
-    render(<App />);
+    render(<Main />);
     const platformsSection = screen.getByText("Plataformas");
     expect(platformsSection).toBeInTheDocument();
   });
 
   test("should render the search bar", () => {
-    render(<App />);
+    render(<Main />);
     const searchBar = screen.getByRole("textbox");
     expect(searchBar).toBeInTheDocument();
   });
 
   test("should render the recommended games section", () => {
-    render(<App />);
+    render(<Main />);
     const recommendedGamesSection = screen.getAllByText("Recomendados");
     expect(recommendedGamesSection).toBeDefined();
+  });
+  
+  test("should render Foter Text", () => {
+    render(<Footer />);
+    const copyrightText = screen.getByText("© 2024 gameShare. Todos los derechos reservados.");
+    expect(copyrightText).toBeInTheDocument();
   });
 });

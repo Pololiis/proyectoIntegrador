@@ -80,7 +80,7 @@ function NavBar() {
             <img src={logo} alt="Logo" className="logo" /> ¡Juega más, paga menos!
           </Link>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler" title="NavBar Toggle Button"
             type="button"
             onClick={handleToggleMenu}
           >

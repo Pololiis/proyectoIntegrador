@@ -19,7 +19,7 @@ toast.success("Mensaje enviado correctamente.");
 
 return (
 <>
-    <button className="whatsapp-button" onClick={handleWhatsAppClick}>
+    <button className="whatsapp" title="Whatsapp" onClick={handleWhatsAppClick}>
     <FontAwesomeIcon icon={faWhatsapp} className="whatsapp-icon" />
     </button>
     <ToastContainer />

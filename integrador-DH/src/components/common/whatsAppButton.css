@@ -1,6 +1,6 @@
 
 
-.whatsapp-button {
+.whatsapp{
 position: fixed;
 bottom: 20px;
 right: 20px;
@@ -22,7 +22,7 @@ font-size: 24px;
 }
 
 @media (max-width: 600px) {
-.whatsapp-button {
+.whatsapp {
     bottom: 10px;
     right: 10px;
     padding: 10px;

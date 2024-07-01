@@ -1,0 +1,43 @@
+.container-cards-section {
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 10vh 0px;
+}
+
+.container-cards-section h2 {
+  margin: 5vh 0px;
+}
+
+.container-cards {
+  width: 50%;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.add-platform-button {
+  margin-top: 20px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.add-platform-button:hover {
+  background-color: #0056b3;
+}
+
+@media screen and (min-width: 378px) and (max-width: 600px) {
+  .container-h1 {
+    display: flex;
+  }
+
+  .bg-h1 {
+    height: 40vh;
+  }
+}

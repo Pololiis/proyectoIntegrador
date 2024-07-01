@@ -1,0 +1,167 @@
+/* Estilos generales para el contenedor */
+.buscador {
+  padding: 20px;
+  background-color: #0A1D56;
+  margin: 20px auto;
+  justify-content: space-between;
+  flex-direction: row;
+  min-width: 100%;
+  position: relative; /* Añadir esta línea */
+}
+
+/* Estilos para el encabezado */
+.buscador-header {
+  
+  margin-bottom: 20px;
+  min-width: 25%;
+  margin-left: 20vw;
+  margin-right: 5vw;
+}
+
+.buscador-header h2 {
+  font-size: 3em;
+  color: white;
+  text-align: center;
+}
+
+/* Estilos para el formulario */
+.buscador-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.buscador-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.buscador-icon {
+  font-size: 2em;
+  color: white;
+}
+
+
+.buscador-form{
+  
+  flex-direction: column;
+}
+
+.buscador-input {
+  background-color: #fff;
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  
+  
+}
+
+/* Cambiar el color del placeholder a negro */
+.buscador-input::placeholder {
+  color: white;
+}
+
+.buscador-button {
+  background-color: #37B5B6;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.buscador-button:disabled {
+  background-color: #cccccc;
+}
+
+.buscador-suggestions {
+  background-color: white;
+  border-radius: 10px;
+  max-height: 100px;
+  overflow-y: auto;
+  max-width: 100%;
+  width: 100%;
+  position: absolute; /* Añadir esta línea */
+  z-index: 1; /* Añadir esta línea */
+  top: 105%; /* Añadir esta línea */
+}
+
+.buscador-suggestion {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.buscador-suggestion:hover {
+  background-color: #f0f0f0;
+}
+
+/* Estilos para el spinner de carga */
+.loading-spinner {
+  display: block;
+  margin: 20px auto;
+}
+
+.cards-src {
+  width: 100%;
+
+}
+
+.buscador-error{
+  width: 100%;
+  text-align: center;
+  
+  border: 1px solid red;
+}
+
+.container-card {
+  display: flex;
+  flex-wrap: wrap;
+  width: 47%;
+  justify-content: center; /* Revisar Codigo Card*/
+}
+
+/* Estilos para el slider */
+.slider-card {
+
+  width: 80%;
+  margin: 0 auto;
+}
+
+.slick-slide {
+  display: grid;
+      place-items: center;
+
+}
+
+/* Media queries para pantallas más grandes */
+@media (max-width: 670px) {
+  .buscador{
+    border: 1px solid red;
+    flex-direction: column;
+    margin: auto;
+  }
+
+
+  .buscador-header{
+    margin: auto;
+  }
+
+  .slider-card{
+    width: 80%;
+
+  }
+
+
+  .cards-src{
+    margin-top: 5vh;
+    margin-left: 10vw;
+  }
+
+  .container-card{
+    width: 90%;
+  }
+}

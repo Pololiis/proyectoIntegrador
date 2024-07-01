@@ -1,0 +1,87 @@
+.panel-container {
+  display: flex;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+}
+
+.sidebar {
+  width: 250px; /* Ancho fijo para la barra lateral */
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.panel-titulo {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: medium;
+  color:  #333;
+}
+
+.button-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.button-row > button {
+  padding: 10px 10px;
+  background-color: #F97316;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-row > button:hover {
+  background-color: #F97316;
+}
+
+.componente-activo {
+  flex-grow: 1; /* Ocupa el espacio restante */
+  padding: 20px;
+  overflow-y: auto;
+}
+
+textarea {
+  resize: none;
+}
+
+.img-seleccionada {
+  width: 10vw;
+  margin-bottom: 2vh;
+}
+
+.img-btn-borrar {
+  flex-wrap: wrap;
+  gap: 2vh;
+}
+
+@media (max-width: 768px) {
+  .panel-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+  }
+
+  .componente-activo {
+    margin-top: 20px; /* Espacio entre los botones y el componente activo */
+  }
+}
+
+.restringido {
+  display: none;
+}
+
+.container-form {
+  background-color: var(--color1);
+  color: white;
+  padding: 10vh 0px;
+}
+
+.formulario {
+  display: none;
+}

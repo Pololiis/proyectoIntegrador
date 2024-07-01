@@ -1,0 +1,27 @@
+.container-form{
+  background-color: var(--color1);
+  color: white;
+  padding: 10vh 0px;
+}
+
+
+.register{
+  background-color: var(--color1);
+}
+
+
+textarea{
+  resize: none;
+}
+
+.img-seleccionada{
+  width: 10vw;
+  margin-bottom: 2vh;
+}
+
+
+
+.img-btn-borrar{
+  flex-wrap: wrap;
+  gap: 2vh;
+}

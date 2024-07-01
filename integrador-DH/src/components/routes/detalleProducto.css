@@ -1,0 +1,99 @@
+.container-detalle{
+  padding: 5vh;
+  margin-bottom: 8vh;
+  color: white;
+  text-align: center;
+  border-radius: 1rem;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; 
+}
+.container-color{
+  background-color: rgba(10, 29, 86, 0.7);
+  border-radius: 1rem;
+  padding: 20px;
+  
+}
+
+
+  .img-caracteristicas {
+    max-width: 2vw;
+    height: auto;
+  }
+  .caractGaleria{
+    background-color: rgb(10, 29, 86);
+    border-radius: 0.5rem;
+  }
+  
+
+  .detalle-producto-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form-group-container {
+    background-color: #f0f0f0; /* Ajusta este color según los colores de tu página */
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .input-field {
+    background-color: #ffffff;
+  }
+  
+  .caracteristicas-seccion {
+    margin-top: 30px;
+  }
+  
+  .caracteristicas-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .caracteristica {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 150px;
+  }
+  
+  .img-caracteristicas {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+  
+  .btn-reserva{
+    --bs-btn-font-weight: 400;
+    --bs-btn-color: white;
+    --bs-btn-bg: var(--color3);
+    --bs-btn-border-color: var(--color3);
+    --bs-btn-hover-color: var(--color3);
+    --bs-btn-hover-bg: white;
+    --bs-btn-active-color: var(--color3);
+    --bs-btn-active-bg: white;
+    border-radius: 0.3rem;
+    display: flex;
+  }
+
+
+  .btn-reserva:hover{
+    border: 1px solid var(--color3);
+  }
+
+
+  @media screen and (max-width: 600px) {
+    .rdr-DayPicker {
+      max-width: 100%; /* Asegura que el selector de días no se expanda más allá del contenedor */
+    }
+  }

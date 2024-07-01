@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './listarUsuarios.css'; // Asegúrate de importar el archivo CSS
+import './listarUsuarios.css'; 
 
 const ListaUsuarios = () => {
   const url = `${import.meta.env.VITE_API_URL}usuarios`;

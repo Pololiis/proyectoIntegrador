@@ -45,7 +45,7 @@ const ListarReservas = ({ usuarioId }) => {
                         reservas.map((reserva) => (
                             <tr key={reserva.id}>
                                 <td>{reserva.id}</td>
-                                <td>{reserva.videojuego.nombre}</td>
+                                <td>{reserva.videojuego?.nombre || "N/A"}</td>
                                 <td>{new Date(reserva.fechaInicio).toLocaleDateString()}</td>
                                 <td>{new Date(reserva.fechaFin).toLocaleDateString()}</td>
                                 <td>{reserva.texto}</td>
@@ -63,6 +63,11 @@ const ListarReservas = ({ usuarioId }) => {
 };
 
 export default ListarReservas;
+
+
+
+
+
 
 
 

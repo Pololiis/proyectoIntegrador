@@ -3,9 +3,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import "./abmPlataforma.css"; 
+import { useAuthContext } from "../context/AuthContext";
+
 
 const AbmPlataforma = ({ onClose }) => {
   const [mensaje, setMensaje] = useState("");
+  const {token} = useAuthContext();
 
   const validationSchema = Yup.object().shape({
     nombre: Yup.string()
@@ -38,6 +41,7 @@ const AbmPlataforma = ({ onClose }) => {
       );
       setMensaje("Categoría agregada con éxito");
       resetForm();
+      console.log(response);
     } catch (error) {
       setMensaje("Error al crear la categoría: " + (error.response?.data?.message || error.message));
     } finally {

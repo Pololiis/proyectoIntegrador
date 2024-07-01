@@ -90,3 +90,10 @@
   .btn-reserva:hover{
     border: 1px solid var(--color3);
   }
+
+
+  @media screen and (max-width: 600px) {
+    .rdr-DayPicker {
+      max-width: 100%; /* Asegura que el selector de días no se expanda más allá del contenedor */
+    }
+  }

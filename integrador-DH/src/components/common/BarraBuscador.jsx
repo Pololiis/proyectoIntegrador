@@ -119,15 +119,44 @@ function BarraBuscador() {
   }, []);
 
   const settings = {
-    dots: true,
-    infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: '0',
+    responsive: [
+      {
+        breakpoint: 1350,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: true
+        }
+      }
+    ]
   };
 
   return (
-    <Container className="buscador">
+    <Container className="buscador d-flex">
       <div className="buscador-header">
         <h2>¡Elige tu próxima aventura!</h2>
         <form onSubmit={handleSubmit} className="buscador-form">
@@ -140,6 +169,23 @@ function BarraBuscador() {
             className="buscador-input"
             aria-label="Buscar videojuegos"
           />
+              {showSuggestions && (
+          <List className="buscador-suggestions">
+            {filteredSuggestions.map((videojuego) => (
+              <ListItem
+                key={videojuego.id}
+                onClick={() => {
+                  setBusqueda(videojuego.nombre);
+                  setShowSuggestions(false);
+                }}
+                className="buscador-suggestion"
+                role="option"
+              >
+                {videojuego.nombre}
+              </ListItem>
+            ))}
+          </List>
+        )}
           <TextField
             id="startDate"
             label="Fecha de inicio"
@@ -178,23 +224,7 @@ function BarraBuscador() {
             {isSubmitting ? <CircularProgress size={24} /> : "Buscar"}
           </Button>
         </form>
-        {showSuggestions && (
-          <List className="buscador-suggestions">
-            {filteredSuggestions.map((videojuego) => (
-              <ListItem
-                key={videojuego.id}
-                onClick={() => {
-                  setBusqueda(videojuego.nombre);
-                  setShowSuggestions(false);
-                }}
-                className="buscador-suggestion"
-                role="option"
-              >
-                {videojuego.nombre}
-              </ListItem>
-            ))}
-          </List>
-        )}
+
       </div>
 
       <section className="cards-src">
@@ -226,8 +256,8 @@ function BarraBuscador() {
               )
             )}
             {filteredData.length === 0 && (
-              <Typography variant="h6" color="error">
-                No se encontraron resultados.
+              <Typography className="buscador-error" variant="h6" color="error">
+                No se encontraron resultados para las fechas elegidas. Pruebe con otro rango de fechas
               </Typography>
             )}
           </div>

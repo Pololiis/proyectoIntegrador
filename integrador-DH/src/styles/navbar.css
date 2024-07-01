@@ -1,25 +1,19 @@
 /* Estilos generales del navbar */
 .navbar {
-  background-color: #0A1D56;
+  background-color: #0a1d56;
   padding: 1rem;
   position: relative;
   z-index: 2;
 }
 
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  color: #fff;
+.eslogan {
+  color: white;
   text-decoration: none;
 }
 
-.navbar-brand .logo {
+.eslogan .logo {
   height: 80px;
   margin-right: 10px;
-}
-
-.eslogan {
-  font-size: 1.2rem;
 }
 
 .nav-link {
@@ -32,7 +26,7 @@
   color: FFFFF;
 }
 
-.nav-toggler {
+.nav-button {
   background-color: white;
 }
 
@@ -62,13 +56,13 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color:#F97316 ;
+  background-color: #f97316;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-right: 10px;
 }
 
@@ -97,4 +91,13 @@
   top: 0;
   left: 0;
   z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .eslogan {
+    font-size: 1em; /* Tamaño del eslogan para dispositivos móviles */
+  }
+}
+
+@media (max-width: 600px) {
 }

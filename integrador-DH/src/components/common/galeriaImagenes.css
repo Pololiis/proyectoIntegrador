@@ -24,7 +24,7 @@
 }
 
 .imagen-principal img {
-margin-left: 7vw;
+margin-left: 5vw;
   width: 80%;
   height: 42vh;
   border-top-left-radius: 8px;
@@ -50,13 +50,12 @@ margin-left: 7vw;
 .imagen-secundaria {
   overflow: hidden;
   border-radius: 8px;
- 
 }
 
 .imagen-secundaria img {
   margin-top: 0.5vh;
   width: 100%;
-  height: 100%;
+  height: 20vh;;
   object-fit: cover; /* Ajusta la imagen dentro del contenedor */
 }
 

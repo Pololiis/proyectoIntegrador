@@ -23,6 +23,7 @@
 }
 
 .card {
+  
   position: relative;
   overflow: hidden;
   width: 250px; /* Ajusta el tamaño de las tarjetas según sea necesario */

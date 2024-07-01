@@ -37,13 +37,13 @@ function Main() {
     <div>
 
       <div className="main-container">
-        <section className="cards-categoria">
-
-          <BarraBuscador />
-        </section>
         <section className="plataformas-section">
           <h2 className="plataforma-title">Plataformas</h2>
           <CardPlataforma />
+        </section>
+        <section className="cards-categoria">
+
+          <BarraBuscador />
         </section>
         <section className="cards-recomendado">
           <h2 className="recomendados-title">Recomendados</h2>

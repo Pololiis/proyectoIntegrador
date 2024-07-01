@@ -10,18 +10,18 @@ function CardPlataforma() {
 
   // const url1 = "http://localhost:8080/categorias";
   const url1 = `${import.meta.env.VITE_API_URL}categorias`;
+  const[plataforma, setPlataforma] = useState([])
 
-  const plataformas = [
-    { id: 1, nombre: "Xbox", imagen: xboxLogo },
-    { id: 2, nombre: "PlayStation", imagen: playstationLogo },
-    { id: 3, nombre: "Nintendo", imagen: nintendoLogo },
-    { id: 4, nombre: "GameCube", imagen: gamecubeLogo },
-  ];
+useEffect(() => {
+    axios.get(url1).then((response) => {
+      setPlataforma(response.data);
+    });
+  }, []);
 
   return (
     <div className="card-plataforma-container">
       <div className="plataformas">
-        {plataformas.map((plataforma) => (
+        {plataforma.map((plataforma) => (
           <div key={plataforma.id} className="plataforma">
             <img src={plataforma.imagen} alt={plataforma.nombre} className="plataforma-logo" />
           </div>

@@ -125,6 +125,7 @@ function DetalleReserva() {
   return (
     <Container>
       <Volver />
+      
       <Grid container justifyContent="center" spacing={2}>
         <Grid item xs={12} md={6}>
           {usuario ? (
@@ -214,8 +215,9 @@ function DetalleReserva() {
             </Grid>
           </Paper>
         </Grid>
+        
       </Grid>
-
+      
       <Modal
         open={showRegisterModal}
         onClose={handleCloseRegisterModal}

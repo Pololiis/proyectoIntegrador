@@ -3,15 +3,19 @@
   padding: 20px;
   background-color: #0A1D56;
   margin: 20px auto;
-  margin-bottom: 40px;
-  display: flex;
-  flex-direction:row ;
+  justify-content: space-between;
+  flex-direction: row;
+  min-width: 100%;
+  position: relative; /* Añadir esta línea */
 }
 
 /* Estilos para el encabezado */
 .buscador-header {
+  
   margin-bottom: 20px;
-  width: 50%;
+  min-width: 25%;
+  margin-left: 20vw;
+  margin-right: 5vw;
 }
 
 .buscador-header h2 {
@@ -41,12 +45,19 @@
   color: white;
 }
 
+
+.buscador-form{
+  
+  flex-direction: column;
+}
+
 .buscador-input {
   background-color: #fff;
   width: 100%;
   max-width: 300px;
   padding: 10px;
-  border-radius: 15px;
+  
+  
 }
 
 /* Cambiar el color del placeholder a negro */
@@ -68,13 +79,15 @@
 }
 
 .buscador-suggestions {
-  margin-top: 10px;
   background-color: white;
   border-radius: 10px;
   max-height: 100px;
   overflow-y: auto;
   max-width: 100%;
   width: 100%;
+  position: absolute; /* Añadir esta línea */
+  z-index: 1; /* Añadir esta línea */
+  top: 105%; /* Añadir esta línea */
 }
 
 .buscador-suggestion {
@@ -94,32 +107,61 @@
 
 .cards-src {
   width: 100%;
-  margin-top: 20px;
+
+}
+
+.buscador-error{
+  width: 100%;
+  text-align: center;
+  
+  border: 1px solid red;
 }
 
 .container-card {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  width: 47%;
   justify-content: center; /* Revisar Codigo Card*/
 }
 
 /* Estilos para el slider */
 .slider-card {
-  width: 90%;
+
+  width: 80%;
   margin: 0 auto;
 }
 
 .slick-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+      place-items: center;
+
 }
 
 /* Media queries para pantallas más grandes */
-@media (min-width: 600px) {
-  .buscador-form {
+@media (max-width: 670px) {
+  .buscador{
+    border: 1px solid red;
     flex-direction: column;
+    margin: auto;
+  }
+
+
+  .buscador-header{
+    margin: auto;
+  }
+
+  .slider-card{
+    width: 80%;
+
+  }
+
+
+  .cards-src{
+    margin-top: 5vh;
+    margin-left: 10vw;
+  }
+
+  .container-card{
+    width: 90%;
   }
 }
-

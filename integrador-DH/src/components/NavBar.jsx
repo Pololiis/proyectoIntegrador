@@ -76,11 +76,11 @@ function NavBar() {
     <>
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
-          <Link to="/" className="navbar-brand eslogan">
+          <Link to="/" className="eslogan">
             <img src={logo} alt="Logo" className="logo" /> ¡Juega más, paga menos!
           </Link>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler nav-button"
             type="button"
             onClick={handleToggleMenu}
           >

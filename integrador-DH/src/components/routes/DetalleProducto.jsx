@@ -12,6 +12,10 @@ import { useAuthContext } from "../context/AuthContext";
 import LoginForm from "../routes/LoginForm";
 import CrearUsuario from "../routes/crearUsuario";
 import "./detalleProducto.css";
+import {useMediaQuery} from '@mui/material';
+
+
+
 
 const modalStyle = {
   position: "absolute",
@@ -44,8 +48,9 @@ function DetalleProducto() {
   const navigate = useNavigate();
   const location = useLocation();
   const { token, updateToken, setShowLoginModal: setGlobalShowLoginModal } = useAuthContext();
-
-  const url = `${import.meta.env.VITE_API_URL}videojuegos/${id}`;
+  const isMobile = useMediaQuery('(max-width: 600px)')
+  const url = `${import.meta.env.VITE_API_URL}videojuegos/${id}`; 
+  const calendarWidth = isMobile ? '100%' : '70%';
 
   useEffect(() => {
     const fetchData = async () => {
@@ -133,15 +138,14 @@ function DetalleProducto() {
             Reservar
           </Button>
           {showCalendar && (
-            <div>
-              <Typography className="mb-2" variant="body1">Fechas</Typography>
+            <div style={{ width: calendarWidth }}>
               <DateRange
                 onChange={item => setDateRange([item.selection])}
                 showSelectionPreview={true}
                 moveRangeOnFirstSelection={false}
                 months={2}
                 ranges={dateRange}
-                direction="horizontal"
+                direction={isMobile ? 'vertical' : 'horizontal'}
                 minDate={today}
                 maxDate={addMonths(today, 2)}
               />
@@ -261,3 +265,6 @@ function DetalleProducto() {
 }
 
 export default DetalleProducto;
+
+
+
